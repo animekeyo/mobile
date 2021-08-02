@@ -227,6 +227,21 @@
 
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
+                const currentUser = user.uid;
+
+                function follow(FollowUser){
+                    const MainYou = firebase.database().ref('/users/'+ currentUser +'/following/'+ FollowUser);
+                    const DataThey = firebase.database().ref('/users/'+ FollowUser +'/followers/'+ currentUser);
+                    MainYou.once("value", function(snapshot) {
+                        if (snapshot.exists()){
+                            MainYou.remove()
+                        } else {
+                            DataThey.update({
+                                follow: true,
+                            })
+                        }
+                    })
+                }
                 // User is signed in./////
                 console.log(user.uid)
                 const data = firebase.database().ref('/users/' + user.uid);
