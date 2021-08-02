@@ -232,17 +232,18 @@ $(document).on('click','[ruf]',function(){
 const ruser = $(this).attr('userid');
 const rtype = $(this).attr('rtype');
 if(rtype == 'follow'){
-    follow(ruser)
+    follow(ruser,$(this))
     console.log('workinh')
 }
 });
-                function follow(FollowUser){
+                function follow(FollowUser,DEX){
                     const MainYou = firebase.database().ref('/users/'+ currentUser +'/following/'+ FollowUser);
                     const DataThey = firebase.database().ref('/users/'+ FollowUser +'/followers/'+ currentUser);
                     MainYou.once("value", function(snapshot) {
                         if (snapshot.exists()){
                             MainYou.remove()
                             DataThey.remove()
+                            DEX.text('Follow')
                         } else {
                             DataThey.update({
                                 follow: true,
@@ -250,9 +251,11 @@ if(rtype == 'follow'){
                             MainYou.update({
                                 follow: true,
                             })
+                            DEX.text('Followed')
                         }
                     })
                 }
+                
                 // User is signed in./////
                 console.log(user.uid)
                 const data = firebase.database().ref('/users/' + user.uid);
