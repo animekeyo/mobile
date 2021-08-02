@@ -229,10 +229,11 @@
             if (user) {
                 const currentUser = user.uid;
 $(document).on('click','[ruf]',function(){
-const ruser = $(this).href('userid');
-const rtype = $(this).href('rtype');
+const ruser = $(this).attr('userid');
+const rtype = $(this).attr('rtype');
 if(rtype == 'follow'){
     follow(ruser)
+    console.log('workinh')
 }
 });
                 function follow(FollowUser){
@@ -241,8 +242,12 @@ if(rtype == 'follow'){
                     MainYou.once("value", function(snapshot) {
                         if (snapshot.exists()){
                             MainYou.remove()
+                            DataThey.remove()
                         } else {
                             DataThey.update({
+                                follow: true,
+                            })
+                            MainYou.update({
                                 follow: true,
                             })
                         }
@@ -448,7 +453,7 @@ if(rtype == 'follow'){
                             .prepend(
                                 ''
                             ),
-                            a('div', 'fw aa ff fbg Follow-Btn', '413')
+                            a('div', 'fw aa ff fbg ruf Follow-Btn', '413')
                             .css('width', 'fit-content')
                             .css('height', 'fit-content')
                             .css('top', 'unset')
