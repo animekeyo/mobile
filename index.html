@@ -195,10 +195,10 @@ input:focus {
     max-width: max-content;
 }
 .mn4121 {
-    height: 68px;
-    width: 68px;
+    height: 70px;
+    width: 70px;
     border: 3px solid var(--r5);
-    margin: 3px;
+    margin: 2px;
     background-color: var( --v1);
     border-radius: 100rem;
 }
@@ -400,11 +400,11 @@ if(rtype == 'follow'){
                             
                         } else if(type == 'State'){
                             if(snapshot.val().State == true){
-    div.css('box-shadow','0px 0px 0px 4px var(--c7)')
+    div.css('box-shadow','0px 0px 0px 2px var(--c7)')
 } else if (snapshot.val().State == false) {
-    div.css('box-shadow','0px 0px 0px 3px var(--c19)')
+    div.css('box-shadow','0px 0px 0px 2px var(--c19)')
 } else {
-    div.css('box-shadow','0px 0px 0px 3px var(--c19)')
+    div.css('box-shadow','0px 0px 0px 2px var(--c19)')
 }
                         } else if(type == 'following-count'){
                             data.child('following').on("value", snapshot => {
