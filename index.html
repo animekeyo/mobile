@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="manifest" href="/mobile-manifest.json?clear-24d3">
+    <link rel="icon" href="/icon-192x192.png">
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js')
@@ -33,17 +34,7 @@
 
         var supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
     </script>
-
-
     <script>
-        $.ajax({
-            url: 'https://canary.animekeyo.com/index.html?clear-231',
-            success: function(data) {
-                var body = data.substring(data.indexOf("<style ux>") + 10, data.indexOf("</style>"));
-                $('style[ux]').html(body)
-            }
-        });
-
         function a(inn, id, clas) {
             if (inn, id) {
                 aa = $(`<${inn}   ${id} class="m${clas}"></${inn}>`);
@@ -89,7 +80,7 @@
         }
     </script>
     <style ux>
-
+@import url("https://canary.animekeyo.com/styles/style.css?clear1-5");
     </style>
     <style mi>
         .m1 {
