@@ -83,6 +83,9 @@
 @import url("https://canary.animekeyo.com/styles/style.css?clear1-5");
     </style>
     <style mi>
+        :root{
+            --v1:rgb(88, 101, 242);
+        }
         .m1 {
             display: grid;
             grid-gap: 10px;
@@ -94,10 +97,21 @@
             height: 2.5rem;
             background: var(--r10);
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             border-radius: 5px;
+            font-family: 'C1';
         }
         
+input:focus {
+    box-shadow: 0px 0px 0px 3px var(--c7);
+}
+        input::placeholder {
+    color: white;
+    
+    letter-spacing: 1px;
+}
+
+
         formx {
             padding: 1.3rem 1rem;
             gap: 0.5rem;
@@ -149,6 +163,80 @@
             margin: 1rem;
             gap: 0.5rem;
         }
+        [fff] {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.mn32 {
+    gap: 0.6rem;
+}
+.mn321 {
+    height: 2.5rem;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--r15);
+}
+.mn3211 {
+    height: 40px;
+    width: 40px;
+    background-color: white;
+    border-radius: 100rem;
+}
+.mn3212 {
+    max-width: max-content;
+}
+.mn4121 {
+    height: 5rem;
+    width: 5rem;
+    background-color: var(--v1);
+    border-radius: 100rem;
+}
+.mn412 {
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.mn4122x {
+    width: fit-content;
+    height: fit-content;
+    padding: 0.5rem 1rem;
+    background-color: var(--v1);
+    border-radius: 5px;
+}
+.mn4121x {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 01rem;
+}
+.mn41221 {
+    font-size: 1.3rem;
+}
+.mn412221 {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    color: hsl(0deg 0% 70%);
+}
+.mn4122 {
+    gap: 0.3rem;
+}
+.mn41222 {
+    gap: 0.1rem;
+}
+.mn412221.n23xdi {
+    font-size: 0.9rem;
+    color: white;
+}
     </style>
 </head>
 
@@ -255,9 +343,94 @@ if(rtype == 'follow'){
                         }
                     })
                 }
-                
+                function checkfollow(FollowUser,DEX){
+                    const MainYou = firebase.database().ref('/users/'+ currentUser +'/following/'+ FollowUser);
+                    const DataThey = firebase.database().ref('/users/'+ FollowUser +'/followers/'+ currentUser);
+                    MainYou.once("value", function(snapshot) {
+                        if (snapshot.exists()){
+                            DEX.text('Follow')
+                        } else {
+                            DEX.text('Followed')
+                        }
+                    })
+                }
+                function userdata(div,type,useridxz){
+                    if (useridxz && type && div) {
+                        const data = firebase.database().ref('/users/' + useridxz);
+                        data.on("value", snapshot => {
+                       if(type == 'displayName'){
+                            div.text(snapshot.val().displayName)
+                        } else if(type == 'avatar'){
+                            div.css('background-image','url('+snapshot.val().avatar+')')
+                        } else if(type == 'banner'){
+                            div.css('background-image','url('+snapshot.val().banner+')')
+                        } else if(type == 'userid'){
+                            div.text(snapshot.val().userid)
+                        } else if(type == 'attr-userid'){
+                            div.attr('userid',snapshot.val().userid)
+                        } else {
+                            console.log('Error [userdata]2')
+                        }
+                        })
+                        
+                    } else {
+                        console.log('Error [userdata]1')
+                    }
+                }
+                /////////////////////////////
+                $(document).on('click','[get-user]',function(){
+                    const userid = $(this).attr('userid')
+                    if(userid){
+                        
+                        const datac =  a('div','fw fff','n41').prepend(
+                        a('div','fw fff fbg','n411').prepend( /// Profile Banner
+                   
+                        ).css({
+                            'height':' 150px',
+                            'background-color': 'var(--v1)',
+                        }),
+                        a('div','fw fff','n412').prepend( /// Profile Meta
+                        
+                        a('div','fw fff','n4121x').prepend( /// Profile Meta
+                        a('div','fw fff fbg','n4121').prepend( /// Profile PIC
+                   
+                        ),
+                        a('div',' fff','n4122').prepend( /// Profile Meta
+                        a('div',' fff','n41221').text(''),
+                        a('div',' fff','n41222').prepend( /// Profile 
+                        a('div',' fff','n412221 n23xdi').prepend( /// Profile 
+                       'Followers 1' ),
+                        a('div',' fff','n412221').prepend( /// Profile 
+                       'Following 1' )
+                        )
+                        )
+                        ),
+                        
+                        )
+                    );
+                   $('.mn4').html(datac)
+                   userdata($('.mn41221'),'displayName',userid)
+                   userdata($('.mn4121'),'avatar',userid)
+                   userdata($('.mn411'),'banner',userid)
+                   if(currentUser == userid){
+                    $('.mn412').append(a('div','fw fff','n4122x').text( /// Profile Follow
+                   'Settings'
+                        ))
+                   } else {
+                    $('.mn412').append(a('div','fw fff','n4122x').text( /// Profile Follow
+                   'Follow'
+                        ))
+                   }
+                   $('body > div[pagex]').hide()
+                        $('[page="account"]').show()
+                    }
+                    
+                }
+                )
                 // User is signed in./////
                 console.log(user.uid)
+
+
                 const data = firebase.database().ref('/users/' + user.uid);
                 data.update({
                     State: true,
@@ -265,28 +438,24 @@ if(rtype == 'follow'){
                 data.onDisconnect().update({
                     State: false,
                 });
-                $(document).on('input', '#search-user-input', function() {
+                $(document).on('input', '#searchbox', function() {
                     const val = $(this).val();
-
-                    firebase.database().ref('/users').orderByChild('displayName').startAt(val).once("value", function(snapshot) {
-                        $('.m52').html('')
-                        snapshot.forEach(function(data) {
-                            console.log(data.val());
-                            data.val().displayName
-                            $('.m52').append(
-                                a('div', 'fw ff get-user userid="' + data.val().userid + '"', '521').prepend(
-                                    a('div', 'fw fbg ff', '5211').prepend(
-                                        ''
-                                    ).css('background-image', 'url(' + data.val().avatar + ')'),
-                                    a('div', ' ff', '5212').prepend(
-                                        data.val().displayName
-                                    )
-                                )
-                            )
-
-
+                   
+                        firebase.database().ref('/users').orderByChild('displayName').startAt(val).once("value", function(snapshot) {
+                            $('[search-results]').html('')
+                            snapshot.forEach(function(data) {
+                            console.log();
+                        
+                        $('[search-results]').append(
+                            a('div','fw fff get-user userid="'+data.val().userid+'"','n321').prepend( // Main div for name and avatar
+                            a('div','fw fff fbg','n3211').css('background-image','url('+data.val().avatar+')').html(''), // Avatar
+                            a('div','fw fff','n3212').text(data.val().displayName) // Display Name
+                        )
+                        );
                         });
                     });
+                    
+                    
                 })
 
                 data.once("value", snapshot => {
@@ -317,8 +486,9 @@ if(rtype == 'follow'){
                     if (typeof snapshot.val().avatar == "undefined") {
 
                     } else {
-
-                        $('[mainava]').css('background-image', 'url(' + snapshot.val().avatar + ')').attr('userid', user.uid)
+userdata($('[mainava]'),'avatar',currentUser)
+userdata($('[mainava]'),'attr-userid',currentUser)
+                       // $('[mainava]').css('background-image', 'url(' + snapshot.val().avatar + ')').attr('userid', user.uid)
                     }
 
                     if (typeof snapshot.val().displayName == "undefined") {
@@ -362,27 +532,7 @@ if(rtype == 'follow'){
                     })
                     //
 
-                $(document).on('click', '[get-user]', function() {
-                    $('body > div[pagex]').hide()
-                    $('[page="account"]').show()
-                    const userid = $(this).attr('userid')
-                    if (userid) {
-                        const data = firebase.database().ref('/users/' + userid);
-                        data.on("value", snapshot => {
-                            console.log(snapshot.val())
-                            $('.m4').css('display', 'flex')
-                            $('[get-user-avatar]').css('background-image', 'url(' + snapshot.val().avatar + ')')
-                            $('[get-user-banner]').css('background-image', 'url(' + snapshot.val().banner + ')')
-                            $('[get-user-displayname]').text(snapshot.val().displayName)
-                            if(currentUser == userid){
-                                $('[Follow-Btn]').hide();
-                            } else {
-                                $('[Follow-Btn]').show().attr('userid',userid).attr('rtype','follow');
-                            }
-                        })
-                    }
 
-                })
             } else {
                 // User is signed out.
                 console.log('No')
@@ -409,89 +559,23 @@ if(rtype == 'follow'){
 
 
                 $('body').prepend(
-                    a('div', 'fw ff fbg pagex page="search"', '5').css('display', 'none').prepend(
-                        a('div', 'fw ff fbg', '51').prepend(
-                            a('div', 'fw ff fbg', '51').prepend(
-                                input('search-user-input', 'ff fw', 'text', '', 'Search user').html('')
-                            ),
-                            a('div', 'fw ff fbg', '52').prepend(
-                                ''
-                            )
-                        )
-                    ),
-                    a('div', 'fw ff fbg pagex page="account"', '4')
-                    .css('display', 'none')
-                    .prepend(
-                        a('div', 'fw ff rr fbg', '41')
-                        .css('height', '12rem')
-
-                        .css('align-items', 'flex-start')
-                        .css('justify-content', 'flex-start')
-                        .css('align-content', 'flex-start')
-                        .prepend(
-                            // Profile Page Banner
-                            a('div', 'fw ff rr fbg ', '411')
-                            .css('background', 'var(--r10)')
-                            .css('height', '9rem')
-                            .css('overflow', 'hidden')
-
-                            .prepend(
-                                a('div', 'fw ff aa fbg get-user-avatar', '4111').html('')
-                                .css('filter', ' blur(40px)')
-                                .css('margin', '-100%')
-                                .css('top', '-20%')
-                                .css('left', '-0%'),
-                                a('div', 'fw ff aa fbg get-user-banner', '4111').html('')
-                            ),
-                            ///Profile Page Avatar 
-                            a('div', 'fw aa ff fbg get-user-avatar', '412')
-                            .css('width', '6rem')
-                            .css('height', '6rem')
-                            .css('top', 'unset')
-                            .css('bottom', '1px')
-                            .css('left', '1.5rem')
-                            .css('background-color', 'var(--r15)')
-                            .css('box-shadow', '0px 0px 0px 8px var(--r7)')
-                            .css('border-radius', '100rem')
-                            .prepend(
-                                ''
-                            ),
-                            a('div', 'fw aa ff fbg ruf Follow-Btn', '413')
-                            .css('width', 'fit-content')
-                            .css('height', 'fit-content')
-                            .css('top', 'unset')
-                            .css('left', 'unset')
-                            .css('bottom', '1px')
-                            .css('right', '1.5rem')
-                            .css('background', 'rgb(88, 101, 242)')
-                            .css('box-shadow', '0px 0px 0px 8px var(--r7)')
-                            .css('border-radius', '5px')
-                            .css('font-size', '1rem')
-                            .css('padding', '8px 16px')
-                            .text('Follow')
-                        ),
-                        a('div', 'ff rr fw', '42').prepend(
-                            a('div', 'ff fw rr', '421').prepend(
-                                a('div', 'ff get-user-displayname', '4211').text('').css('font-size', '1.3rem')
-                            )
-                            .css('align-items', 'flex-start')
-                            .css('justify-content', 'flex-start')
-                            .css('margin', '10px 20px')
-                        )
-                    )),
-                ///Login Acces///
-                a('div', 'fw ff fbg pagex', '3').css('display', 'none')
-                .prepend(
-
-                    ''
-
+                    
+                a('div','fw ff aa pagex page="account"','n4').prepend(
+                    
                 )
-                .css('position', 'fixed')
-                .css('bottom', '0')
-                .css('overflow', 'hidden')
-                .css('z-index', '3')
-                .css('left', '0'),
-                ///Bottom Bar///
+                .css('margin-bottom','50px'),
+                a('div','fw ff aa pagex page="search"','n3').prepend(
+                    a('div','fw fff','n31').prepend(
+                    input('searchbox','ff fw','text','search','Search Users...').html(''),
+                    a('div','fw fff search-results','n32').prepend( // The div where the data of search put showed!
+
+                      
+                    ),
+                    )
+                    .css('padding','1.5rem').css('gap','1rem')
+                )
+                .css('margin-bottom','50px'),
+                ///Bottom Menu Bar///
                 a('div', 'fw ff', '2').prepend(
                     ''
                 )
@@ -503,7 +587,7 @@ if(rtype == 'follow'){
                 .css('background', 'var(--r5)')
                 .css('flex-direction', 'row')
                 .css('justify-content', 'space-between')
-                .css('z-index', '1').ready(
+                .css('z-index', '10').ready(
                     function name(params) {
                         $('body').css('margin-bottom', '75px')
                         const data = [{
@@ -531,7 +615,7 @@ if(rtype == 'follow'){
                             name: 'view-page page="account" mainava get-user',
                             color: 'rgb(88, 101, 242)',
                             br: '100rem',
-                        }]
+                        }];
                         $.each(data, function(v, o) {
                             const data = a('div', 'fw fbg ff ' + o.name + '', '21')
                                 .prepend(
@@ -545,69 +629,10 @@ if(rtype == 'follow'){
                         })
                     }
                 ),
-                ///Bottom Bar///
-                a('div', 'rr fw ff pagex page="home"', '1x').prepend(
-                    a('div', 'rr fw ff discover-avatars', '1x1').text('Load Avatars'),
-                    a('div', 'rr fw ff discover-banners', '1x1').text('Load Banners')
-                ),
-                a('div', 'rr fw pagex page="home"', '1').css('display', 'none').css('margin', '15px').prepend('').ready(function() {
-                    $(document).on('click', '[discover-avatars]', function() {
-
-                        $('.m1').html('').css('grid-template-columns', 'repeat(auto-fill, minmax(150px, 1fr))')
-                        $.getJSON('https://pfps.glitch.me/?p=0', function(api) {
-                            $.each(api, function(o, v) {
-                                $.each(v, function(o, v) {
-                                    if (v.img) {
-                                        $('.m1').append(
-                                            a('div', 'ff rr fw', '11 m12x').prepend(
-                                                srcx('img', 'ff nnn', 'idd', v.img),
-                                                a('div', 'ff aa fw fbg ', '12x m111')
-                                                .css('padding', '100px')
-                                                .css('top', '-50%')
-                                                .css('left', '-50%')
-                                                .css('filter', 'blur(30px)')
-                                                .css('background-image', 'url(' + v.img + ')'),
-                                                a('div', 'ff rr fw fbg set-avatar href="' + v.img + '"', '112')
-                                                .css('background-image', 'url(' + v.img + ')')
-                                                .css('margin', '30px')
-                                                .css('border-radius', '100rem'), )
-                                            .css('overflow', 'hidden')
-                                            .css('background-color', 'var(--r11)')
-                                            .css('border-radius', '5px')
-                                            .ready(function() {
-                                                sh('.m12x')
-                                                sw('.m111')
-                                            }))
-                                    } else {}
-                                })
-                            })
-                        })
-
-                    })
-                    $(document).on('click', '[discover-banners]', function() {
-                        $('.m1').html('').css('grid-template-columns', 'repeat(auto-fill, minmax(350px, 1fr))')
-                        $.getJSON('https://banners-api.animekeyo.com/?p=0', function(api) {
-                            $.each(api, function(o, v) {
-                                $.each(v, function(o, v) {
-                                    if (v.img) {
-                                        $('.m1').append(
-                                            a('div', 'ff rr fw', '11 m12x').prepend(
-                                                srcx('img', 'ff fw set-banner href="' + v.img + '"', 'idd', v.img))
-                                            .css('overflow', 'hidden')
-                                            .css('background-color', 'var(--r11)')
-                                            .css('border-radius', '5px')
-                                            .ready(function() {
-
-                                            }))
-                                    } else {}
-                                })
-                            })
-                        })
-
-                    })
-                })
+                ///Bottom Menu Bar///
 
             )
+        )
             .css('background-color', 'var(--r7)')
     </script>
 </body>
