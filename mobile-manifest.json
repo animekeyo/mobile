@@ -2,8 +2,8 @@
     "theme_color": "black",
     "background_color": "black",
     "display": "standalone",
-    "scope": "/mobile",
-    "start_url": "/mobile",
+    "scope": "/",
+    "start_url": "/",
     "name": "Anime Keyo",
     "short_name": "Anime Keyo",
     "categories": [
@@ -35,7 +35,7 @@
     ],
     "shortcuts": [{
             "name": "Search",
-            "url": "/mobile?ll=search",
+            "url": "/?ll=search",
             "icons": [{
                 "src": "https://canary.animekeyo.com/icon-192x192.png",
                 "type": "image/png",
@@ -44,7 +44,7 @@
         },
         {
             "name": "Profile",
-            "url": "/mobile?ll=account",
+            "url": "/?ll=account",
             "icons": [{
                 "src": "https://canary.animekeyo.com/icon-192x192.png",
                 "type": "image/png",
