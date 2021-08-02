@@ -228,7 +228,13 @@
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 const currentUser = user.uid;
-
+$(document).on('click','[ruf]',function(){
+const ruser = $(this).href('userid');
+const rtype = $(this).href('rtype');
+if(rtype == 'follow'){
+    follow(ruser)
+}
+});
                 function follow(FollowUser){
                     const MainYou = firebase.database().ref('/users/'+ currentUser +'/following/'+ FollowUser);
                     const DataThey = firebase.database().ref('/users/'+ FollowUser +'/followers/'+ currentUser);
@@ -360,6 +366,11 @@
                             $('[get-user-avatar]').css('background-image', 'url(' + snapshot.val().avatar + ')')
                             $('[get-user-banner]').css('background-image', 'url(' + snapshot.val().banner + ')')
                             $('[get-user-displayname]').text(snapshot.val().displayName)
+                            if(currentUser == userid){
+                                $('[Follow-Btn]').hide();
+                            } else {
+                                $('[Follow-Btn]').show().attr('userid',userid).attr('rtype','follow');
+                            }
                         })
                     }
 
@@ -437,7 +448,7 @@
                             .prepend(
                                 ''
                             ),
-                            a('div', 'fw aa ff fbg', '413')
+                            a('div', 'fw aa ff fbg Follow-Btn', '413')
                             .css('width', 'fit-content')
                             .css('height', 'fit-content')
                             .css('top', 'unset')
