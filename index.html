@@ -269,27 +269,8 @@ sd {
 
     <script>
         const messaging = firebase.messaging();
-
-        messaging.getToken({
-            vapidKey: 'BO_pr8rrSONw5247EO9yl9dfUfz635UjfXd6fb-wiExxOwzorFJag7BbkqQLiBtqvkM3Zcln2bvppZLUCmODLFI'
-        }).then((currentToken) => {
-            if (currentToken) {
-                // Send the token to your server and update the UI if necessary
-                // ...
-                console.log(currentToken)
-            } else {
-                // Show permission request UI
-                console.log('No registration token available. Request permission to generate one.');
-                // ...
-            }
-        }).catch((err) => {
-            console.log('An error occurred while retrieving token. ', err);
-            // ...
-        });
-        messaging.onMessage((payload) => {
-            console.log('Message received. ', payload);
-            // ...
-        });
+        
+        
 
         // sh('class')
         // a('div','id','class')
@@ -340,6 +321,30 @@ sd {
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 const currentUser = user.uid;
+                const data = firebase.database().ref('/users/' + user.uid);
+                messaging.getToken({
+            vapidKey: 'BO_pr8rrSONw5247EO9yl9dfUfz635UjfXd6fb-wiExxOwzorFJag7BbkqQLiBtqvkM3Zcln2bvppZLUCmODLFI'
+        }).then((currentToken) => {
+            if (currentToken) {
+                // Send the token to your server and update the UI if necessary
+                // ...
+                data.update({
+                    pushToken: currentToken,
+                })
+                console.log(currentToken)
+            } else {
+                // Show permission request UI
+                console.log('No registration token available. Request permission to generate one.');
+                // ...
+            }
+        }).catch((err) => {
+            console.log('An error occurred while retrieving token. ', err);
+            // ...
+        });
+        messaging.onMessage((payload) => {
+            console.log('Message received. ', payload);
+            // ...
+        });
 $(document).on('click','[ruf]',function(){
 const ruser = $(this).attr('userid');
 const rtype = $(this).attr('rtype');
@@ -492,7 +497,7 @@ if(rtype == 'follow'){
                 console.log(user.uid)
 
 
-                const data = firebase.database().ref('/users/' + user.uid);
+                
                 data.update({
                     State: true,
                 });
