@@ -310,6 +310,23 @@
             border-radius: 100rem;
             background: white;
         }
+        
+        .midetx {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            bottom: -3px;
+            right: -3px;
+            background-color: var(--r5);
+            border-radius: 100px;
+            box-shadow: 0px 0px 0px 4px var(--r5);
+        }
+        
+        .midetx svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--r5);
+        }
     </style>
 </head>
 
@@ -372,12 +389,18 @@
                 const currentUser = user.uid;
                 const data = firebase.database().ref('/users/' + user.uid);
                 //function to save file
-                // <input type="file" aa id="files" name="files[]" multiple />
-
-                $(document).on('input', 'uploadfiles', function() {
+                // <input deletexinput type="file" nnn id="files" name="files[]" multiple />
+                $(document).on('click', '[uploadfilex]', function() {
+                    const type = $(this).attr('type')
+                    $('body').prepend(`<input deletexinput typex="${type}" type="file" nnn id="files" name="files[]" multiple />`)
+                    $('[deletexinput]').trigger('click');
+                })
+                $(document).on('input', '[deletexinput]', function() {
                     // Created a Storage Reference with root dir
+
                     var file = $(this)[0].files[0];
-                    const type = $(this).attr('type');
+                    const type = $(this).attr('typex');
+                    console.log(type)
                     if (type) {
                         console.log(file);
                         var storageRef = firebase.storage().ref('/users/' + currentUser + '/' + type + '/p1.jpg');
@@ -391,6 +414,7 @@
 
                             alert("File Uploaded")
                             storageRef.getDownloadURL().then((downloadURL) => {
+                                $('[deletexinput]').remove();
                                 console.log('File available at', downloadURL);
                                 if (type == 'avatar') {
                                     data.update({
@@ -410,6 +434,7 @@
 
 
                 })
+
                 messaging.getToken({
                     vapidKey: 'BO_pr8rrSONw5247EO9yl9dfUfz635UjfXd6fb-wiExxOwzorFJag7BbkqQLiBtqvkM3Zcln2bvppZLUCmODLFI'
                 }).then((currentToken) => {
@@ -500,6 +525,14 @@
                                 } else {
                                     div.css('box-shadow', '0px 0px 0px 3px var(--c19)')
                                 }
+                            } else if (type == 'StateColor') {
+                                if (snapshot.val().State == true) {
+                                    div.css('background-color', 'var(--c7)')
+                                } else if (snapshot.val().State == false) {
+                                    div.css('background-color', 'var(--c19)')
+                                } else {
+                                    div.css('background-color', 'var(--c19)')
+                                }
                             } else if (type == 'following-count') {
                                 data.child('following').on("value", snapshot => {
                                     div.text(snapshot.numChildren())
@@ -540,7 +573,7 @@
                                 a('div', 'fw fff', 'n412').prepend( /// Profile Meta
 
                                     a('div', 'fw fff', 'n4121x').prepend( /// Profile Meta
-                                        a('div', 'fw fff fbg', 'n4121').prepend( /// Profile PIC
+                                        a('div', 'fw fff rr fbg', 'n4121').prepend( /// Profile PIC
 
                                         ),
                                         a('div', ' fff', 'n4122').prepend( /// Profile Meta
@@ -561,6 +594,7 @@
                             userdata($('.mn41221'), 'verified', userid)
 
                             userdata($('.mn4121'), 'avatar', userid)
+
                             userdata($('.mn4121'), 'State', userid)
                             userdata($('.mn411'), 'banner', userid)
                             userdata($('[Following-Count]'), 'following-count', userid)
@@ -570,11 +604,21 @@
                                     `
 <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><rect fill="none" height="24" width="24"/><path d="M19.5,12c0-0.23-0.01-0.45-0.03-0.68l1.86-1.41c0.4-0.3,0.51-0.86,0.26-1.3l-1.87-3.23c-0.25-0.44-0.79-0.62-1.25-0.42 l-2.15,0.91c-0.37-0.26-0.76-0.49-1.17-0.68l-0.29-2.31C14.8,2.38,14.37,2,13.87,2h-3.73C9.63,2,9.2,2.38,9.14,2.88L8.85,5.19 c-0.41,0.19-0.8,0.42-1.17,0.68L5.53,4.96c-0.46-0.2-1-0.02-1.25,0.42L2.41,8.62c-0.25,0.44-0.14,0.99,0.26,1.3l1.86,1.41 C4.51,11.55,4.5,11.77,4.5,12s0.01,0.45,0.03,0.68l-1.86,1.41c-0.4,0.3-0.51,0.86-0.26,1.3l1.87,3.23c0.25,0.44,0.79,0.62,1.25,0.42 l2.15-0.91c0.37,0.26,0.76,0.49,1.17,0.68l0.29,2.31C9.2,21.62,9.63,22,10.13,22h3.73c0.5,0,0.93-0.38,0.99-0.88l0.29-2.31 c0.41-0.19,0.8-0.42,1.17-0.68l2.15,0.91c0.46,0.2,1,0.02,1.25-0.42l1.87-3.23c0.25-0.44,0.14-0.99-0.26-1.3l-1.86-1.41 C19.49,12.45,19.5,12.23,19.5,12z M12.04,15.5c-1.93,0-3.5-1.57-3.5-3.5s1.57-3.5,3.5-3.5s3.5,1.57,3.5,3.5S13.97,15.5,12.04,15.5z"/></svg>`
                                 ))
+                                $('.mn4121').prepend(
+                                    a('div', 'ff uploadfilex type="avatar"', 'idetx').html('<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><circle cx="12" cy="12" r="3"/><path d="M20 4h-3.17l-1.24-1.35c-.37-.41-.91-.65-1.47-.65H9.88c-.56 0-1.1.24-1.48.65L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8 13c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>').ready(function() {
+                                        userdata($('.midetx'), 'StateColor', userid)
+                                    })
+                                )
                             } else {
                                 $('.mn412').append(a('div', 'fw fff ruf rtype="follow" userid="' + userid + '"', 'n4122x')
                                     .html('')).ready(function() {
                                     checkfollow(userid, $('[ruf][rtype="follow"][userid="' + userid + '"]'))
                                 });
+                                $('.mn4121').prepend(
+                                    a('div', 'ff', 'idetx').html('').ready(function() {
+                                        userdata($('.midetx'), 'StateColor', userid)
+                                    })
+                                )
                             }
                             $('body > div[pagex]').hide()
                             $('[page="account"]').show()
