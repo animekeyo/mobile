@@ -1,4 +1,5 @@
 {
+    "capture_links": "existing-client-navigate",
     "theme_color": "#12161b",
     "background_color": "#12161b",
     "display": "standalone",
