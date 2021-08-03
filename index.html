@@ -598,7 +598,7 @@ userdata($('[mainava]'),'attr-userid',currentUser)
                     })
                     //
 
-
+$('[loginx]').remove()
             } else {
                 // User is signed out.
                 console.log('No')
@@ -606,8 +606,9 @@ userdata($('[mainava]'),'attr-userid',currentUser)
                     function name(params) {
                         $('.m3').css('display', 'flex')
 
-                        $('.m3').prepend(a('div', 'fw ff aa fbg', '31')
+                        $('body').prepend(a('div', 'fw ff aa fbg loginx', '31')
                             .css('background', 'var(--r5)')
+                            .css('z-index','11')
                             .css('justify-content', 'flex-end')
                             .prepend(
                                 a('formx', 'ff', '311').prepend(
