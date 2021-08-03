@@ -337,7 +337,7 @@
         .mn61111 {
             height: 40px;
             width: 40px;
-            background: white;
+            background-color: black;
             border-radius: 100px;
         }
         
@@ -437,12 +437,13 @@
                 $(document).on('click', '[view-page][page="notifications"]', function() {
 
                         data.child('notifications').once("value", function(snapshot) {
+                            $('.mn61').html('')
                             snapshot.forEach(function(childSnapshot) {
                                 const key = childSnapshot.key;
                                 const childData = childSnapshot.val();
                                 if (childData.type == 'follow') {
                                     const data = firebase.database().ref('/users/' + childData.userid);
-                                    data.on("value", function(snapshot) {
+                                    data.once("value", function(snapshot) {
                                         const aas = snapshot.val();
                                         const name = aas.displayName;
                                         const avatar = aas.avatar;
