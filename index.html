@@ -322,6 +322,12 @@
             box-shadow: 0px 0px 0px 4px var(--r5);
         }
         
+        .midetx.bannerxto {
+            top: 10px;
+            right: 10px;
+            bottom: unset;
+        }
+        
         .midetx svg {
             width: 14px;
             height: 14px;
@@ -564,7 +570,7 @@
                         if (userid) {
 
                             const datac = a('div', 'fw fff', 'n41').prepend(
-                                a('div', 'fw fff fbg', 'n411').prepend( /// Profile Banner
+                                a('div', 'fw fff rr fbg', 'n411').prepend( /// Profile Banner
 
                                 ).css({
                                     'height': ' 130px',
@@ -607,6 +613,11 @@
                                 $('.mn4121').prepend(
                                     a('div', 'ff uploadfilex type="avatar"', 'idetx').html('<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><circle cx="12" cy="12" r="3"/><path d="M20 4h-3.17l-1.24-1.35c-.37-.41-.91-.65-1.47-.65H9.88c-.56 0-1.1.24-1.48.65L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8 13c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>').ready(function() {
                                         userdata($('.midetx'), 'StateColor', userid)
+                                    })
+                                )
+                                $('.mn411').prepend(
+                                    a('div', 'ff uploadfilex type="banner"', 'idetx bannerxto').html('<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><circle cx="12" cy="12" r="3"/><path d="M20 4h-3.17l-1.24-1.35c-.37-.41-.91-.65-1.47-.65H9.88c-.56 0-1.1.24-1.48.65L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8 13c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>').ready(function() {
+                                        userdata($('.bannerxto'), 'StateColor', userid)
                                     })
                                 )
                             } else {
