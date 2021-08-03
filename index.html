@@ -23,6 +23,8 @@
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-storage.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -369,6 +371,45 @@
             if (user) {
                 const currentUser = user.uid;
                 const data = firebase.database().ref('/users/' + user.uid);
+                //function to save file
+                // <input type="file" aa id="files" name="files[]" multiple />
+
+                $(document).on('input', 'uploadfiles', function() {
+                    // Created a Storage Reference with root dir
+                    var file = $(this)[0].files[0];
+                    const type = $(this).attr('type');
+                    if (type) {
+                        console.log(file);
+                        var storageRef = firebase.storage().ref('/users/' + currentUser + '/' + type + '/p1.jpg');
+                        // Get the file from DOM
+
+
+                        //dynamically set reference to the file name
+
+                        //put request upload file to firebase storage
+                        storageRef.put(file).then(function(snapshot) {
+
+                            alert("File Uploaded")
+                            storageRef.getDownloadURL().then((downloadURL) => {
+                                console.log('File available at', downloadURL);
+                                if (type == 'avatar') {
+                                    data.update({
+                                        avatar: downloadURL
+                                    })
+                                }
+                                if (type == 'banner') {
+                                    data.update({
+                                        banner: downloadURL
+                                    })
+                                }
+
+                            });
+
+                        });
+                    }
+
+
+                })
                 messaging.getToken({
                     vapidKey: 'BO_pr8rrSONw5247EO9yl9dfUfz635UjfXd6fb-wiExxOwzorFJag7BbkqQLiBtqvkM3Zcln2bvppZLUCmODLFI'
                 }).then((currentToken) => {
@@ -668,7 +709,7 @@
 
 
                 $('body').prepend(
-                    a('div', 'fw fff aa pagex page="home"', 'n5').prepend(
+                    a('div', 'fw fff aa pagex page="home"', 'n5').css('display', 'none').prepend(
                         a('div', 'fff fw rr', 'n51').prepend(
                             a('div', 'fff fw rr', 'n511').prepend(
                                 a('div', 'ff fw rr', 'n5111').prepend(
@@ -686,9 +727,9 @@
                     .css('margin-bottom', '50px'),
                     a('div', 'fw ff aa pagex page="account"', 'n4').prepend(
 
-                    )
+                    ).css('display', 'none')
                     .css('margin-bottom', '50px'),
-                    a('div', 'fw ff aa pagex page="search"', 'n3').prepend(
+                    a('div', 'fw ff aa pagex page="search"', 'n3').css('display', 'none').prepend(
                         a('div', 'fw fff', 'n31').prepend(
                             input('searchbox', 'ff fw', 'text', 'search', 'Search Users...').html(''),
                             a('div', 'fw fff search-results', 'n32').prepend( // The div where the data of search put showed!
