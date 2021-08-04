@@ -394,16 +394,19 @@
         }
         
         .mnmxc1 {
-            display: grid;
-            grid-gap: 20px;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            margin: 20px;
+            padding-bottom: 4rem;
+            margin: 1rem;
+            margin-bottom: 7rem;
+            gap: 1.5rem;
         }
         
-        .mnmxc11 {
-            background-color: var(--c6);
+        .mnmxc11 img {
             border-radius: 10px;
-            border: 1px solid var(--r15);
+            border: 2px solid var(--r15);
+        }
+        
+        .mnmxc111 {
+            font-size: 2rem;
         }
     </style>
 </head>
@@ -744,7 +747,7 @@
 
                         if (userid) {
 
-                            const datac = a('div', 'fw fff', 'n41').prepend(
+                            const datac = a('div', 'fw', 'n41').prepend(
                                 a('div', 'fw fff rr fbg', 'n411').prepend( /// Profile Banner
 
                                 ).css({
@@ -782,7 +785,7 @@
                             userdata($('[Followers-Count]'), 'followers-count', userid)
 
                             $('.mn41').append(
-                                a('div', 'fww', 'nmxc1').prepend('')
+                                a('div', ' fff fww', 'nmxc1').prepend('')
                             )
                             $('.mnmxc1').html('')
                             firebase.database().ref('/users/' + userid).child('posts').once("value", function(snapshot) {
@@ -790,12 +793,12 @@
                                 snapshot.forEach(function(data) {
 
                                     $('.mnmxc1').prepend(
-                                        a('div', 'ff fbg', 'nmxc11').prepend(
+                                        a('div', ' fww', 'nmxc11')
+                                        .prepend(
+                                            `<img fww src="${data.val().image}">`,
+                                            a('div', ' ', 'nmxc111').text(data.val().title)
+                                        )
 
-                                        ).css('background-image', 'url(' + data.val().image + ')')
-                                        .ready(function() {
-                                            sh('.mnmxc11')
-                                        })
                                     )
                                 })
                             })
