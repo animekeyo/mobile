@@ -408,6 +408,28 @@
         .mnmxc111 {
             font-size: 2rem;
         }
+        
+        .mnmxc1121 {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 100rem;
+        }
+        
+        .mnmxc1122 {
+            font-size: 1.2rem;
+            width: fit-content;
+        }
+        
+        .mnmxc112 {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-content: center;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 10px 0rem;
+        }
     </style>
 </head>
 
@@ -788,18 +810,27 @@
                                 a('div', ' fff fww', 'nmxc1').prepend('')
                             )
                             $('.mnmxc1').html('')
-                            firebase.database().ref('/users/' + userid).child('posts').once("value", function(snapshot) {
+                            const gli = firebase.database().ref('/users/' + userid);
+                            gli.child('posts').once("value", function(snapshot) {
 
                                 snapshot.forEach(function(data) {
+                                    gli.once("value", function(snapshotx) {
+                                        $('.mnmxc1').prepend(
+                                            a('div', ' fww', 'nmxc11')
+                                            .prepend(
+                                                a('div', 'fww', 'nmxc112').prepend(
+                                                    a('div', ' fbg', 'nmxc1121').prepend(
+                                                        ''
+                                                    ).css('background-image', 'url(' + snapshotx.val().avatar + ')'),
+                                                    a('div', ' ', 'nmxc1122').text(snapshotx.val().displayName)
+                                                ),
+                                                `<img fww src="${data.val().image}">`,
+                                                a('div', ' ', 'nmxc111').text(data.val().title)
+                                            )
 
-                                    $('.mnmxc1').prepend(
-                                        a('div', ' fww', 'nmxc11')
-                                        .prepend(
-                                            `<img fww src="${data.val().image}">`,
-                                            a('div', ' ', 'nmxc111').text(data.val().title)
                                         )
+                                    })
 
-                                    )
                                 })
                             })
 
