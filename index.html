@@ -531,6 +531,29 @@
                 const currentUser = user.uid;
                 const CreateLink = new Date().getTime();
                 const data = firebase.database().ref('/users/' + user.uid);
+                $(document).on('click', '[like-post]', function() {
+                    const userid = $(this).attr('userid');
+                    const postid = $(this).attr('postid');
+                    if (postid && userid) {
+                        const datav = firebase.database().ref('/users/' + userid + '/posts')
+                            .child(postid)
+                            .child('likes')
+                            .child(currentUser);
+                        datav.once("value", function(snapshot) {
+                            if (snapshot.exists()) {
+                                datav.remove()
+                            } else {
+                                datav.update({
+                                    like: true,
+                                    userid: currentUser
+                                })
+                            }
+                        })
+
+                        swal('yes')
+
+                    }
+                })
                 $('#uploadPostFile').on('click', function name(params) {
                     $('body').prepend(`<uploadPostFile link=""></uploadPostFile><input uploadPostFile type="file" nnn id="files" name="files[]" multiple />`)
                     $('[uploadPostFile]').trigger('click');
@@ -863,7 +886,7 @@
                                                 ),
                                                 `<img fww src="${data.val().image}">`,
                                                 a('div', ' ', 'nmxc113').prepend(
-                                                    a('div', ' ', 'nmxc1131').prepend(
+                                                    a('div', 'like-post userid="' + userid + '" postid="' + data.val().postid + '" ', 'nmxc1131 ').prepend(
                                                         icon_heart
                                                     ),
                                                     a('div', ' ', 'nmxc1132').text(
