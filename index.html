@@ -391,6 +391,18 @@
             width: 50px;
             height: 50px;
         }
+        
+        .mnmxc1 {
+            display: grid;
+            grid-gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            margin: 20px;
+        }
+        
+        .mnmxc11 {
+            background-color: var(--c6);
+            border-radius: 10px;
+        }
     </style>
 </head>
 
@@ -764,6 +776,24 @@
                             userdata($('.mn411'), 'banner', userid)
                             userdata($('[Following-Count]'), 'following-count', userid)
                             userdata($('[Followers-Count]'), 'followers-count', userid)
+                            $('.mn41').append(
+                                a('div', 'fww', 'nmxc1').prepend('')
+                            )
+                            data.child('avatars').once("value", function(snapshot) {
+
+                                snapshot.forEach(function(data) {
+
+                                    $('.mnmxc1').append(
+                                        a('div', 'ff fbg', 'nmxc11').prepend(
+
+                                        ).css('background-image', 'url(' + data.val().image + ')')
+                                        .ready(function() {
+                                            sh('.mnmxc11')
+                                        })
+                                    )
+                                })
+                            })
+
                             if (currentUser == userid) {
                                 $('.mn412').append(a('div', 'fw ff', 'n4122x').html( /// Profile Follow
                                     `
