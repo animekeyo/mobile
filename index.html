@@ -737,7 +737,9 @@
                 }
                 /////////////////////////////
                 $(document).on('click', '[get-user]', function() {
+
                         const userid = $(this).attr('userid')
+
                         if (userid) {
 
                             const datac = a('div', 'fw fff', 'n41').prepend(
@@ -776,11 +778,13 @@
                             userdata($('.mn411'), 'banner', userid)
                             userdata($('[Following-Count]'), 'following-count', userid)
                             userdata($('[Followers-Count]'), 'followers-count', userid)
+
                             $('.mn41').append(
                                 a('div', 'fww', 'nmxc1').prepend('')
                             )
-                            data.child('avatars').once("value", function(snapshot) {
-                                $('.mnmxc1').html('')
+                            $('.mnmxc1').html('')
+                            firebase.database().ref('/users/' + userid).child('avatars').once("value", function(snapshot) {
+
                                 snapshot.forEach(function(data) {
 
                                     $('.mnmxc1').prepend(
