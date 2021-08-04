@@ -550,10 +550,34 @@
                             }
                         })
 
-                        swal('yes')
 
                     }
                 })
+
+                function likesData(userid, link, apply, type) {
+                    if (userid && link && apply && type) {
+                        const datav = firebase.database().ref('/users/' + userid + '/posts/' + link + '/likes');
+                        if (type == 'fill') {
+
+                            datav.child(currentUser).on('value', function(dx) {
+                                if (dx.exists()) {
+                                    apply.css('fill', 'var(--c19)')
+                                } else {
+                                    apply.css('fill', 'var(--c6)')
+                                }
+                            })
+                        }
+                        if (type == 'count') {
+                            datav.on('value', function(dx) {
+                                apply.text(dx.numChildren());
+                            })
+
+                            // snapshot.forEach(function(childSnapshot) {
+
+                            // })
+                        }
+                    }
+                }
                 $('#uploadPostFile').on('click', function name(params) {
                     $('body').prepend(`<uploadPostFile link=""></uploadPostFile><input uploadPostFile type="file" nnn id="files" name="files[]" multiple />`)
                     $('[uploadPostFile]').trigger('click');
@@ -874,6 +898,7 @@
                             gli.child('posts').once("value", function(snapshot) {
 
                                 snapshot.forEach(function(data) {
+                                    const postid = data.val().postid
                                     gli.once("value", function(snapshotx) {
                                         $('.mnmxc1').prepend(
                                             a('div', ' fww', 'nmxc11')
@@ -886,12 +911,20 @@
                                                 ),
                                                 `<img fww src="${data.val().image}">`,
                                                 a('div', ' ', 'nmxc113').prepend(
-                                                    a('div', 'like-post userid="' + userid + '" postid="' + data.val().postid + '" ', 'nmxc1131 ').prepend(
+                                                    a('div', 'like-post userid="' + userid + '" postid="' + postid + '" ', 'nmxc1131 ').prepend(
                                                         icon_heart
-                                                    ),
-                                                    a('div', ' ', 'nmxc1132').text(
-                                                        '100'
-                                                    ),
+                                                    ).ready(
+                                                        function name(params) {
+                                                            likesData(userid, postid, $('[like-post][postid="' + postid + '"] > svg'), 'fill')
+
+                                                        }),
+                                                    a('div', 'like-count postid="' + postid + '"', 'nmxc1132').text(
+                                                        '0'
+                                                    ).ready(
+                                                        function name(params) {
+                                                            likesData(userid, postid, $('[like-count][postid="' + postid + '"]'), 'count')
+
+                                                        }),
                                                 ),
                                                 a('div', ' ', 'nmxc111').text(data.val().title)
                                             )
