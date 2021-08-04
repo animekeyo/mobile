@@ -48,7 +48,7 @@
 
         function input(id, classx, type, auto, placeholder) {
 
-            aa = $(` <input  type="${type}" ${classx}  placeholder="${placeholder}" autocomplete="${auto}" id="${id}">`);
+            aa = $(` <input  type="${type}" ${classx}  placeholder="${placeholder}" autocomplete="${auto}" id="${id}" required>`);
             return aa
         };
 
@@ -60,6 +60,11 @@
         };
 
         function sh(dsfvf) {
+            setTimeout(function name(params) {
+                $(dsfvf).css({
+                    'height': $(dsfvf).width() + 'px'
+                })
+            }, 2000)
             $(dsfvf).css({
                 'height': $(dsfvf).width() + 'px'
             })
@@ -95,6 +100,7 @@
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         }
         
+        select,
         input {
             padding: 0.7rem 1rem;
             height: 2.5rem;
@@ -105,13 +111,24 @@
             font-family: 'C1';
         }
         
+        select:focus,
         input:focus {
             box-shadow: 0px 0px 0px 3px var(--c7);
         }
         
+        select::placeholder,
         input::placeholder {
             color: white;
             letter-spacing: 1px;
+        }
+        
+        select {
+            border: unset;
+            height: auto;
+        }
+        
+        select:focus-visible {
+            outline: unset;
         }
         
         formx {
@@ -175,6 +192,10 @@
             align-content: center;
             justify-content: flex-start;
             align-items: flex-start;
+        }
+        
+        [fww] {
+            width: -webkit-fill-available;
         }
         
         .mn32 {
@@ -282,35 +303,6 @@
             color: var(--v1);
         }
         
-        .mn5113,
-        .mn5111 {
-            height: 30px;
-            background: var(--r8);
-            padding: 10px 15px;
-        }
-        
-        .mn51111 {
-            display: flex;
-            gap: 10px;
-            font-size: 1rem;
-            font-family: 'C1';
-            flex-direction: row;
-            align-items: center;
-        }
-        
-        .mn5112 {
-            border-top: solid 2px var(--r15);
-            min-height: 5rem;
-            background: var(--r9);
-        }
-        
-        .mn511111 {
-            height: 30px;
-            width: 30px;
-            border-radius: 100rem;
-            background: white;
-        }
-        
         .midetx {
             width: 20px;
             height: 20px;
@@ -377,6 +369,15 @@
             font-family: sans-serif;
             color: var(--v1);
         }
+        
+        input[type="submit"] {
+            padding: 1.5rem;
+            background: var(--c7);
+        }
+        
+        form {
+            gap: 0.5rem;
+        }
     </style>
 </head>
 
@@ -397,6 +398,7 @@
             const password = $('#loginpassword').val();
             if (email) {
                 if (password) {
+
                     firebase.auth().createUserWithEmailAndPassword(email, password)
                         .then((userCredential) => {
                             // Signed in 
@@ -436,8 +438,21 @@
 
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
+
                 const currentUser = user.uid;
+                const CreateLink = new Date().getTime();
                 const data = firebase.database().ref('/users/' + user.uid);
+
+                function uploadPost(url, title, type) {
+                    if (type == 'avatar') {
+                        data.child('avatars').child(CreateLink).update({
+                            title: title,
+                            avatarid: CreateLink,
+                            image: url,
+                            userid: currentUser,
+                        })
+                    }
+                };
                 $(document).on('click', '[view-page][page="notifications"]', function() {
 
                         data.child('notifications').once("value", function(snapshot) {
@@ -846,7 +861,30 @@
 
                 //notifications
                 $('body').prepend(
-                    a('div', 'fw fff aa pagex page="notifications"', 'n6').prepend(
+                    a('div', 'fw fff aa pagex page="add"', 'n7').css('display', 'none').prepend(
+                        a('form', 'ff fww', 'n71').prepend(
+                            a('div', 'fww ff', 'n711').html('').ready(
+                                function name(params) {
+                                    sh('.mn711')
+                                }
+                            )
+                            .css('background-color', 'var(--c7)').css('border-radius', '10px'),
+                            input('uploadPostTitle', 'ff fww', 'text', 'title', 'Title')
+                            .css('height', '1.4rem').html(''),
+                            `<select fww ff id="uploadPostType" name="type">
+  <option value="volvo">Volvo XC90</option>
+  <option value="saab">Saab 95</option>
+  <option value="mercedes">Mercedes SLK</option>
+  <option value="audi">Audi TT</option>
+</select>`,
+                            input('uploadPostSubmit', 'ff fww', 'submit', '', '')
+                            .css('height', '1.4rem').html(''),
+
+                        ),
+                    ).css('margin-bottom', '50px')
+                    .css('padding', '1rem')
+                    .css('gap', '1rem'),
+                    a('div', 'fw fff aa pagex page="notifications"', 'n6').css('display', 'none').prepend(
                         a('div', ' fff', 'n62').prepend(
                             'Notifications'
                         ).css('font-size', '1.5rem'),
@@ -856,22 +894,7 @@
                     ).css('margin-bottom', '50px')
                     .css('padding', '1rem')
                     .css('gap', '1rem'),
-                    a('div', 'fw fff aa pagex page="home"', 'n5').css('display', 'none').prepend(
-                        a('div', 'fff fw rr', 'n51').prepend(
-                            a('div', 'fff fw rr', 'n511').prepend(
-                                a('div', 'ff fw rr', 'n5111').prepend(
-                                    a('div', 'fff fw rr', 'n51111').prepend(
-                                        a('div', 'fff fbg fw rr', 'n511111').prepend(''),
-                                        a('div', 'fff  rr', 'n511112').text('Syera'),
-                                    ),
 
-                                ),
-                                a('div', 'fff fw rr', 'n5112').prepend(''),
-                                a('div', 'fff fw rr', 'n5113').prepend('')
-                            )
-                        )
-                    )
-                    .css('margin-bottom', '50px'),
                     a('div', 'fw ff aa pagex page="account"', 'n4').prepend(
 
                     ).css('display', 'none')
