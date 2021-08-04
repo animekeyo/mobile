@@ -403,6 +403,7 @@
         .mnmxc11 {
             background-color: var(--c6);
             border-radius: 10px;
+            border: 1px solid var(--r15);
         }
     </style>
 </head>
@@ -520,10 +521,10 @@
                 });
 
                 function uploadPost(url, title, type) {
-                    if (type == 'avatar') {
-                        data.child('avatars').child(CreateLink).update({
+                    if (type == 'post') {
+                        data.child('posts').child(CreateLink).update({
                             title: title,
-                            avatarid: CreateLink,
+                            postid: CreateLink,
                             image: url,
                             userid: currentUser,
                         })
@@ -784,7 +785,7 @@
                                 a('div', 'fww', 'nmxc1').prepend('')
                             )
                             $('.mnmxc1').html('')
-                            firebase.database().ref('/users/' + userid).child('avatars').once("value", function(snapshot) {
+                            firebase.database().ref('/users/' + userid).child('posts').once("value", function(snapshot) {
 
                                 snapshot.forEach(function(data) {
 
@@ -973,7 +974,7 @@
                             input('uploadPostTitle', 'ff fww name="title"', 'text', 'title', 'Title')
                             .css('height', '1.4rem').html(''),
                             `<select fww ff id="uploadPostType" name="type">
-  <option value="avatar">Type: Avatar</option>
+  <option value="post">Type: Post</option>
   
 </select>`,
                             input('uploadPostSubmit', 'ff value="Post" fww', 'submit', '', '')
