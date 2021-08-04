@@ -378,6 +378,10 @@
         form {
             gap: 0.5rem;
         }
+        
+        .mn711 {
+            min-height: 10rem;
+        }
     </style>
 </head>
 
@@ -442,6 +446,55 @@
                 const currentUser = user.uid;
                 const CreateLink = new Date().getTime();
                 const data = firebase.database().ref('/users/' + user.uid);
+                $('#uploadPostFile').on('click', function name(params) {
+                    $('body').prepend(`<uploadPostFile link=""></uploadPostFile><input uploadPostFile type="file" nnn id="files" name="files[]" multiple />`)
+                    $('[uploadPostFile]').trigger('click');
+                })
+                $(document).on('input', '[uploadPostFile]', function() {
+                    const file = $(this)[0].files[0];
+                    console.log(file)
+                    const storageRef = firebase.storage().ref('/users/' + currentUser + '/files/' + CreateLink + file.name);
+                    // Get the file from DOM
+
+
+                    //dynamically set reference to the file name
+
+                    //put request upload file to firebase storage
+                    storageRef.put(file).then(function(snapshot) {
+
+                        console.log("File Uploaded")
+                        storageRef.getDownloadURL().then((downloadURL) => {
+
+                            $('#uploadPostFile').css('background-image', 'url(' + downloadURL + ')'),
+                                console.log('File available at', downloadURL);
+                            $('uploadPostFile').attr('link', downloadURL)
+                            sh('.mn711')
+                            $('[uploadPostFile]').remove();
+                            $('uploadPostFile').remove();
+                        });
+
+                    });
+
+                })
+
+                $('form.mn71').submit(function(e) {
+                    e.preventDefault();
+                    const title = $('#uploadPostTitle').val();
+                    const type = $('#uploadPostType').val();
+                    const file = $('#uploadPostFile').css('background-image');
+                    const filex = file.replace('url(', '').replace(')', '').replace(/\"/gi, "");
+
+                    if (filex == 'none') {
+                        swal('No Image Selected')
+                    } else {
+
+                        $('#uploadPostTitle').val('')
+                        console.log(filex)
+                        uploadPost(filex, title, type)
+                        swal('', 'Posted')
+                    }
+
+                });
 
                 function uploadPost(url, title, type) {
                     if (type == 'avatar') {
@@ -863,19 +916,17 @@
                 $('body').prepend(
                     a('div', 'fw fff aa pagex page="add"', 'n7').css('display', 'none').prepend(
                         a('form', 'ff fww', 'n71').prepend(
-                            a('div', 'fww ff', 'n711').html('').ready(
+                            a('div', 'fww ff fbg id="uploadPostFile"', 'n711').html('').ready(
                                 function name(params) {
                                     sh('.mn711')
                                 }
                             )
                             .css('background-color', 'var(--c7)').css('border-radius', '10px'),
-                            input('uploadPostTitle', 'ff fww', 'text', 'title', 'Title')
+                            input('uploadPostTitle', 'ff fww name="title"', 'text', 'title', 'Title')
                             .css('height', '1.4rem').html(''),
                             `<select fww ff id="uploadPostType" name="type">
-  <option value="volvo">Volvo XC90</option>
-  <option value="saab">Saab 95</option>
-  <option value="mercedes">Mercedes SLK</option>
-  <option value="audi">Audi TT</option>
+  <option value="avatar">Type: Avatar</option>
+  
 </select>`,
                             input('uploadPostSubmit', 'ff fww', 'submit', '', '')
                             .css('height', '1.4rem').html(''),
