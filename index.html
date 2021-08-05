@@ -640,20 +640,26 @@
                     }
                 };
                 $(document).on('click', '[view-page][page="notifications"]', function() {
+                        $('.mn61').html(' ')
 
                         data.child('notifications').once("value", function(snapshot) {
-                            $('.mn61').html('')
+
+
                             snapshot.forEach(function(childSnapshot) {
                                 const key = childSnapshot.key;
+                                console.log(childSnapshot.key)
+                                $('[keyx="' + key + '"]').remove()
                                 const childData = childSnapshot.val();
                                 if (childData.type == 'follow') {
+                                    $('[keyx="' + key + '"]').remove()
                                     const data = firebase.database().ref('/users/' + childData.userid);
                                     data.once("value", function(snapshot) {
                                         const aas = snapshot.val();
                                         const name = aas.displayName;
                                         const avatar = aas.avatar;
+                                        $('[keyx="' + key + '"]').remove()
                                         $('.mn61').append(
-                                            a('div', ' fff', 'n611').prepend(
+                                            a('div', ' fff keyx="' + key + '"', 'n611').prepend(
                                                 a('div', 'fw rr fff', 'n6111').prepend(
                                                     a('div', 'aa fw fff fbg', 'n61111').prepend(
                                                         ''
@@ -675,6 +681,9 @@
                         }, function(error) {
                             console.error(error);
                         });
+
+
+
                     })
                     //function to save file
                     // <input deletexinput type="file" nnn id="files" name="files[]" multiple />
@@ -1120,12 +1129,14 @@
                     .css('padding', '1rem')
                     .css('gap', '1rem'),
                     a('div', 'fw fff aa pagex page="notifications"', 'n6').css('display', 'none').prepend(
+
                         a('div', ' fff', 'n62').prepend(
                             'Notifications'
                         ).css('font-size', '1.5rem'),
                         a('div', 'fw fff', 'n61').prepend(
                             ''
                         )
+
                     ).css('margin-bottom', '50px')
                     .css('padding', '1rem')
                     .css('gap', '1rem'),
