@@ -28,6 +28,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+
     <script src="https://canary.animekeyo.com/scripts/firebase.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script>
@@ -86,6 +87,7 @@
             })
         }
     </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <style ux>
         @import url("https://canary.animekeyo.com/styles/style.css?clear1-5");
     </style>
@@ -467,6 +469,19 @@
             height: fit-content;
             width: fit-content;
         }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        
+        *::-webkit-scrollbar {
+            display: none!important;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        
+        * {
+            -ms-overflow-style: none!important;
+            /* IE and Edge */
+            scrollbar-width: none!important;
+            /* Firefox */
+        }
     </style>
 </head>
 
@@ -661,8 +676,10 @@
                                     const avatar = aas.avatar;
                                     $('[keyx="' + key + '"]').remove()
                                     if (childData.type == 'follow') {
+
                                         $('.mn61').prepend(
-                                            a('div', ' fff keyx="' + key + '"', 'n611').prepend(
+
+                                            a('div', ' fff keyx="' + key + '"', 'n611').hide().prepend(
                                                 a('div', 'fw rr fff', 'n6111').prepend(
                                                     a('div', 'aa fw fff fbg', 'n61111').prepend(
                                                         ''
@@ -675,9 +692,12 @@
                                                 a('div', 'ff get-user userid="' + childData.userid + '"', 'n6112').prepend(
                                                     'View'
                                                 )
-                                            ),
+                                            ).ready(function name(params) {
+                                                $('[keyx="' + key + '"]').fadeIn('slow')
+                                            }),
 
                                         )
+
 
                                     }
                                     if (childData.type == 'like') {
@@ -698,7 +718,9 @@
                                                     a('div', 'ff get-user userid="' + childData.userid + '"', 'n6112').prepend(
                                                         'View'
                                                     )
-                                                ),
+                                                ).ready(function name(params) {
+                                                    $('[keyx="' + key + '"]').fadeIn('slow')
+                                                }),
 
                                             )
 
@@ -941,7 +963,8 @@
                                     const postid = data.val().postid
                                     gli.once("value", function(snapshotx) {
                                         $('.mnmxc1').prepend(
-                                            a('div', ' fww', 'nmxc11')
+                                            a('div', '  fww', 'nmxc11')
+                                            .hide()
                                             .prepend(
                                                 a('div', 'fww', 'nmxc112').prepend(
                                                     a('div', ' fbg', 'nmxc1121').prepend(
@@ -967,7 +990,9 @@
                                                         }),
                                                 ),
                                                 a('div', ' ', 'nmxc111').text(data.val().title)
-                                            )
+                                            ).ready(function name(params) {
+                                                $('.mnmxc11').fadeIn('slow');
+                                            })
 
                                         )
                                     })
