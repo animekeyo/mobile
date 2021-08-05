@@ -341,9 +341,11 @@
         }
         
         .mn6112 {
-            padding: 6px 10px 8px 13px;
+            padding: 6px 10px;
             background: var(--v1);
             border-radius: 5px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
         }
         
         .mn611 {
@@ -665,7 +667,7 @@
                                                         ''
                                                     ).css('background-image', 'url(' + avatar + ')'),
                                                     a('div', 'c', 'n61112').prepend(
-                                                        a('c', 'c', 'n611121').prepend(name),
+                                                        a('c', 'c get-user userid="' + childData.userid + '"', 'n611121').prepend(name),
                                                         ' started following you.'
                                                     )
                                                 ),
