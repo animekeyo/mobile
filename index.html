@@ -652,14 +652,15 @@
                                 console.log(childSnapshot.key)
                                 $('[keyx="' + key + '"]').remove()
                                 const childData = childSnapshot.val();
-                                if (childData.type == 'follow') {
+
+                                $('[keyx="' + key + '"]').remove()
+                                const data = firebase.database().ref('/users/' + childData.userid);
+                                data.once("value", function(snapshot) {
+                                    const aas = snapshot.val();
+                                    const name = aas.displayName;
+                                    const avatar = aas.avatar;
                                     $('[keyx="' + key + '"]').remove()
-                                    const data = firebase.database().ref('/users/' + childData.userid);
-                                    data.once("value", function(snapshot) {
-                                        const aas = snapshot.val();
-                                        const name = aas.displayName;
-                                        const avatar = aas.avatar;
-                                        $('[keyx="' + key + '"]').remove()
+                                    if (childData.type == 'follow') {
                                         $('.mn61').append(
                                             a('div', ' fff keyx="' + key + '"', 'n611').prepend(
                                                 a('div', 'fw rr fff', 'n6111').prepend(
@@ -677,8 +678,31 @@
                                             ),
 
                                         )
-                                    })
-                                }
+
+                                    }
+                                    if (childData.type == 'like') {
+                                        $('.mn61').append(
+                                            a('div', ' fff keyx="' + key + '"', 'n611').prepend(
+                                                a('div', 'fw rr fff', 'n6111').prepend(
+                                                    a('div', 'aa fw fff fbg', 'n61111').prepend(
+                                                        ''
+                                                    ).css('background-image', 'url(' + avatar + ')'),
+                                                    a('div', 'c', 'n61112').prepend(
+                                                        a('c', 'c get-user userid="' + childData.userid + '"', 'n611121').prepend(name),
+                                                        ' liked your post.'
+                                                    )
+                                                ),
+                                                a('div', 'ff get-user userid="' + childData.userid + '"', 'n6112').prepend(
+                                                    'Open'
+                                                )
+                                            ),
+
+                                        )
+
+                                    }
+                                })
+
+
                             });
                         }, function(error) {
                             console.error(error);
