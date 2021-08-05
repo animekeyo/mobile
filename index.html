@@ -681,23 +681,28 @@
 
                                     }
                                     if (childData.type == 'like') {
-                                        $('.mn61').prepend(
-                                            a('div', ' fff keyx="' + key + '"', 'n611').prepend(
-                                                a('div', 'fw rr fff', 'n6111').prepend(
-                                                    a('div', 'aa fw fff fbg', 'n61111').prepend(
-                                                        ''
-                                                    ).css('background-image', 'url(' + avatar + ')'),
-                                                    a('div', 'c', 'n61112').prepend(
-                                                        a('c', 'c get-user userid="' + childData.userid + '"', 'n611121').prepend(name),
-                                                        ' liked your post.'
+                                        if (childData.userid == currentUser) {
+
+                                        } else {
+                                            $('.mn61').prepend(
+                                                a('div', ' fff keyx="' + key + '"', 'n611').prepend(
+                                                    a('div', 'fw rr fff', 'n6111').prepend(
+                                                        a('div', 'aa fw fff fbg', 'n61111').prepend(
+                                                            ''
+                                                        ).css('background-image', 'url(' + avatar + ')'),
+                                                        a('div', 'c', 'n61112').prepend(
+                                                            a('c', 'c get-user userid="' + childData.userid + '"', 'n611121').prepend(name),
+                                                            ' liked your post.'
+                                                        )
+                                                    ),
+                                                    a('div', 'ff get-user userid="' + childData.userid + '"', 'n6112').prepend(
+                                                        'Open'
                                                     )
                                                 ),
-                                                a('div', 'ff get-user userid="' + childData.userid + '"', 'n6112').prepend(
-                                                    'Open'
-                                                )
-                                            ),
 
-                                        )
+                                            )
+
+                                        }
 
                                     }
                                 })
