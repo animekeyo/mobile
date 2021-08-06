@@ -658,9 +658,22 @@
                     }
                 };
 
+                function notinfo(userid, notid, type, apply) {
+                    firebase.database().ref('/users/' + userid + '/notifications/' + notid)
+                        .on("value", function(snapshot) {
+                            if (type == 'title') {
+                                apply.text(snapshot.val().title);
+                            } else if (type == 'userid') {
+                                apply.attr('userid', snapshot.val().userid);
+                            } else {
+                                console.log('ERROR notinfo')
+                            }
+                        })
+                }
+
                 function postinfo(userid, postid, type, apply) {
                     firebase.database().ref('/users/' + userid + '/posts/' + postid)
-                        .once("value", function(snapshot) {
+                        .on("value", function(snapshot) {
                             if (type == 'title') {
                                 apply.text(snapshot.val().title);
                             } else if (type == 'image') {
@@ -717,64 +730,34 @@
 
                                 $('[keyx="' + key + '"]').remove()
                                 const childData = childSnapshot.val();
+                                const type = childSnapshot.val().type;
+                                var fhsdkdfoewopidfdfgjkldf;
+                                if (type == 'follow') {
+                                    fhsdkdfoewopidfdfgjkldf = 'is following you now.';
+                                } else if (type == 'like') {
+                                    fhsdkdfoewopidfdfgjkldf = 'liked your post.';
+                                } else {
+                                    fhsdkdfoewopidfdfgjkldf = 'just posted something new!';
+                                }
+                                const datacv =
+                                    `<div fff="" keyx="${key}" class="mn611">
+    <div fw="" rr="" fff="" class="mn6111">
+        <div user-avatarxd userid="${childData.userid}" aa fw fff fbg class="mn61111">
 
-                                $('[keyx="' + key + '"]').remove()
-                                const data = firebase.database().ref('/users/' + childData.userid);
-                                data.once("value", function(snapshot) {
-                                    const aas = snapshot.val();
-                                    const name = aas.displayName;
-                                    const avatar = aas.avatar;
-                                    $('[keyx="' + key + '"]').remove()
-                                    if (childData.type == 'follow') {
+        </div>
+        <div c class="mn61112">
+            <c c get-user display-namexd userid="${childData.userid}" class="mn611121">
+            </c> 
 
-                                        $('.mn61').prepend(
-
-                                            a('div', ' fff keyx="' + key + '"', 'n611').prepend(
-                                                a('div', 'fw rr fff', 'n6111').prepend(
-                                                    a('div', 'aa fw fff fbg', 'n61111').prepend(
-                                                        ''
-                                                    ).css('background-image', 'url(' + avatar + ')'),
-                                                    a('div', 'c', 'n61112').prepend(
-                                                        a('c', 'c get-user userid="' + childData.userid + '"', 'n611121').prepend(name),
-                                                        ' started following you.'
-                                                    )
-                                                ),
-                                                a('div', 'ff get-user userid="' + childData.userid + '"', 'n6112').prepend(
-                                                    'View'
-                                                )
-                                            )
-
-                                        )
-
-
-                                    }
-                                    if (childData.type == 'like') {
-                                        if (childData.userid == currentUser) {
-
-                                        } else {
-                                            $('.mn61').prepend(
-                                                a('div', ' fff keyx="' + key + '"', 'n611').prepend(
-                                                    a('div', 'fw rr fff', 'n6111').prepend(
-                                                        a('div', 'aa fw fff fbg', 'n61111').prepend(
-                                                            ''
-                                                        ).css('background-image', 'url(' + avatar + ')'),
-                                                        a('div', 'c', 'n61112').prepend(
-                                                            a('c', 'c get-user userid="' + childData.userid + '"', 'n611121').prepend(name),
-                                                            ' liked your post.'
-                                                        )
-                                                    ),
-                                                    a('div', 'ff get-user userid="' + childData.userid + '"', 'n6112').prepend(
-                                                        'View'
-                                                    )
-                                                )
-
-                                            )
-
-                                        }
-
-                                    }
-                                })
-
+        ${fhsdkdfoewopidfdfgjkldf}</div>
+    </div>
+    <div ff get-user userid="${childData.userid}" class="mn6112">View</div>
+</div>`;
+                                $('.mn61').prepend(datacv)
+                                userdata($('[user-avatarxd][userid="' + childData.userid + '"]'), 'avatar', childData.userid)
+                                userdata($('[display-namexd][userid="' + childData.userid + '"]'), 'displayName', childData.userid)
+                                    //  const data = firebase.database().ref('/users/' + childData.userid);
+                                    // data.once("value", function(snapshot) { const aas = snapshot.val(); const name = aas.displayName; const avatar = aas.avatar; $('[keyx="' + key + '"]').remove() if (childData.type == 'follow') { $('.mn61').prepend( a('div', ' fff keyx="' + key + '"', 'n611').prepend( a('div', 'fw rr fff', 'n6111').prepend( a('div', 'aa fw fff fbg', 'n61111').prepend( '' ).css('background-image', 'url(' + avatar + ')'), a('div', 'c', 'n61112').prepend( a('c', 'c get-user userid="' + childData.userid + '"', 'n611121').prepend(name), ' started following you.' ) ), a('div', 'ff get-user userid="' + childData.userid + '"', 'n6112').prepend( 'View' ) ) ) } if (childData.type == 'like') { if (childData.userid == currentUser) { } else { $('.mn61').prepend( a('div', ' fff keyx="' + key + '"', 'n611').prepend( a('div', 'fw rr fff', 'n6111').prepend( a('div', 'aa fw fff fbg', 'n61111').prepend( '' ).css('background-image', 'url(' + avatar + ')'), a('div', 'c', 'n61112').prepend( a('c', 'c get-user userid="' + childData.userid + '"', 'n611121').prepend(name), ' liked your post.' ) ), a('div', 'ff get-user userid="' + childData.userid + '"', 'n6112').prepend( 'View' ) ) ) } } })
 
                             });
                         }, function(error) {
