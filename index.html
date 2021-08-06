@@ -692,12 +692,13 @@
         <div like-post userid="${userid}" postid="${postid}" class="mnmxc1131 ">${icon_heart}</div>
         <div like-count postid="${postid}" class="mnmxc1132">0</div>
     </div>
-    <div class="mnmxc111">Hello</div>
+    <div post-titlex userid="${userid}" postid="${postid}" class="mnmxc111"></div>
 </div>`;
                             $('.mn81').prepend(datax);
                             userdata($('[user-avatarx][userid="' + userid + '"]'), 'avatar', userid)
                             userdata($('[display-name][userid="' + userid + '"]'), 'displayName', userid)
-                            postinfo(userid, postid, 'image', $('[userid="' + userid + '"][postid="' + postid + '"]'))
+                            postinfo(userid, postid, 'image', $('img[userid="' + userid + '"][postid="' + postid + '"]'))
+                            postinfo(userid, postid, 'title', $('[post-titlex][userid="' + userid + '"][postid="' + postid + '"]'))
                             likesData(userid, postid, $('[like-post][postid="' + postid + '"] > svg'), 'fill')
                             likesData(userid, postid, $('[like-count][postid="' + postid + '"]'), 'count')
 
