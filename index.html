@@ -653,15 +653,54 @@
                         })
                     }
                 };
+
+                function postinfo(userid, postid, type, apply) {
+                    firebase.database().ref('/users/' + userid + '/posts/' + postid)
+                        .once("value", function(snapshot) {
+                            if (type == 'title') {
+                                apply.text(snapshot.val().title);
+                            } else if (type == 'image') {
+                                apply.attr('src', snapshot.val().image);
+                            } else {
+                                console.log('ERROR POSTINFO')
+                            }
+                        })
+                }
+                $(document).on('click', '[view-page][page="home"]', function() {
+                    $('.mn8').append(
+                            a('div', ' fff fww', 'n81').prepend('')
+                        )
+                        // $('.mnmxc1').html('')
+                    const gli = firebase.database().ref('/everyone/');
+                    gli.once("value", function(snapshot) {
+                        snapshot.forEach(function(data) {
+                            const postid = data.val().postid
+                            const userid = data.val().userid
+                            console.log(postid + "  " + userid)
+                            postinfo(userid, postid)
+                            gli.once("value", function(snapshotx) {
+                                $('.mnmxc1').prepend(a('div', '  fww', 'nmxc11').hide().prepend(a('div', 'fww', 'nmxc112').prepend(a('div', ' fbg', 'nmxc1121').prepend('').css('background-image', 'url(' + snapshotx.val().avatar + ')'), a('div', ' ', 'nmxc1122').text(snapshotx.val().displayName)), `<img fww src="${data.val().image}">`, a('div', ' ', 'nmxc113').prepend(a('div', 'like-post userid="' + userid + '" postid="' + postid + '" ', 'nmxc1131 ').prepend(icon_heart).ready(function name(params) {
+                                    likesData(userid, postid, $('[like-post][postid="' + postid + '"] > svg'), 'fill')
+                                }), a('div', 'like-count postid="' + postid + '"', 'nmxc1132').text('0').ready(function name(params) {
+                                    likesData(userid, postid, $('[like-count][postid="' + postid + '"]'), 'count')
+                                }), ), a('div', ' ', 'nmxc111').text(data.val().title)).ready(function name(params) {
+                                    $('.mnmxc11').fadeIn('slow');
+                                }))
+                            })
+
+                        })
+                    })
+
+                })
                 $(document).on('click', '[view-page][page="notifications"]', function() {
                         $('.mn61').html(' ')
 
                         data.child('notifications').once("value", function(snapshot) {
 
-                            console.log(snapshot.numChildren() + 1)
+
                             snapshot.forEach(function(childSnapshot) {
                                 const key = childSnapshot.key;
-                                console.log(childSnapshot.key)
+
                                 $('[keyx="' + key + '"]').remove()
                                 const childData = childSnapshot.val();
 
@@ -743,9 +782,9 @@
 
                     const file = $(this)[0].files[0];
                     const type = $(this).attr('typex');
-                    console.log(type)
+
                     if (type) {
-                        console.log(file);
+
                         const storageRef = firebase.storage().ref('/users/' + currentUser + '/' + type + '/p1.jpg');
                         // Get the file from DOM
 
@@ -787,7 +826,7 @@
                         data.update({
                             pushToken: currentToken,
                         })
-                        console.log(currentToken)
+
                     } else {
                         // Show permission request UI
                         console.log('No registration token available. Request permission to generate one.');
@@ -840,14 +879,7 @@
                         }
                     })
                 }
-                const datxa = firebase.database().ref('/users/' + currentUser);
-                datxa.once("value", snapshot => {
-                    console.log(snapshot.val().followers[k])
-                    for (var k in snapshot.val().followers) {
-                        console.log(k);
-                        console.log('hello');
-                    }
-                })
+
 
                 function userdata(div, type, useridxz) {
                     if (useridxz && type && div) {
@@ -1164,6 +1196,10 @@
 
                 ///notifications
                 $('body').prepend(
+                    a('div', 'fw fff aa pagex page="home"', 'n8').prepend(
+
+                    ).css('display', 'none')
+                    .css('margin-bottom', '50px'),
                     a('div', 'fw fff aa pagex page="add"', 'n7').css('display', 'none').prepend(
                         a('form', 'ff fww', 'n71').prepend(
                             a('div', 'fww ff fbg id="uploadPostFile"', 'n711').html(
