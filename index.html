@@ -99,6 +99,10 @@
             border-bottom: 4rem solid var(--r7);
         }
         
+        .mn81 {
+            padding: 1rem;
+        }
+        
         select,
         input {
             padding: 0.7rem 1rem;
@@ -667,26 +671,35 @@
                         })
                 }
                 $(document).on('click', '[view-page][page="home"]', function() {
+                    $('.mn81').remove()
                     $('.mn8').append(
-                            a('div', ' fff fww', 'n81').prepend('')
-                        )
-                        // $('.mnmxc1').html('')
+                        a('div', ' fff fww', 'n81').prepend('')
+                    )
+                    $('.mn81').html('')
                     const gli = firebase.database().ref('/everyone/');
                     gli.once("value", function(snapshot) {
                         snapshot.forEach(function(data) {
                             const postid = data.val().postid
                             const userid = data.val().userid
                             console.log(postid + "  " + userid)
-                            postinfo(userid, postid)
-                            gli.once("value", function(snapshotx) {
-                                $('.mnmxc1').prepend(a('div', '  fww', 'nmxc11').hide().prepend(a('div', 'fww', 'nmxc112').prepend(a('div', ' fbg', 'nmxc1121').prepend('').css('background-image', 'url(' + snapshotx.val().avatar + ')'), a('div', ' ', 'nmxc1122').text(snapshotx.val().displayName)), `<img fww src="${data.val().image}">`, a('div', ' ', 'nmxc113').prepend(a('div', 'like-post userid="' + userid + '" postid="' + postid + '" ', 'nmxc1131 ').prepend(icon_heart).ready(function name(params) {
-                                    likesData(userid, postid, $('[like-post][postid="' + postid + '"] > svg'), 'fill')
-                                }), a('div', 'like-count postid="' + postid + '"', 'nmxc1132').text('0').ready(function name(params) {
-                                    likesData(userid, postid, $('[like-count][postid="' + postid + '"]'), 'count')
-                                }), ), a('div', ' ', 'nmxc111').text(data.val().title)).ready(function name(params) {
-                                    $('.mnmxc11').fadeIn('slow');
-                                }))
-                            })
+                            $('[postx="' + postid + '"]').remove()
+                            const datax = `<div fww="" postx="${postid}" class="mnmxc11" style="">
+    <div get-user userid="${userid}" fww="" class="mnmxc112">
+        <div user-avatarx userid="${userid}" fbg="" class="mnmxc1121" style="background-image: url()"></div>
+        <div display-name userid="${userid}" class="mnmxc1122"></div>
+    </div><img userid="${userid}" postid="${postid}" fww="" src="">
+    <div class="mnmxc113">
+        <div like-post userid="${userid}" postid="${postid}" class="mnmxc1131 ">${icon_heart}</div>
+        <div like-count postid="${postid}" class="mnmxc1132">0</div>
+    </div>
+    <div class="mnmxc111">Hello</div>
+</div>`;
+                            $('.mn81').prepend(datax);
+                            userdata($('[user-avatarx][userid="' + userid + '"]'), 'avatar', userid)
+                            userdata($('[display-name][userid="' + userid + '"]'), 'displayName', userid)
+                            postinfo(userid, postid, 'image', $('[userid="' + userid + '"][postid="' + postid + '"]'))
+                            likesData(userid, postid, $('[like-post][postid="' + postid + '"] > svg'), 'fill')
+                            likesData(userid, postid, $('[like-count][postid="' + postid + '"]'), 'count')
 
                         })
                     })
