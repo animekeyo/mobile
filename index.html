@@ -27,16 +27,8 @@
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-storage.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-
     <script src="https://canary.animekeyo.com/scripts/firebase.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <script>
-        const SUPABASE_URL = 'https://srdaietqaprjhpuwovbv.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYyNDgwOTQxMiwiZXhwIjoxOTQwMzg1NDEyfQ.yBwqUvBsIY3pbITcKgZ99jlEnVfDOhJDOQ6-hHKdaqY';
 
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
-    </script>
     <script>
         function a(inn, id, clas) {
             if (inn, id) {
@@ -100,6 +92,11 @@
             display: grid;
             grid-gap: 10px;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        }
+        
+        .mn6 {
+            height: fit-content;
+            border-bottom: 4rem solid var(--r7);
         }
         
         select,
@@ -661,7 +658,7 @@
 
                         data.child('notifications').once("value", function(snapshot) {
 
-
+                            console.log(snapshot.numChildren() + 1)
                             snapshot.forEach(function(childSnapshot) {
                                 const key = childSnapshot.key;
                                 console.log(childSnapshot.key)
@@ -843,11 +840,22 @@
                         }
                     })
                 }
+                const datxa = firebase.database().ref('/users/' + currentUser);
+                datxa.once("value", snapshot => {
+                    console.log(snapshot.val().followers[k])
+                    for (var k in snapshot.val().followers) {
+                        console.log(k);
+                        console.log('hello');
+                    }
+                })
 
                 function userdata(div, type, useridxz) {
                     if (useridxz && type && div) {
                         const data = firebase.database().ref('/users/' + useridxz);
                         data.on("value", snapshot => {
+
+
+
                             if (type == 'displayName') {
                                 div.text(snapshot.val().displayName)
                             } else if (type == 'avatar') {
