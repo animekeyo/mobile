@@ -1080,20 +1080,24 @@
 
                 $(document).on('input', '#searchbox', function() {
                     const val = $(this).val();
-
-                    firebase.database().ref('/users').orderByChild('displayName').startAt(val).once("value", function(snapshot) {
+                    if (val == '') {
                         $('[search-results]').html('')
-                        snapshot.forEach(function(data) {
-                            console.log();
+                    } else {
+                        firebase.database().ref('/users').orderByChild('displayName').startAt(val).endAt(val + "\uf8ff").once("value", function(snapshot) {
+                            $('[search-results]').html('')
+                            snapshot.forEach(function(data) {
+                                console.log();
 
-                            $('[search-results]').append(
-                                a('div', 'fw fff get-user userid="' + data.val().userid + '"', 'n321').prepend( // Main div for name and avatar
-                                    a('div', 'fw fff fbg', 'n3211').css('background-image', 'url(' + data.val().avatar + ')').html(''), // Avatar
-                                    a('div', 'fw fff', 'n3212').text(data.val().displayName) // Display Name
-                                )
-                            );
+                                $('[search-results]').append(
+                                    a('div', 'fw fff get-user userid="' + data.val().userid + '"', 'n321').prepend( // Main div for name and avatar
+                                        a('div', 'fw fff fbg', 'n3211').css('background-image', 'url(' + data.val().avatar + ')').html(''), // Avatar
+                                        a('div', 'fw fff', 'n3212').text(data.val().displayName) // Display Name
+                                    )
+                                );
+                            });
                         });
-                    });
+
+                    }
 
 
                 })
