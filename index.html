@@ -990,6 +990,23 @@
                     }
                 }
                 /////////////////////////////
+                $(document).on('click', '[add-aboutme]', function() {
+                    async function myFunction() {
+                        const {
+                            value: text
+                        } = await Swal.fire({
+                            title: 'Input',
+                            input: 'text',
+                            inputLabel: 'About You',
+                            inputPlaceholder: 'Enter Something About You '
+                        })
+
+                        if (text) {
+                            aboutme(text)
+                        }
+                    }
+                    myFunction()
+                })
                 $(document).on('click', '[get-user]', function() {
 
                         const userid = $(this).attr('userid')
@@ -1126,7 +1143,7 @@
 
                             if (currentUser == userid) {
                                 $('.mn9').append(
-                                    `<div ff class="mn93">
+                                    `<div ff add-aboutme class="mn93">
  <wordxc>Edit</wordxc>
  ${icon_edit}
 </div>
