@@ -701,21 +701,32 @@
                             }
                         })
                 }
+
+
+
+
                 $(document).on('click', '[view-page][page="home"]', function() {
 
                     $('.mn81').remove()
                     $('.mn8').append(
-                        a('div', ' fff fww', 'n81').prepend('')
+                        a('div', ' fff fww', 'n81').prepend(''),
+
                     )
                     $('.mn81').html('')
                     const gli = firebase.database().ref('/everyone/');
                     gli.once("value", function(snapshot) {
-                        snapshot.forEach(function(data) {
-                            const postid = data.val().postid
-                            const userid = data.val().userid
-                            console.log(postid + "  " + userid)
-                            $('[postx="' + postid + '"]').remove()
-                            const datax = `<div data-aos="fade-up" fww="" postx="${postid}" class="mnmxc11" style="">
+                        console.log(snapshot.numChildren())
+                        const ccs = snapshot.numChildren();
+                        const count = 50;
+                        gli.orderByKey().limitToLast(count).once("value", function(snapshot) {
+
+                            snapshot.forEach(function(data) {
+
+                                const postid = data.val().postid
+                                const userid = data.val().userid
+                                console.log(postid + "  " + userid)
+                                $('[postx="' + postid + '"]').remove()
+                                const datax = `<div data-aos="fade-up" fww="" postx="${postid}" class="mnmxc11" style="">
     <div get-user userid="${userid}" fww="" class="mnmxc112">
         <div user-avatarx userid="${userid}" fbg="" class="mnmxc1121" style="background-image: url()"></div>
         <div display-name userid="${userid}" class="mnmxc1122"></div>
@@ -726,13 +737,15 @@
     </div>
     <div post-titlex userid="${userid}" postid="${postid}" class="mnmxc111"></div>
 </div>`;
-                            $('.mn81').prepend(datax);
-                            userdata($('[user-avatarx][userid="' + userid + '"]'), 'avatar', userid)
-                            userdata($('[display-name][userid="' + userid + '"]'), 'displayName', userid)
-                            postinfo(userid, postid, 'image', $('img[userid="' + userid + '"][postid="' + postid + '"]'))
-                            postinfo(userid, postid, 'title', $('[post-titlex][userid="' + userid + '"][postid="' + postid + '"]'))
-                            likesData(userid, postid, $('[like-post][postid="' + postid + '"] > svg'), 'fill')
-                            likesData(userid, postid, $('[like-count][postid="' + postid + '"]'), 'count')
+                                $('.mn81').prepend(datax);
+                                userdata($('[user-avatarx][userid="' + userid + '"]'), 'avatar', userid)
+                                userdata($('[display-name][userid="' + userid + '"]'), 'displayName', userid)
+                                postinfo(userid, postid, 'image', $('img[userid="' + userid + '"][postid="' + postid + '"]'))
+                                postinfo(userid, postid, 'title', $('[post-titlex][userid="' + userid + '"][postid="' + postid + '"]'))
+                                likesData(userid, postid, $('[like-post][postid="' + postid + '"] > svg'), 'fill')
+                                likesData(userid, postid, $('[like-count][postid="' + postid + '"]'), 'count')
+
+                            })
 
                         })
                     })
@@ -759,7 +772,7 @@
                                     fhsdkdfoewopidfdfgjkldf = 'just posted something new!';
                                 }
                                 const datacv =
-                                    `<div fff="" data-aos="fade-up" keyx="${key}" class="mn611">
+                                    `<div fff="" keyx="${key}" class="mn611">
     <div fw="" rr="" fff="" class="mn6111">
         <div user-avatarxd userid="${childData.userid}" aa fw fff fbg class="mn61111">
 
@@ -1135,7 +1148,11 @@
                                 page: page,
                             });
                             $('body > div[pagex]').hide()
+                            $('div[view-page] > svg').css('fill', 'var(--c6)')
+                            $('div[view-page]').css('border-color', 'var(--c6)')
                             $('[page="' + page + '"]').show()
+                            $('[page="' + page + '"] > svg').css('fill', 'var(--v1)')
+                            $('[page="' + page + '"]').css('border-color', 'var(--c7)')
                         }
                     })
                 })
