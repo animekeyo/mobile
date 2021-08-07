@@ -1135,27 +1135,24 @@
 
                 })
 
-                data.once("value", snapshot => {
-                    if (snapshot.val().page) {
-                        $(document).ready(function() {
-                            $('[view-page][page="' + snapshot.val().page + '"]').trigger("click");
+
+                $(document).ready(function() {
+                    $('[view-page][page="home"]').trigger("click");
+                });
+                $(document).on('click', '[view-page]', function() {
+                    const page = $(this).attr('page');
+                    navigator.vibrate(70);
+                    if (page) {
+                        data.update({
+                            page: page,
                         });
+                        $('body > div[pagex]').hide()
+                        $('div[view-page] > svg').css('fill', 'var(--c6)')
+                        $('div[view-page]').css('border-color', 'var(--c6)')
+                        $('[page="' + page + '"]').show()
+                        $('[page="' + page + '"] > svg').css('fill', 'var(--v1)')
+                        $('[page="' + page + '"]').css('border-color', 'var(--c7)')
                     }
-                    $(document).on('click', '[view-page]', function() {
-                        const page = $(this).attr('page');
-                        navigator.vibrate(70);
-                        if (page) {
-                            data.update({
-                                page: page,
-                            });
-                            $('body > div[pagex]').hide()
-                            $('div[view-page] > svg').css('fill', 'var(--c6)')
-                            $('div[view-page]').css('border-color', 'var(--c6)')
-                            $('[page="' + page + '"]').show()
-                            $('[page="' + page + '"] > svg').css('fill', 'var(--v1)')
-                            $('[page="' + page + '"]').css('border-color', 'var(--c7)')
-                        }
-                    })
                 })
                 data.on("value", snapshot => {
 
