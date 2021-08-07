@@ -689,7 +689,7 @@
                         })
                 }
                 $(document).on('click', '[view-page][page="home"]', function() {
-                    navigator.vibrate(200);
+
                     $('.mn81').remove()
                     $('.mn8').append(
                         a('div', ' fff fww', 'n81').prepend('')
@@ -1114,7 +1114,7 @@
                     }
                     $(document).on('click', '[view-page]', function() {
                         const page = $(this).attr('page');
-
+                        navigator.vibrate(50);
                         if (page) {
                             data.update({
                                 page: page,
