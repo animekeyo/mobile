@@ -840,7 +840,9 @@
                     // ...
                 });
                 messaging.onMessage((payload) => {
+                    navigator.vibrate(200);
                     console.log('Message received. ', payload);
+
                     // ...
                 });
                 $(document).on('click', '[ruf]', function() {
