@@ -840,7 +840,7 @@
                     // ...
                 });
                 messaging.onMessage((payload) => {
-                    navigator.vibrate(200);
+                    navigator.vibrate(300);
                     console.log('Message received. ', payload);
 
                     // ...
@@ -1116,7 +1116,7 @@
                     }
                     $(document).on('click', '[view-page]', function() {
                         const page = $(this).attr('page');
-                        navigator.vibrate(100);
+                        navigator.vibrate(70);
                         if (page) {
                             data.update({
                                 page: page,
