@@ -97,6 +97,41 @@
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         }
         
+        .mn9 {
+            padding: 1rem 1.3rem;
+            gap: 0.5rem;
+            background: var(--r10);
+            /* margin: 0 01rem; */
+            /* border-radius: 10px; */
+        }
+        
+        .mn92 {
+            font-size: 1rem;
+            color: hsl(0deg 0% 90%);
+        }
+        
+        .mn91 {
+            text-transform: uppercase;
+            font-size: 1.1rem;
+        }
+        
+        .mn93 {
+            display: flex;
+            flex-direction: row;
+            padding: 4px 8px;
+            background: var(--v1);
+            font-size: 15px;
+            text-transform: uppercase;
+            gap: 5px;
+            border-radius: 4px;
+        }
+        
+        .mn93 svg {
+            fill: var(--c6);
+            width: 15px;
+            height: 15px;
+        }
+        
         .mn6 {
             height: fit-content;
             border-bottom: 4rem solid var(--r7);
@@ -1044,42 +1079,7 @@
     </div>
     <div fff fww class="mn92">
  
-        </div>
-
-<style>
-    .mn9 {
-        padding: 1rem 1.3rem;
-        gap: 0.5rem;
-        background: var(--r10);
-        /* margin: 0 01rem; */
-        /* border-radius: 10px; */
-    }
-    
-    .mn92 {
-        font-size: 1rem;
-        color: hsl(0deg 0% 90%);
-    }
-    
-    .mn91 {
-        text-transform: uppercase;
-        font-size: 1.1rem;
-    }
-    .mn93 {
-    display: flex;
-    flex-direction: row;
-    padding: 4px 8px;
-    background: var(--v1);
-    font-size: 15px;
-    text-transform: uppercase;
-    gap: 5px;
-    border-radius: 4px;
-}
-.mn93 svg {
-    fill: var(--c6);
-    width: 15px;
-    height: 15px;
-}
-</style>`
+        </div>`
                             );
                             $('.mn4').html(datac)
                             userdata($('.mn41221'), 'displayName', userid)
@@ -1231,7 +1231,7 @@
                         $('div[view-page]').css('border-color', 'var(--c6)')
                         $('[page="' + page + '"]').show()
                         $('[page="' + page + '"] > svg').css('fill', 'var(--v1)')
-                        $('[page="' + page + '"]').css('border-color', 'var(--c7)')
+                        $('[page="' + page + '"]').css('border-color', 'var(--v1)')
                     }
                 })
                 data.on("value", snapshot => {
