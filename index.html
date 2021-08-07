@@ -565,9 +565,7 @@
         .swal2-styled.swal2-confirm {
             color: white;
             background: var(--v1);
-            padding: 1rem;
             text-transform: uppercase;
-            font-size: 1.3rem;
         }
         
         .swal2-content {
@@ -607,8 +605,6 @@
             background: var(--r15);
             border-radius: 5px;
             color: white;
-            font-family: 'c1';
-            letter-spacing: 1px;
         }
     </style>
 </head>
@@ -1180,7 +1176,7 @@
                         const {
                             value: text
                         } = await Swal.fire({
-                            title: 'Intro',
+                            add
                             input: 'textarea',
                             inputPlaceholder: 'Enter Something About You'
                         })
