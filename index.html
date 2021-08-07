@@ -840,7 +840,7 @@
                     // ...
                 });
                 messaging.onMessage((payload) => {
-                    navigator.vibrate(300);
+                    navigator.vibrate([70, 30, 70, ]);
                     console.log('Message received. ', payload);
 
                     // ...
