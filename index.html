@@ -975,6 +975,69 @@
                     })
                 }
 
+                function userdatao(div, type, useridxz) {
+                    if (useridxz && type && div) {
+                        const data = firebase.database().ref('/users/' + useridxz);
+                        data.once("value", snapshot => {
+                            if (type == 'verified') {
+                                data.child('badges').once("value", snapshot => {
+                                    if (snapshot.exists()) {
+                                        if (snapshot.val().verified) {
+                                            div.append(
+                                                icon_verified
+                                            )
+                                        } else {
+
+                                        }
+                                    }
+
+                                })
+                            } else if (type == 'staff') {
+                                data.child('badges').once("value", snapshot => {
+                                    if (snapshot.exists()) {
+                                        if (snapshot.val().staff) {
+                                            div.append(
+                                                icon_staff
+                                            )
+                                        } else {
+
+                                        }
+                                    }
+
+                                })
+                            } else if (type == 'turbo') {
+                                data.child('badges').once("value", snapshot => {
+                                    if (snapshot.exists()) {
+                                        if (snapshot.val().turbo) {
+                                            div.append(
+                                                icon_turbo_1
+                                            )
+                                        } else {
+
+                                        }
+                                    }
+
+                                })
+                            } else if (type == 'turbo2') {
+                                data.child('badges').once("value", snapshot => {
+                                    if (snapshot.exists()) {
+                                        if (snapshot.val().turbo2) {
+                                            div.append(
+                                                icon_turbo_2
+                                            )
+                                        } else {
+
+                                        }
+                                    }
+
+                                })
+                            } else {
+                                console.log('Error [userdata]2')
+                            }
+                        })
+                    }
+                }
+
                 function userdata(div, type, useridxz) {
                     if (useridxz && type && div) {
                         const data = firebase.database().ref('/users/' + useridxz);
@@ -1022,58 +1085,6 @@
                             } else if (type == 'following-count') {
                                 data.child('following').on("value", snapshot => {
                                     div.text(snapshot.numChildren())
-                                })
-                            } else if (type == 'verified') {
-                                data.child('badges').on("value", snapshot => {
-                                    if (snapshot.exists()) {
-                                        if (snapshot.val().verified) {
-                                            div.append(
-                                                icon_verified
-                                            )
-                                        } else {
-
-                                        }
-                                    }
-
-                                })
-                            } else if (type == 'staff') {
-                                data.child('badges').on("value", snapshot => {
-                                    if (snapshot.exists()) {
-                                        if (snapshot.val().staff) {
-                                            div.append(
-                                                icon_staff
-                                            )
-                                        } else {
-
-                                        }
-                                    }
-
-                                })
-                            } else if (type == 'turbo') {
-                                data.child('badges').on("value", snapshot => {
-                                    if (snapshot.exists()) {
-                                        if (snapshot.val().turbo) {
-                                            div.append(
-                                                icon_turbo_1
-                                            )
-                                        } else {
-
-                                        }
-                                    }
-
-                                })
-                            } else if (type == 'turbo2') {
-                                data.child('badges').on("value", snapshot => {
-                                    if (snapshot.exists()) {
-                                        if (snapshot.val().turbo2) {
-                                            div.append(
-                                                icon_turbo_2
-                                            )
-                                        } else {
-
-                                        }
-                                    }
-
                                 })
                             } else {
                                 console.log('Error [userdata]2')
@@ -1148,10 +1159,10 @@
                             $('.mn4').html(datac)
                             userdata($('.mn41221'), 'displayName', userid)
                             userdata($('.mn92'), 'aboutme', userid)
-                            userdata($('.mn41221'), 'verified', userid)
-                            userdata($('.mnex8'), 'verified', userid)
-                            userdata($('.mnex8'), 'staff', userid)
-                            userdata($('.mnex8'), 'turbo', userid)
+                            userdatao($('.mn41221'), 'verified', userid)
+                            userdatao($('.mnex8'), 'verified', userid)
+                            userdatao($('.mnex8'), 'staff', userid)
+                            userdatao($('.mnex8'), 'turbo', userid)
                             userdata($('.mn4121'), 'avatar', userid)
 
                             userdata($('.mn4121'), 'State', userid)
