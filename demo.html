@@ -532,6 +532,23 @@
             color: white;
         }
     </style>
+    <script>
+        function sh(dsfvf) {
+            setTimeout(function name(params) {
+                $(dsfvf).css({
+                    'height': $(dsfvf).width() + 'px'
+                })
+            }, 2000)
+            $(dsfvf).css({
+                'height': $(dsfvf).width() + 'px'
+            })
+            $(window).on('resize', function() {
+                $(dsfvf).css({
+                    'height': $(dsfvf).width() + 'px'
+                })
+            })
+        }
+    </script>
     <style>
         [m5] {
             margin-bottom: 50px;
@@ -563,18 +580,47 @@
             color: white;
         }
         
-        .ar11 {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-        }
-        
         .ar112 {
             padding: 5px 15px;
             background: var(--v1);
             font-size: 1rem;
             border-radius: 100rem;
             text-transform: uppercase;
+        }
+        
+        .ar13 {
+            display: flex;
+            gap: 1rem;
+            flex-direction: row;
+        }
+        
+        .ar11 {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .ar12 {
+            height: 25px;
+        }
+        
+        .ar13 {
+            padding: 5px 10px;
+            background: var(--r15);
+            border-radius: 100px;
+        }
+        
+        .ar1 {
+            margin: 1rem;
+            gap: 0.5rem;
+        }
+        
+        .ar14 img {
+            height: 15rem;
+            width: fit-content;
+            border: 2px solid var(--r15);
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -591,10 +637,35 @@
                 </div>
             </div>
             <textarea maxlength="150" placeholder="Whats up!??" fff fw id="note" class="ar12"></textarea>
+            <div fww display-upload-image class="ar14">
+            </div>
+            <div add-upload-image class="ar13">
+                Add Image
+            </div>
+            <input nnn add-upload-image-input type="file" name="" accept="image/png, image/gif, image/jpeg" id="">
         </div>
     </div>
     <script>
+        $('[add-upload-image]').on('click', function name(params) {
+            $('[add-upload-image-input]').trigger('click')
+        })
+        $('[add-upload-image-input]').on('input', function name(params) {
+            const file = $(this)[0].files[0];
+
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('[display-upload-image]').html(
+                    `<img ff  src="${e.target.result}" alt="" srcset="">`
+                )
+            };
+
+            reader.readAsDataURL($(this)[0].files[0]);
+
+
+        })
         autosize($('#note'));
+        sh('.ar12x')
         $("#note").on('input', function() {
             if ($(this).val().length) {
                 console.log($(this).val().length)
