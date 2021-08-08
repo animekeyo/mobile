@@ -616,6 +616,16 @@
             border: 2px solid var(--r15);
             border-radius: 10px;
         }
+        
+        [fc] {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        
+        .ar13x {
+            gap: 0.5rem;
+        }
     </style>
 </head>
 
@@ -630,11 +640,21 @@
                     Post
                 </div>
             </div>
-            <textarea maxlength="150" placeholder="Whats up!??" fff fw id="note" class="ar12"></textarea>
             <div fww display-upload-image class="ar14">
             </div>
-            <div add-upload-image class="ar13">
-                Add Image
+            <textarea maxlength="150" placeholder="Whats up!??" fff fw id="note" class="ar12"></textarea>
+            <div fc class="ar13x">
+                <div add-upload-image class="ar13">
+                    Add Image
+                </div>
+                <div fc input-count-max-box class="ar13">
+                    <div input-count-max class="ar13a">
+                        0
+                    </div>
+                    <div class="ar13a">
+                        /150
+                    </div>
+                </div>
             </div>
             <input nnn add-upload-image-input type="file" name="" accept="image/png, image/gif, image/jpeg" id="">
         </div>
@@ -663,7 +683,15 @@
         $("#note").on('input', function() {
             if ($(this).val().length) {
                 console.log($(this).val().length)
+                $('[input-count-max]').text($(this).val().length)
+                if ($(this).val().length == 150) {
+                    $('[input-count-max-box]').css('background', 'var(--c19)')
+                } else {
+                    $('[input-count-max-box]').css('background', 'var(--r15)')
+                }
+
             } else {
+
                 // Disable submit button
             }
         });
