@@ -565,16 +565,16 @@
             align-items: flex-start;
         }
         
-        div#note:focus-visible {
+        textarea:focus-visible {
             outline-offset: unset;
             outline: unset;
         }
         
-        div#note {
+        textarea#note {
             border: unset;
             color: white;
             padding: unset;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             background: var(--c15);
             font-family: 'c1';
             letter-spacing: 1px;
@@ -582,7 +582,7 @@
             outline: none;
         }
         
-        div#note::placeholder {
+        textarea::placeholder {
             color: white;
         }
         
@@ -662,23 +662,6 @@
             grid-gap: 15px;
             grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
         }
-        
-        div#note {
-            overflow: hidden;
-            height: auto;
-            width: -webkit-fill-available;
-            word-break: break-word;
-        }
-        
-        div#note:empty:before {
-            content: attr(placeholder);
-        }
-        
-        span[emote] {
-            height: 30px;
-            display: inline-block;
-            width: 30px;
-        }
     </style>
 </head>
 
@@ -696,7 +679,7 @@
             </div>
             <div display-upload-image rr class="ar14">
             </div>
-            <div contenteditable="true" maxlength="150" cols="3" rows="10" placeholder="Whats up!??" id="note" class="ar12">dfggdfglkdjflgdkfjgldfjgd dfgkldfjglkdf lkdfjg ldkfjg kldfgjk <span emote fbg style="background-image: url(/emotes/anime/headpat.png);"></span>dfkgjdkl fkgj ldfkj ldfgj ldfkj ldfkj dffff djjjjjjjjj kfdgfg</div>
+            <textarea maxlength="150" cols="3" rows="10" placeholder="Whats up!??" fff fw id="note" class="ar12"></textarea>
             <div fc class="ar13x">
                 <div add-upload-image class="ar13">
                     Add Image
@@ -787,7 +770,7 @@
                 }];
             $.each(data, function(v, o) {
                 const frame =
-                    `<div set-emote-to-valinputar fbg style="background-repeat: no-repeat;
+                    `<div set-emote-to-valinputar name="[${o.name}]" fbg style="background-repeat: no-repeat;
             background-image: url(/emotes/anime/${o.name}.png);">
                 </div>`;
                 $('.a15xd').prepend(frame)
@@ -796,13 +779,19 @@
         })
         autosize($('#note'));
         sh('[set-emote-to-valinputar]')
-        $("#note").on('keydown paste', function(event) {
-            if ($(this).text().length) {
-                console.log($(this).text().length)
-                $('[input-count-max]').text($(this).text().length)
-                if ($(this).text().length == 150 && event.keyCode != 8) {
+        $(document).on('click', '[set-emote-to-valinputar]', function() {
+            var cursorPos = $('#note').prop('selectionStart');
+            var v = $('#note').val();
+            var textBefore = v.substring(0, cursorPos);
+            var textAfter = v.substring(cursorPos, v.length);
+            $('#note').val(textBefore + $(this).attr('name') + textAfter);
+        });
+        $("#note").on('input', function() {
+            if ($(this).val().length) {
+                console.log($(this).val().length)
+                $('[input-count-max]').text($(this).val().length)
+                if ($(this).val().length == 150) {
                     $('[input-count-max-box]').css('background', 'var(--c19)')
-                    event.preventDefault();
                 } else {
                     $('[input-count-max-box]').css('background', 'var(--r15)')
                 }
