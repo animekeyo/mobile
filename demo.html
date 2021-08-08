@@ -565,16 +565,16 @@
             align-items: flex-start;
         }
         
-        textarea:focus-visible {
+        div#note:focus-visible {
             outline-offset: unset;
             outline: unset;
         }
         
-        textarea#note {
+        div#note {
             border: unset;
             color: white;
             padding: unset;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             background: var(--c15);
             font-family: 'c1';
             letter-spacing: 1px;
@@ -582,7 +582,7 @@
             outline: none;
         }
         
-        textarea::placeholder {
+        div#note::placeholder {
             color: white;
         }
         
@@ -655,6 +655,30 @@
             height: 1.7rem;
             width: 1.7rem;
         }
+        
+        .a15xd {
+            display: grid;
+            width: -webkit-fill-available;
+            grid-gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+        }
+        
+        div#note {
+            overflow: hidden;
+            height: auto;
+            width: -webkit-fill-available;
+            word-break: break-word;
+        }
+        
+        div#note:empty:before {
+            content: attr(placeholder);
+        }
+        
+        span[emote] {
+            height: 30px;
+            display: inline-block;
+            width: 30px;
+        }
     </style>
 </head>
 
@@ -672,7 +696,7 @@
             </div>
             <div display-upload-image rr class="ar14">
             </div>
-            <textarea maxlength="150" cols="3" rows="10" placeholder="Whats up!??" fff fw id="note" class="ar12"></textarea>
+            <div contenteditable="true" maxlength="150" cols="3" rows="10" placeholder="Whats up!??" id="note" class="ar12">dfggdfglkdjflgdkfjgldfjgd dfgkldfjglkdf lkdfjg ldkfjg kldfgjk <span emote fbg style="background-image: url(/emotes/anime/headpat.png);"></span>dfkgjdkl fkgj ldfkj ldfgj ldfkj ldfkj dffff djjjjjjjjj kfdgfg</div>
             <div fc class="ar13x">
                 <div add-upload-image class="ar13">
                     Add Image
@@ -685,6 +709,10 @@
                         /150
                     </div>
                 </div>
+            </div>
+            <div class="a15xd">
+
+
             </div>
             <input nnn add-upload-image-input type="file" name="" accept="image/png, image/gif, image/jpeg" id="">
         </div>
@@ -712,14 +740,69 @@
 
 
         })
+
+        $('.a15xd').ready(function name(params) {
+            const data =
+
+                [{
+                    name: 'Angry'
+                }, {
+                    name: 'animeangry'
+                }, {
+                    name: 'aquacry'
+                }, {
+                    name: 'AwOo'
+                }, {
+                    name: 'awoothink'
+                }, {
+                    name: 'baka'
+                }, {
+                    name: 'blushwow'
+                }, {
+                    name: 'flandre_concerned'
+                }, {
+                    name: 'headpat'
+                }, {
+                    name: 'HeHe'
+                }, {
+                    name: 'kannabear'
+                }, {
+                    name: 'lmao'
+                }, {
+                    name: 'lurk'
+                }, {
+                    name: 'MadokaLewd'
+                }, {
+                    name: 'mashahello'
+                }, {
+                    name: 'NepSmug'
+                }, {
+                    name: 'Ryukosip'
+                }, {
+                    name: 'kannabear'
+                }, {
+                    name: 'SagiriShy'
+                }, {
+                    name: 'ohmy'
+                }];
+            $.each(data, function(v, o) {
+                const frame =
+                    `<div set-emote-to-valinputar fbg style="background-repeat: no-repeat;
+            background-image: url(/emotes/anime/${o.name}.png);">
+                </div>`;
+                $('.a15xd').prepend(frame)
+            })
+
+        })
         autosize($('#note'));
-        sh('.ar12x')
-        $("#note").on('input', function() {
-            if ($(this).val().length) {
-                console.log($(this).val().length)
-                $('[input-count-max]').text($(this).val().length)
-                if ($(this).val().length == 150) {
+        sh('[set-emote-to-valinputar]')
+        $("#note").on('keydown paste', function(event) {
+            if ($(this).text().length) {
+                console.log($(this).text().length)
+                $('[input-count-max]').text($(this).text().length)
+                if ($(this).text().length == 150 && event.keyCode != 8) {
                     $('[input-count-max-box]').css('background', 'var(--c19)')
+                    event.preventDefault();
                 } else {
                     $('[input-count-max-box]').css('background', 'var(--r15)')
                 }
