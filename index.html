@@ -852,6 +852,8 @@
                                     time: CreateLink,
                                     userid: currentUser,
                                 })
+                                $('[display-upload-image]').html('')
+                                $('[the-post-text-input]').val('')
                             })
                         } else {
                             console.log(numbig)
@@ -872,6 +874,8 @@
                                         time: CreateLink,
                                         userid: currentUser,
                                     })
+                                    $('[display-upload-image]').html('')
+                                    $('[the-post-text-input]').val('')
                                 } else {
                                     //postref.child(total).child(numsml + 1).update({ postid: numsml + 1, })
 
@@ -885,6 +889,8 @@
                                         time: CreateLink,
                                         userid: currentUser,
                                     })
+                                    $('[display-upload-image]').html('')
+                                    $('[the-post-text-input]').val('')
                                 }
                             })
                         }
