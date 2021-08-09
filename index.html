@@ -1190,7 +1190,8 @@
                                 a('div', ' fff fww', 'nmxc1').prepend('')
                             )
                             $('.mnmxc1').html('')
-                            const postref = data.child('posts');
+                            const datax = firebase.database().ref('/users/' + userid);
+                            const postref = datax.child('posts');
                             postref.once('value', function(shot) {
                                 const numbig = shot.numChildren();
                                 postref.child(numbig).once('value', function(shot) {
