@@ -821,68 +821,6 @@
                         })
                 }
 
-                function postinfo(userid, postid, type, apply) {
-                    firebase.database().ref('/users/' + userid + '/posts/' + postid)
-                        .on("value", function(snapshot) {
-                            if (type == 'title') {
-                                apply.text(snapshot.val().title);
-                            } else if (type == 'image') {
-                                apply.attr('src', snapshot.val().image);
-                            } else {
-                                console.log('ERROR POSTINFO')
-                            }
-                        })
-                }
-
-
-
-
-                $(document).on('click', '[view-page][page="home"]', function() {
-
-                    $('.mn81').remove()
-                    $('.mn8').append(
-                        a('div', ' fff fww', 'n81').prepend(''),
-
-                    )
-                    $('.mn81').html('')
-                    const gli = firebase.database().ref('/everyone/');
-                    gli.once("value", function(snapshot) {
-                        console.log(snapshot.numChildren())
-                        const ccs = snapshot.numChildren();
-                        const count = 50;
-                        gli.orderByKey().limitToLast(count).once("value", function(snapshot) {
-
-                            snapshot.forEach(function(data) {
-
-                                const postid = data.val().postid
-                                const userid = data.val().userid
-                                console.log(postid + "  " + userid)
-                                $('[postx="' + postid + '"]').remove()
-                                const datax = `<div data-aos="fade-up" fww="" postx="${postid}" class="mnmxc11" style="">
-    <div get-user userid="${userid}" fww="" class="mnmxc112">
-        <div user-avatarx userid="${userid}" fbg="" class="mnmxc1121" style="background-image: url()"></div>
-        <div display-name userid="${userid}" class="mnmxc1122"></div>
-    </div><img userid="${userid}" postid="${postid}" fww="" src="">
-    <div class="mnmxc113">
-        <div like-post userid="${userid}" postid="${postid}" class="mnmxc1131 ">${icon_heart}</div>
-        <div like-count postid="${postid}" class="mnmxc1132">0</div>
-    </div>
-    <div post-titlex userid="${userid}" postid="${postid}" class="mnmxc111"></div>
-</div>`;
-                                $('.mn81').prepend(datax);
-                                userdata($('[user-avatarx][userid="' + userid + '"]'), 'avatar', userid)
-                                userdata($('[display-name][userid="' + userid + '"]'), 'displayName', userid)
-                                postinfo(userid, postid, 'image', $('img[userid="' + userid + '"][postid="' + postid + '"]'))
-                                postinfo(userid, postid, 'title', $('[post-titlex][userid="' + userid + '"][postid="' + postid + '"]'))
-                                likesData(userid, postid, $('[like-post][postid="' + postid + '"] > svg'), 'fill')
-                                likesData(userid, postid, $('[like-count][postid="' + postid + '"]'), 'count')
-
-                            })
-
-                        })
-                    })
-
-                })
                 $(document).on('click', '[view-page][page="notifications"]', function() {
                         $('.mn61').html(' ')
 
@@ -1252,47 +1190,79 @@
                                 a('div', ' fff fww', 'nmxc1').prepend('')
                             )
                             $('.mnmxc1').html('')
-                            const gli = firebase.database().ref('/users/' + userid);
-                            gli.child('posts').once("value", function(snapshot) {
+                            const postref = data.child('posts');
+                            postref.once('value', function(shot) {
+                                const numbig = shot.numChildren();
+                                postref.child(numbig).once('value', function(shot) {
+                                    shot.forEach(function(shot2) {
+                                        console.log(shot2.val())
+                                        var title;
+                                        var titlex;
+                                        var datasrc;
+                                        var keyxo = shot2.val().numsml + '' + shot2.val().numbig;
 
-                                snapshot.forEach(function(data) {
-                                    const postid = data.val().postid
-                                    gli.once("value", function(snapshotx) {
-                                        $('.mnmxc1').prepend(
-                                            a('div', '  fww', 'nmxc11')
-                                            .hide()
-                                            .prepend(
-                                                a('div', 'fww', 'nmxc112').prepend(
-                                                    a('div', ' fbg', 'nmxc1121').prepend(
-                                                        ''
-                                                    ).css('background-image', 'url(' + snapshotx.val().avatar + ')'),
-                                                    a('div', ' ', 'nmxc1122').text(snapshotx.val().displayName)
-                                                ),
-                                                `<img fww src="${data.val().image}">`,
-                                                a('div', ' ', 'nmxc113').prepend(
-                                                    a('div', 'like-post userid="' + userid + '" postid="' + postid + '" ', 'nmxc1131 ').prepend(
-                                                        icon_heart
-                                                    ).ready(
-                                                        function name(params) {
-                                                            likesData(userid, postid, $('[like-post][postid="' + postid + '"] > svg'), 'fill')
+                                        if (shot2.val().image == false) {
+                                            console.log(true)
+                                            if (shot2.val().video == false) {
+                                                datasrc = ''
+                                                title = ''
+                                                if (shot2.val().title == false) {
+                                                    titlex = ''
+                                                } else {
+                                                    titlex = `<div sdtitle="${keyxo +shot2.val().userid}" class="mnmxc111"></div>`;
+                                                }
+                                            } else {
+                                                datasrc = `
+<video style="border-radius:10px" video-post fww autoplay controls muted loop>
+  <source  src="${shot2.val().video}" type="video/mp4">
+Your browser does not support the video tag.
+</video>`
+                                                if (shot2.val().title == false) {
+                                                    title = ''
+                                                    titlex = ''
+                                                } else {
+                                                    titlex = ''
+                                                    title = `<div sdtitle="${keyxo +shot2.val().userid}" class="mnmxc111"></div>`;
+                                                }
+                                            }
+                                        } else {
+                                            datasrc = '<img fww src="' + shot2.val().image + '">'
+                                            if (shot2.val().title == false) {
+                                                title = ''
+                                                titlex = ''
+                                            } else {
+                                                titlex = ''
+                                                title = `<div sdtitle="${keyxo +shot2.val().userid}" class="mnmxc111"></div>`;
+                                            }
+                                        }
+                                        const datax =
+                                            `
+<div fww="" class="mnmxc11">
+    <div fww="" class="mnmxc112">
+        <!--Avavtar-->
+        <div fbg="" class="mnmxc1121" style="background-image: url();"></div>
+        <!--Name-->
+        <div class="mnmxc1122"></div>
+    </div>
+    ${titlex}
+    ${datasrc}
+    <div class="mnmxc113">
+        <!--Like Button-->
+        <div like-post="" userid="" postid="" class="mnmxc1131 ">
+${icon_heart}
+        </div>
+        <!--Like Count-->
+        <div like-count postid="" class="mnmxc1132">4</div>
+    </div>
+    <!--Title-->
+    ${title}
+</div>`;
 
-                                                        }),
-                                                    a('div', 'like-count postid="' + postid + '"', 'nmxc1132').text(
-                                                        '0'
-                                                    ).ready(
-                                                        function name(params) {
-                                                            likesData(userid, postid, $('[like-count][postid="' + postid + '"]'), 'count')
-
-                                                        }),
-                                                ),
-                                                a('div', ' ', 'nmxc111').text(data.val().title)
-                                            ).ready(function name(params) {
-                                                $('.mnmxc11').fadeIn('slow');
-                                            })
-
-                                        )
+                                        $('.mnmxc1').prepend(datax)
+                                        $('[sdtitle="' + keyxo + shot2.val().userid + '"]').text(shot2.val().title)
+                                        userdata($('.mnmxc1121'), 'avatar', userid)
+                                        userdata($('.mnmxc1122'), 'displayName', userid)
                                     })
-
                                 })
                             })
 
