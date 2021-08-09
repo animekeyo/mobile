@@ -993,10 +993,12 @@ Your browser does not support the video tag.
                 });
                 $(document).on('click', '[like-post]', function() {
                     const userid = $(this).attr('userid');
-                    const postid = $(this).attr('postid');
-                    if (postid && userid) {
+                    const sid = $(this).attr('sid');
+                    const bid = $(this).attr('bid');
+                    if (sid && bid && userid) {
                         const datav = firebase.database().ref('/users/' + userid + '/posts')
-                            .child(postid)
+                            .child(bid)
+                            .child(sid)
                             .child('likes')
                             .child(currentUser);
                         datav.once("value", function(snapshot) {
@@ -1014,9 +1016,10 @@ Your browser does not support the video tag.
                     }
                 })
 
-                function likesData(userid, link, apply, type) {
-                    if (userid && link && apply && type) {
-                        const datav = firebase.database().ref('/users/' + userid + '/posts/' + link + '/likes');
+                function likesData(userid, bid, sid, apply, type) {
+                    if (userid && bid && sid && apply && type) {
+                        const datav = firebase.database().ref('/users/' + userid + '/posts')
+                            .child(bid).child(sid).child('likes');
                         if (type == 'fill') {
 
                             datav.child(currentUser).on('value', function(dx) {
@@ -1504,6 +1507,8 @@ Your browser does not support the video tag.
                                         var title;
                                         var titlex;
                                         var datasrc;
+                                        const sid = shot2.val().numsml;
+                                        const bid = shot2.val().numbig;
                                         var keyxo = shot2.val().numsml + '' + shot2.val().numbig;
 
                                         if (shot2.val().image == false) {
@@ -1553,11 +1558,11 @@ Your browser does not support the video tag.
     ${datasrc}
     <div class="mnmxc113">
         <!--Like Button-->
-        <div like-post="" userid="" postid="" class="mnmxc1131 ">
-${icon_heart}
+        <div like-post userid="${userid}" sid="${sid}" bid="${bid}" class="mnmxc1131 ">
+            <svg like-fill userid="${userid}" sid="${sid}" bid="${bid}" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M13.35 20.13c-.76.69-1.93.69-2.69-.01l-.11-.1C5.3 15.27 1.87 12.16 2 8.28c.06-1.7.93-3.33 2.34-4.29 2.64-1.8 5.9-.96 7.66 1.1 1.76-2.06 5.02-2.91 7.66-1.1 1.41.96 2.28 2.59 2.34 4.29.14 3.88-3.3 6.99-8.55 11.76l-.1.09z"/></svg>
         </div>
         <!--Like Count-->
-        <div like-count postid="" class="mnmxc1132">4</div>
+        <div like-count userid="${userid}" sid="${sid}" bid="${bid}" class="mnmxc1132">4</div>
     </div>
     <!--Title-->
     ${title}
@@ -1567,6 +1572,9 @@ ${icon_heart}
                                         $('[sdtitle="' + keyxo + shot2.val().userid + '"]').text(shot2.val().title)
                                         userdata($('.mnmxc1121'), 'avatar', userid)
                                         userdata($('.mnmxc1122'), 'displayName', userid)
+                                        likesData(userid, bid, sid, $('[like-count][userid="' + userid + '"][sid="' + sid + '"][bid="' + bid + '"]'), 'count')
+                                        likesData(userid, bid, sid, $('[like-fill][userid="' + userid + '"][sid="' + sid + '"][bid="' + bid + '"]'), 'fill')
+
                                     })
                                 })
                             })
