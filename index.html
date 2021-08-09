@@ -840,36 +840,17 @@
                     }
 
                     const postref = data.child('posts');
-                    postref.once('value', function(shot) {
-                        const numbig = shot.numChildren();
-                        if (numbig == 0) {
-                            postref.child(1).once('value', function(shot) {
-                                postref.child(1).child(1).update({
-                                    postid: 11,
-                                    numsml: 1,
-                                    numbig: 1,
-                                    image: imgxxxx,
-                                    video: videoxxxx,
-                                    title: inputxxxx,
-                                    time: CreateLink,
-                                    userid: currentUser,
-                                })
-                                $('[display-upload-image]').html('')
-                                $('[the-post-text-input]').val('')
-                            })
-                        } else {
-                            console.log(numbig)
-                            postref.child(numbig).once('value', function(shot) {
-                                const numsml = shot.numChildren();
-                                const totals = numsml + 1;
-                                const totalb = numbig + 1;
+                    if (imgxxxx == false && videoxxxx == false && inputxxxx == false) {
 
-                                if (numsml == '8') {
-                                    console.log(numsml)
-                                    postref.child(totalb).child(1).update({
-                                        postid: totalb + '1',
+                    } else {
+                        postref.once('value', function(shot) {
+                            const numbig = shot.numChildren();
+                            if (numbig == 0) {
+                                postref.child(1).once('value', function(shot) {
+                                    postref.child(1).child(1).update({
+                                        postid: 11,
                                         numsml: 1,
-                                        numbig: totalb,
+                                        numbig: 1,
                                         image: imgxxxx,
                                         video: videoxxxx,
                                         title: inputxxxx,
@@ -878,26 +859,50 @@
                                     })
                                     $('[display-upload-image]').html('')
                                     $('[the-post-text-input]').val('')
-                                } else {
-                                    //postref.child(total).child(numsml + 1).update({ postid: numsml + 1, })
+                                })
+                            } else {
+                                console.log(numbig)
+                                postref.child(numbig).once('value', function(shot) {
+                                    const numsml = shot.numChildren();
+                                    const totals = numsml + 1;
+                                    const totalb = numbig + 1;
 
-                                    postref.child(numbig).child(totals).update({
-                                        postid: '' + numbig + '' + '' + totals + '',
-                                        numsml: totals,
-                                        numbig: numbig,
-                                        image: imgxxxx,
-                                        video: videoxxxx,
-                                        title: inputxxxx,
-                                        time: CreateLink,
-                                        userid: currentUser,
-                                    })
-                                    $('[display-upload-image]').html('')
-                                    $('[the-post-text-input]').val('')
-                                }
-                            })
-                        }
+                                    if (numsml == '8') {
+                                        console.log(numsml)
+                                        postref.child(totalb).child(1).update({
+                                            postid: totalb + '1',
+                                            numsml: 1,
+                                            numbig: totalb,
+                                            image: imgxxxx,
+                                            video: videoxxxx,
+                                            title: inputxxxx,
+                                            time: CreateLink,
+                                            userid: currentUser,
+                                        })
+                                        $('[display-upload-image]').html('')
+                                        $('[the-post-text-input]').val('')
+                                    } else {
+                                        //postref.child(total).child(numsml + 1).update({ postid: numsml + 1, })
 
-                    })
+                                        postref.child(numbig).child(totals).update({
+                                            postid: '' + numbig + '' + '' + totals + '',
+                                            numsml: totals,
+                                            numbig: numbig,
+                                            image: imgxxxx,
+                                            video: videoxxxx,
+                                            title: inputxxxx,
+                                            time: CreateLink,
+                                            userid: currentUser,
+                                        })
+                                        $('[display-upload-image]').html('')
+                                        $('[the-post-text-input]').val('')
+                                    }
+                                })
+                            }
+
+                        })
+
+                    }
                 })
                 $('[add-upload-image]').on('click', function name(params) {
                     $('[add-upload-image-input]').trigger('click')
