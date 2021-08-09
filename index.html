@@ -640,6 +640,7 @@
             letter-spacing: 1px;
             text-decoration: none!important;
             outline: none;
+            margin-left: 4px;
         }
         
         textarea::placeholder {
@@ -815,6 +816,8 @@
                 const currentUser = user.uid;
                 const CreateLink = new Date().getTime();
                 const data = firebase.database().ref('/users/' + user.uid);
+                const e = firebase.database().ref('/everyone/');
+                const u = firebase.database().ref('/users/');
                 $('[post-mypost]').on('click', function() {
                     console.log('working')
                     var imgxxxx;
@@ -1364,6 +1367,64 @@ Your browser does not support the video tag.
                     }
                 }
 
+                function userdatax(div, type, useridxz) {
+                    if (useridxz && type && div) {
+                        const data = firebase.database().ref('/users/' + useridxz);
+                        data.once("value", snapshot => {
+
+
+
+                            if (type == 'displayName') {
+                                div.text(snapshot.val().displayName)
+                            } else if (type == 'aboutme') {
+                                if (typeof snapshot.val().aboutme == 'undefined') {
+                                    div.text('Meow!! Meow!! No Data Found.')
+                                } else {
+                                    div.text(snapshot.val().aboutme)
+                                }
+                            } else if (type == 'avatar') {
+                                div.css('background-image', 'url(' + snapshot.val().avatar + ')')
+                            } else if (type == 'banner') {
+                                div.css('background-image', 'url(' + snapshot.val().banner + ')')
+                            } else if (type == 'userid') {
+                                div.text(snapshot.val().userid)
+                            } else if (type == 'attr-userid') {
+                                div.attr('userid', snapshot.val().userid)
+                            } else if (type == 'followers-count') {
+                                data.child('followers').on("value", snapshot => {
+                                    div.text(snapshot.numChildren())
+                                })
+
+                            } else if (type == 'State') {
+                                if (snapshot.val().State == true) {
+                                    div.css('box-shadow', '0px 0px 0px 3px var(--c7)')
+                                } else if (snapshot.val().State == false) {
+                                    div.css('box-shadow', '0px 0px 0px 3px var(--c19)')
+                                } else {
+                                    div.css('box-shadow', '0px 0px 0px 3px var(--c19)')
+                                }
+                            } else if (type == 'StateColor') {
+                                if (snapshot.val().State == true) {
+                                    div.css('background-color', 'var(--c7)')
+                                } else if (snapshot.val().State == false) {
+                                    div.css('background-color', 'var(--c19)')
+                                } else {
+                                    div.css('background-color', 'var(--c19)')
+                                }
+                            } else if (type == 'following-count') {
+                                data.child('following').on("value", snapshot => {
+                                    div.text(snapshot.numChildren())
+                                })
+                            } else {
+                                console.log('Error [userdata]2')
+                            }
+                        })
+
+                    } else {
+                        console.log('Error [userdata]1')
+                    }
+                }
+
                 function userdata(div, type, useridxz) {
                     if (useridxz && type && div) {
                         const data = firebase.database().ref('/users/' + useridxz);
@@ -1663,6 +1724,101 @@ Your browser does not support the video tag.
                 $(document).ready(function() {
                     $('[view-page][page="home"]').trigger("click");
                 });
+                $(document).on('click', '[view-page][page="home"]', function() {
+                    e.once('value', function(shot) {
+                        e.child(shot.numChildren()).once('value', function(shot) {
+                            $('.mn81').html('')
+                            shot.forEach(function(shotx) {
+                                const o = shotx.val();
+                                u.child(o.userid)
+                                    .child('posts')
+                                    .child(o.bid)
+                                    .child(o.sid)
+                                    .once('value', function(shot2) {
+                                        const o = shot2.val();
+                                        const userid = shot2.val().userid;
+                                        console.log(o)
+
+                                        console.log(shot2.val())
+                                        var title;
+                                        var titlex;
+                                        var datasrc;
+                                        const sid = shot2.val().numsml;
+                                        const bid = shot2.val().numbig;
+                                        var keyxo = shot2.val().numsml + '' + shot2.val().numbig;
+
+                                        if (shot2.val().image == false) {
+                                            console.log(true)
+                                            if (shot2.val().video == false) {
+                                                datasrc = ''
+                                                title = ''
+                                                if (shot2.val().title == false) {
+                                                    titlex = ''
+                                                } else {
+                                                    titlex = `<div sdtitle="${keyxo +shot2.val().userid}" class="mnmxc111"></div>`;
+                                                }
+                                            } else {
+                                                datasrc = `
+<video style="border-radius:10px" video-post fww autoplay controls muted loop>
+  <source  src="${shot2.val().video}" type="video/mp4">
+Your browser does not support the video tag.
+</video>`
+                                                if (shot2.val().title == false) {
+                                                    title = ''
+                                                    titlex = ''
+                                                } else {
+                                                    titlex = ''
+                                                    title = `<div sdtitle="${keyxo +shot2.val().userid}" class="mnmxc111"></div>`;
+                                                }
+                                            }
+                                        } else {
+                                            datasrc = '<img fww src="' + shot2.val().image + '">'
+                                            if (shot2.val().title == false) {
+                                                title = ''
+                                                titlex = ''
+                                            } else {
+                                                titlex = ''
+                                                title = `<div sdtitle="${keyxo +shot2.val().userid}" class="mnmxc111"></div>`;
+                                            }
+                                        }
+                                        const datax =
+                                            `
+<div fww="" class="mnmxc11">
+    <div fww="" get-user userid="${userid}" class="mnmxc112">
+        <!--Avavtar-->
+        <div fbg="" class="mnmxc1121" userid="${userid}" style="background-image: url();"></div>
+        <!--Name-->
+        <div class="mnmxc1122" userid="${userid}"></div>
+    </div>
+    ${titlex}
+    ${datasrc}
+    <div class="mnmxc113">
+        <!--Like Button-->
+        <div like-post userid="${userid}" sid="${sid}" bid="${bid}" class="mnmxc1131 ">
+            <svg like-fill userid="${userid}" sid="${sid}" bid="${bid}" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M13.35 20.13c-.76.69-1.93.69-2.69-.01l-.11-.1C5.3 15.27 1.87 12.16 2 8.28c.06-1.7.93-3.33 2.34-4.29 2.64-1.8 5.9-.96 7.66 1.1 1.76-2.06 5.02-2.91 7.66-1.1 1.41.96 2.28 2.59 2.34 4.29.14 3.88-3.3 6.99-8.55 11.76l-.1.09z"/></svg>
+        </div>
+        <!--Like Count-->
+        <div like-count userid="${userid}" sid="${sid}" bid="${bid}" class="mnmxc1132">0</div>
+    </div>
+    <!--Title-->
+    ${title}
+</div>`;
+
+                                        $('.mn81').append(datax)
+                                        $('[sdtitle="' + keyxo + shot2.val().userid + '"]').text(shot2.val().title)
+                                        userdatax($('.mnmxc1121[userid="' + userid + '"]'), 'avatar', userid)
+                                        userdatax($('.mnmxc1122[userid="' + userid + '"]'), 'displayName', userid)
+                                        likesData(userid, bid, sid, $('[like-count][userid="' + userid + '"][sid="' + sid + '"][bid="' + bid + '"]'), 'count')
+                                        likesData(userid, bid, sid, $('[like-fill][userid="' + userid + '"][sid="' + sid + '"][bid="' + bid + '"]'), 'fill')
+
+
+
+                                    });
+                            })
+                        })
+                    })
+
+                })
                 $(document).on('click', '[view-page]', function() {
                     const page = $(this).attr('page');
                     navigator.vibrate(70);
@@ -1758,7 +1914,9 @@ Your browser does not support the video tag.
                 ///notifications
                 $('body').prepend(
                     a('div', 'fw fff aa pagex page="home"', 'n8').prepend(
-
+                        a('div', ' fww', 'n81').prepend(
+                            ''
+                        )
                     ).css('display', 'none')
                     .css('margin-bottom', '50px'),
                     a('div', 'fw fff aa pagex page="add"', 'n7').css('display', 'none').prepend(
