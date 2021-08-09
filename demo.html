@@ -568,7 +568,7 @@
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
-            align-content: flex-start;
+            align-content: flex-end;
             justify-content: flex-start;
             align-items: flex-start;
         }
@@ -595,7 +595,7 @@
         }
         
         .ar112 {
-            padding: 5px 15px;
+            padding: 11px 20px;
             background: var(--v1);
             font-size: 1rem;
             border-radius: 100rem;
@@ -635,6 +635,7 @@
             display: flex;
             flex-direction: row;
             align-items: center;
+            flex-wrap: wrap;
         }
         
         .ar13x {
@@ -688,22 +689,13 @@
 <body>
     <div aa fff m5 fw>
         <div fff rr fw class="ar1">
-            <div ff fw fw class="ar11">
-                <div ff class="ar111">
 
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg>
-                </div>
-                <div post-mypost ff class="ar112">
-                    Post
-                </div>
-
-            </div>
             <div display-upload-image rr class="ar14">
             </div>
             <textarea the-post-text-input maxlength="150" cols="3" rows="10" placeholder="Whats up!??" fff fw id="note" class="ar12"></textarea>
             <div fc class="ar13x">
                 <div add-upload-image class="ar13">
-                    Add Image/Video
+                    Add Image Or Video
                 </div>
                 <div fc input-count-max-box class="ar13">
                     <div input-count-max class="ar13a">
@@ -712,6 +704,9 @@
                     <div class="ar13a">
                         /150
                     </div>
+                </div>
+                <div post-mypost ff class="ar112">
+                    Post
                 </div>
             </div>
 
