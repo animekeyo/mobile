@@ -842,7 +842,7 @@
                     <sd following-countxx>0</sd>
                 </div>`;
                         $('[flow-xoptions]').html(fll)
-                        $('[flow-results]').html('<o></o>')
+                        $('[flow-results]').html('')
                         u.child(userid).child('following').once('value', function(snap) {
                             $('[following-countxx]').text(snap.numChildren())
                         })
@@ -852,20 +852,24 @@
                         u.child(userid).child(type).once(
                             'value',
                             function(snap) {
-                                $('[flow-results]').html('<o></o>')
+                                $('[flow-results]').html('')
                                 for (var k in snap.val()) {
-                                    $('[flow-results]').html('<o></o>')
-                                    u.child(k).once('value', function(snap) {
-                                        $('[keyx][userid="' + snap.val().userid + '"]').remove()
-                                        const dx = `<div fw fff get-user keyx userid="${snap.val().userid}" class="mn321">
+                                    const dx =
+                                        `
+    <div fw fff get-user keyx userid="${k}" class="mn321">
         <!--Avatar-->
-        <div fw fff fbg class="mn3211" style="background-image: url(${snap.val().avatar});"></div>
+        <div fw fff fbg dkoa userid="${k}" class="mn3211"></div>
         <!--NAme-->
-        <div fw fff userid="${snap.val().userid}" class="mn3212"></div>
+        <div fw fff dkon userid="${k}" class="mn3212"></div>
     </div>`;
-                                        $('[flow-results]').prepend(dx)
-                                        $('.mn3212[userid="' + snap.val().userid + '"]').text(snap.val().displayName)
-                                    })
+                                    $('[flow-results]').prepend(dx)
+                                    userdata($('[dkoa][userid="' + k + '"]'), 'avatar', k)
+                                    userdata($('[dkon][userid="' + k + '"]'), 'displayName', k)
+                                        //  u.child(k).once('value', function(snap) {
+                                        //  $('[keyx][userid="' + snap.val().userid + '"]').remove()
+
+                                    //  $('.mn3212[userid="' + snap.val().userid + '"]').text(snap.val().displayName)
+                                    // })
                                 }
                             }
                         )
