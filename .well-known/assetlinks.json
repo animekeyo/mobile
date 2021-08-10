@@ -1,6 +1,0 @@
-[{
-        "relation": ["delegate_permission/common.handle_all_urls"],
-        "target" : { "namespace": "android_app", "package_name": "com.animekeyo.m",
-                     "sha256_cert_fingerprints": ["93:06:81:DC:D6:AF:53:BC:FB:E3:A9:16:FD:A7:A0:2B:33:30:8D:90:B6:9C:EB:3C:18:FD:F3:06:2A:59:FE:91"] }
-      }
-]
