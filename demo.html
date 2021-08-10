@@ -20,16 +20,16 @@
 </head>
 
 <body>
-
+    <div class="mn81"></div>
     <script>
         // user.child(userid).once("value",function(snapshotx){ const name = snapshotx.val().displayName; const avatar = snapshotx.val().avatar; user.child(userid).once("value", function(snapshot) { for (var k in snapshot.val().followers) { console.log(k); user.child(k).once("value", function(snapshot){ const token = snapshot.val().pushToken; const useridx = snapshot.val().userid; user.child(useridx).child('notifications').once("value",function(snapshot){ const Cou = snapshot.numChildren() + 1; user.child(useridx).child('notifications').child(Cou).update({ type: 'post', userid: userid, title: name+" just posted something new!", time: CreateLink, }) const payload = { notification: { title: "Anime Keyo", body: name+" just posted something new!", icon: avatar, image: image, click_action:"https://m.animekeyo.com", } }; admin.messaging().sendToDevice(token, payload) .then(function(response) { console.log("Successfully sent message:", response); }) .catch(function(error) { console.log("Error sending message:", error); }); }) }) } }) })
 
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
-                const e = firebase.database().ref('/everyone/');
-                const u = firebase.database().ref('/users/');
+
                 const currentUser = user.uid;
                 const CreateLink = new Date().getTime();
+
             }
         })
     </script>
