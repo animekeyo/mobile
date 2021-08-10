@@ -266,7 +266,7 @@
         .mn3211 {
             height: 40px;
             width: 40px;
-            background-color: white;
+            background-color: black;
             border-radius: 100rem;
         }
         
@@ -737,6 +737,10 @@
             fill: white;
             z-index: 11;
         }
+        
+        .m3x1 {
+            gap: 0.5rem;
+        }
     </style>
 </head>
 
@@ -821,6 +825,52 @@
                 const data = firebase.database().ref('/users/' + user.uid);
                 const e = firebase.database().ref('/everyone/');
                 const u = firebase.database().ref('/users/');
+                $(document).on('click', '[get-flowx]', function name(params) {
+                    const type = $(this).attr('type');
+                    const userid = $(this).attr('userid')
+                    $('body > div[pagex]').hide()
+                    $('body > div[pagex][page="flow"]').show()
+                    $('[flow-results]').html(' ')
+                    if (userid && type) {
+                        const fll = ` <div get-user userid="${userid}" class="mnex81 closex">
+                    X
+                </div>
+               
+                <div get-flowx userid="${userid}" type="followers" class="mnex81">Followers
+                    <sd followers-countxx>0</sd>
+                </div> <div get-flowx userid="${userid}" type="following" class="mnex81">Following
+                    <sd following-countxx>0</sd>
+                </div>`;
+                        $('[flow-xoptions]').html(fll)
+                        $('[flow-results]').html('<o></o>')
+                        u.child(userid).child('following').once('value', function(snap) {
+                            $('[following-countxx]').text(snap.numChildren())
+                        })
+                        u.child(userid).child('followers').once('value', function(snap) {
+                            $('[followers-countxx]').text(snap.numChildren())
+                        })
+                        u.child(userid).child(type).once(
+                            'value',
+                            function(snap) {
+                                $('[flow-results]').html('<o></o>')
+                                for (var k in snap.val()) {
+                                    $('[flow-results]').html('<o></o>')
+                                    u.child(k).once('value', function(snap) {
+                                        $('[keyx][userid="' + snap.val().userid + '"]').remove()
+                                        const dx = `<div fw fff get-user keyx userid="${snap.val().userid}" class="mn321">
+        <!--Avatar-->
+        <div fw fff fbg class="mn3211" style="background-image: url(${snap.val().avatar});"></div>
+        <!--NAme-->
+        <div fw fff userid="${snap.val().userid}" class="mn3212"></div>
+    </div>`;
+                                        $('[flow-results]').prepend(dx)
+                                        $('.mn3212[userid="' + snap.val().userid + '"]').text(snap.val().displayName)
+                                    })
+                                }
+                            }
+                        )
+                    }
+                })
 
                 function postgg(userid, bid, sid) {
                     firebase.database().ref('/users/' + userid + '/posts/' + bid + '/' + sid)
@@ -1679,11 +1729,11 @@ Your browser does not support the video tag.
  
         </div>
     </div>
-    <div fff fww class="mnex8">
+    <div fff fww get-flowx userid="${userid}" type="followers" class="mnex8">
                                     <div class="mnex81">Followers
         <sd followers-count="">0</sd>
     </div>
-    <div class="mnex81">Following
+    <div get-flowx userid="${userid}" type="following" class="mnex81">Following
         <sd following-count="">0</sd>
     </div>
 </div>`
@@ -1974,6 +2024,16 @@ Your browser does not support the video tag.
 
                 ///notifications
                 $('body').prepend(
+                    `    <div fw ff aa pagex page="flow" class="mn3" style="margin-bottom: 50px;display: none;border-color: var(--v1);">
+        <div fw fff class="mn31" style="padding: 1rem; gap: 1rem;">
+            <div fc flow-xoptions class="m3x1">
+
+            </div>
+            <div fw fff flow-results class="mn32">
+
+            </div>
+        </div>
+    </div>`,
                     a('div', 'fw fff aa pagex page="home"', 'n8').prepend(
                         a('div', ' fww', 'n81').prepend(
                             ''
