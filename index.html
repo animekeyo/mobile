@@ -1693,6 +1693,7 @@ Your browser does not support the video tag.
                 })
                 $(document).on('click', '[get-user]', function() {
                         $('[pagex][page="home"] > .mn81').html('')
+                        $('[flow-results]').html('')
                         const userid = $(this).attr('userid')
 
                         if (userid) {
