@@ -702,18 +702,18 @@
         </div>
     </div>
     <script>
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-
-                const currentUser = user.uid;
-                const CreateLink = new Date().getTime();
-
-                const data = firebase.database().ref('/users/' + user.uid);
-                const e = firebase.database().ref('/everyone/');
-                const u = firebase.database().ref('/users/');
-
-            }
-        })
+        function sendnoti(userid, notuserid, type) {
+            const CreateLink = new Date().getTime();
+            const user = database.ref("/users/");
+            user.child(notuserid).child('notifications').once("value", function(snapshot) {
+                const Cou = snapshot.numChildren() + 1;
+                user.child(notuserid).child('notifications').child(Cou).update({
+                    type: type,
+                    userid: userid,
+                    time: CreateLink,
+                })
+            })
+        }
     </script>
 </body>
 
