@@ -803,7 +803,7 @@
 
         </div>
         <div fw ff class="ss212">
-            <div fww class="ss211">
+            <div id="messages" fww class="ss211">
 
             </div>
             <textarea placeholder="Massage" fww></textarea>
@@ -817,6 +817,28 @@
         function c(params) {
             console.log(params)
         }
+        const messages = document.getElementById('messages');
+
+        function getMessages() {
+            // Prior to getting your messages.
+            shouldScroll = messages.scrollTop + messages.clientHeight === messages.scrollHeight;
+            /*
+             * Get your messages, we'll just simulate it by appending a new one syncronously.
+             */
+
+            // After getting your messages.
+            if (!shouldScroll) {
+                scrollToBottom();
+            }
+        }
+
+        function scrollToBottom() {
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        scrollToBottom();
+
+
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 var useridx;
@@ -918,6 +940,7 @@
   
 </div>`;
                                     $('.ss211').append(data)
+                                    getMessages()
                                     userdata($('[Avatar][userid="' + element.val().userid + '"]'), 'avatar', element.val().userid)
                                     userdata($('[DisplayName][userid="' + element.val().userid + '"]'), 'displayName', element.val().userid)
                                 });
