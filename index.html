@@ -782,8 +782,10 @@
         .ss11 {
             width: 50px;
             height: 50px;
-            background: var(--r15);
+            margin: 3px;
+            background-color: var(--r15);
             border-radius: 100rem;
+            box-shadow: 0px 0px 0px 3px var(--r15);
         }
     </style>
 </head>
@@ -869,6 +871,7 @@
                 const data = firebase.database().ref('/users/' + user.uid);
                 const e = firebase.database().ref('/everyone/');
                 const u = firebase.database().ref('/users/');
+
                 $(document).on('click', '[get-flowx]', function name(params) {
                     $('.mn82').html('')
                     $('.ss0').hide()
@@ -1056,6 +1059,16 @@ Your browser does not support the video tag.
                 $(document).on('click', '[view-page][page="home"]', function() {
                     const e = firebase.database().ref('/everyone/');
                     const u = firebase.database().ref('/users/');
+                    u.child(currentUser).child('following').once('value', function(shot) {
+                        $('.ss1').html('')
+                        for (var userx in shot.val()) {
+                            u.child(userx).once('value', function(shotx) {
+                                $('[get-server][userid="' + userx + '"]').remove()
+                                const data = `<div get-server userid="${userx}" fww fbg style="background-image:url(${shotx.val().avatar})" class="ss11"></div>`;
+                                $('.ss1').prepend(data)
+                            })
+                        }
+                    })
                     e.once('value', function(shotxx) {
                         const loadno = shotxx.numChildren() - 1;
                         $('.mn82').html(`<div loadmorehome no="${loadno}">More</div>`)
@@ -2122,54 +2135,7 @@ Your browser does not support the video tag.
                     a('div', 'fw fff aa pagex page="home"', 'n8').prepend(
                         `<div fww class="ss0">
         <div fww class="ss1">
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
+         
         </div>
     </div>`,
                         a('div', ' fww', 'n81').prepend(
