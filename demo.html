@@ -798,7 +798,7 @@
                 var v = window.location.pathname;
                 console.log(v)
                 const currentUser = user.uid;
-                const CreateLink = new Date().getTime() + currentUser;
+                const CreateLink = new Date().getTime();
 
                 const data = firebase.database().ref('/users/' + user.uid);
                 const e = firebase.database().ref('/everyone/');
@@ -826,7 +826,8 @@
                         $('textarea').val('')
                         $('textarea').css('height', '16px');
                         const val = $('textbox').text();
-
+                        let firstChar = val.charAt(0)
+                        let firstCharb = currentUser.charAt(0)
                         if (val.length == 0) {
 
                         } else if (!val.replace(/\s/g, '').length) {
@@ -838,32 +839,37 @@
 
                                 const count = shot.numChildren();
                                 if (count == 0) {
-                                    const CreateLink = new Date().getTime() + currentUser;
-                                    chat.child(1).child(CreateLink).update({
+                                    const CreateLink = new Date().getTime();
+                                    const Link = CreateLink + firstChar + firstCharb;
+                                    chat.child(1).child(Link).update({
                                         time: CreateLink,
                                         massage: val,
                                         userid: currentUser,
+                                        link: Link,
                                     }).then(function name(params) {
                                         $('textbox').text('');
                                     })
 
                                 } else {
-                                    const CreateLink = new Date().getTime() + currentUser;
+                                    const CreateLink = new Date().getTime();
+                                    const Link = CreateLink + firstChar + firstCharb;
                                     chat.child(count).once('value', function(shotv) {
                                         const count2 = shotv.numChildren()
                                         if (count2 == 50) {
-                                            chat.child(count + 1).child(CreateLink).update({
+                                            chat.child(count + 1).child(Link).update({
                                                 time: CreateLink,
                                                 massage: val,
                                                 userid: currentUser,
+                                                link: Link,
                                             }).then(function name(params) {
                                                 $('textbox').text('');
                                             })
                                         } else {
-                                            chat.child(count).child(CreateLink).update({
+                                            chat.child(count).child(Link).update({
                                                 time: CreateLink,
                                                 massage: val,
                                                 userid: currentUser,
+                                                link: Link,
                                             }).then(function name(params) {
                                                 $('textbox').text('');
                                             })
