@@ -959,8 +959,7 @@
                                 $('textarea').val('')
                                 $('textarea').css('height', '16px');
                                 const val = $('textbox').text();
-                                let firstChar = val.charAt(0)
-                                let firstCharb = currentUser.charAt(0) + currentUser.charAt(1) + currentUser.charAt(2)
+
                                 if (val.length == 0) {
 
                                 } else if (!val.replace(/\s/g, '').length) {
@@ -973,7 +972,7 @@
                                         const count = shot.numChildren();
                                         if (count == 0) {
                                             const CreateLink = new Date().getTime();
-                                            const Link = CreateLink + firstChar + firstCharb;
+                                            const Link = CreateLink;
                                             chat.child(1).child(Link).update({
                                                 time: CreateLink,
                                                 massage: val,
@@ -985,7 +984,7 @@
 
                                         } else {
                                             const CreateLink = new Date().getTime();
-                                            const Link = CreateLink + firstChar + firstCharb;
+                                            const Link = CreateLink;
                                             chat.child(count).once('value', function(shotv) {
                                                 const count2 = shotv.numChildren()
                                                 if (count2 == 50) {
