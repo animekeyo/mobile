@@ -827,7 +827,7 @@
                         $('textarea').css('height', '16px');
                         const val = $('textbox').text();
                         let firstChar = val.charAt(0)
-                        let firstCharb = currentUser.charAt(0)
+                        let firstCharb = currentUser.charAt(0) + currentUser.charAt(1) + currentUser.charAt(2)
                         if (val.length == 0) {
 
                         } else if (!val.replace(/\s/g, '').length) {
