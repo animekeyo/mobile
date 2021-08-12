@@ -140,7 +140,7 @@
         
         .mn81 {
             padding: 1rem;
-            padding-bottom: 3rem;
+            padding-bottom: unset;
         }
         
         .m21 svg {
@@ -462,7 +462,7 @@
         }
         
         .mnmxc111 {
-            font-size: 1.8rem;
+            font-size: 1.1rem;
             word-break: break-word;
         }
         
@@ -473,7 +473,7 @@
         }
         
         .mnmxc1122 {
-            font-size: 1.2rem;
+            font-size: 1rem;
             width: fit-content;
         }
         
@@ -486,6 +486,7 @@
             align-items: center;
             gap: 0.5rem;
             margin: 10px 0rem;
+            margin-top: unset;
         }
         
         .mnmxc113 {
@@ -505,9 +506,9 @@
         }
         
         .mnmxc1132:before {
-            content: "Likes";
+            /* content: "Likes";
             margin-right: 0.2rem;
-            font-size: 1rem;
+            font-size: 1rem; */
         }
         
         .mnmxc1131 svg {
@@ -741,6 +742,15 @@
         
         .m3x1 {
             gap: 0.5rem;
+        }
+        
+        .mn82 {
+            padding: 0.8rem;
+            margin: 1rem;
+            background: var(--r15);
+            text-align: center;
+            text-transform: uppercase;
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -991,6 +1001,8 @@ Your browser does not support the video tag.
                     const e = firebase.database().ref('/everyone/');
                     const u = firebase.database().ref('/users/');
                     e.once('value', function(shotxx) {
+                        const loadno = shotxx.numChildren() - 1;
+                        $('.mn82').html(`<div loadmorehome no="${loadno}">More</div>`)
                         e.child(shotxx.numChildren()).once('value', function(shot) {
                             $('.mn81').html('')
 
@@ -2042,6 +2054,9 @@ Your browser does not support the video tag.
     </div>`,
                     a('div', 'fw fff aa pagex page="home"', 'n8').prepend(
                         a('div', ' fww', 'n81').prepend(
+                            ''
+                        ),
+                        a('div', 'fww', 'n82').prepend(
                             ''
                         )
                     ).css('display', 'none')
