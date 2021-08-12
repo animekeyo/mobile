@@ -846,6 +846,7 @@
                 const e = firebase.database().ref('/everyone/');
                 const u = firebase.database().ref('/users/');
                 $(document).on('click', '[get-flowx]', function name(params) {
+                    $('.mn82').html('')
                     const type = $(this).attr('type');
                     const userid = $(this).attr('userid')
                     $('body > div[pagex]').hide()
