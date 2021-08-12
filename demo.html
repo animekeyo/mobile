@@ -762,16 +762,24 @@
             color: white;
             border-radius: 22px;
         }
+        
+        p[massage] {
+            word-break: break-all;
+            margin: unset;
+            padding: unset;
+        }
     </style>
 </head>
 
 <body>
 
     <!---->
+    <textbox nnn>
 
+    </textbox>
     <!---->
     <div fw class="ss21">
-        <div fww class="ss211">
+        <div fww class="ss2111">
 
         </div>
         <div fw ff class="ss212">
@@ -795,6 +803,82 @@
                 const data = firebase.database().ref('/users/' + user.uid);
                 const e = firebase.database().ref('/everyone/');
                 const u = firebase.database().ref('/users/');
+                const chat = u.child(currentUser).child('server').child('chat');
+                chat.once('value', function(shot) {
+                    const count = shot.numChildren();
+                    chat.child(count).on('value', function(shotv) {
+                        shotv.forEach(element => {
+                            console.log(element.val().massage)
+                            $('[keyx="' + element.val().massage + '"]').remove()
+                            const data = `<p keyx="${element.val().massage}" massage>${element.val().massage}</p>`;
+                            $('.ss211').append(data)
+                        });
+                    })
+
+                })
+                $('textarea').on('keyup keypress', function(e) {
+                    var keyCode = e.keyCode || e.which;
+
+                    if (keyCode === 13) {
+                        e.preventDefault();
+                        const valx = $(this).val();
+                        $('textbox').text(valx);
+                        $('textarea').val('')
+                        $('textarea').css('height', '16px');
+                        const val = $('textbox').text();
+
+                        if (val.length == 0) {
+
+                        } else if (!val.replace(/\s/g, '').length) {
+                            console.log('no space')
+                        } else {
+
+
+                            chat.once('value', function(shot) {
+
+                                const count = shot.numChildren();
+                                if (count == 0) {
+                                    const CreateLink = new Date().getTime();
+                                    chat.child(1).child(CreateLink).update({
+                                        time: CreateLink,
+                                        massage: val
+                                    }).then(function name(params) {
+                                        $('textbox').text('');
+                                    })
+
+                                } else {
+                                    const CreateLink = new Date().getTime();
+                                    chat.child(count).once('value', function(shotv) {
+                                        const count2 = shotv.numChildren()
+                                        if (count2 == 50) {
+                                            chat.child(count + 1).child(CreateLink).update({
+                                                time: CreateLink,
+                                                massage: val
+                                            }).then(function name(params) {
+                                                $('textbox').text('');
+                                            })
+                                        } else {
+                                            chat.child(count).child(CreateLink).update({
+                                                time: CreateLink,
+                                                massage: val
+                                            }).then(function name(params) {
+                                                $('textbox').text('');
+                                            })
+                                        }
+                                    })
+                                }
+
+                            })
+
+                        }
+                    }
+
+                });
+
+
+
+
+
             }
         })
     </script>
