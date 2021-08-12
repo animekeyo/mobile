@@ -984,11 +984,12 @@
 
                                         } else {
                                             const CreateLink = new Date().getTime();
-                                            const Link = CreateLink;
+                                            const Link = count2 + Link + 1;
                                             chat.child(count).once('value', function(shotv) {
                                                 const count2 = shotv.numChildren()
+                                                const Link = count2 + Link + 1;
                                                 if (count2 == 50) {
-                                                    chat.child(count + 1).child(count2 + Link + 1).update({
+                                                    chat.child(count + 1).child(Link).update({
                                                         time: CreateLink,
                                                         massage: val,
                                                         userid: currentUser,
@@ -997,7 +998,7 @@
                                                         $('textbox').text('');
                                                     })
                                                 } else {
-                                                    chat.child(count).child(count2 + Link + 1).update({
+                                                    chat.child(count).child(Link).update({
                                                         time: CreateLink,
                                                         massage: val,
                                                         userid: currentUser,
