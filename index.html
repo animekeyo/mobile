@@ -144,6 +144,7 @@
         
         .mn81 {
             padding: 1rem;
+            padding-top: unset;
             padding-bottom: unset;
         }
         
@@ -761,6 +762,29 @@
             margin-bottom: 1rem;
             font-size: 1.5rem;
         }
+        
+        .ss1 {
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            justify-content: flex-start;
+            align-items: center;
+            width: fit-content;
+            margin: 15px;
+            gap: 10px;
+            flex-wrap: nowrap;
+        }
+        
+        .ss0 {
+            overflow-x: scroll;
+        }
+        
+        .ss11 {
+            width: 50px;
+            height: 50px;
+            background: var(--r15);
+            border-radius: 100rem;
+        }
     </style>
 </head>
 
@@ -847,6 +871,7 @@
                 const u = firebase.database().ref('/users/');
                 $(document).on('click', '[get-flowx]', function name(params) {
                     $('.mn82').html('')
+                    $('.ss0').hide()
                     const type = $(this).attr('type');
                     const userid = $(this).attr('userid')
                     $('body > div[pagex]').hide()
@@ -1007,6 +1032,27 @@ Your browser does not support the video tag.
                         }
                     }
                 });
+                $(document).on('click', '[loadmorehome]', function() {
+                    const no = $(this).attr('no');
+                    const e = firebase.database().ref('/everyone/');
+                    const u = firebase.database().ref('/users/');
+                    e.once('value', function(shotxx) {
+                        const loadno = shotxx.numChildren() - 1;
+                        $('.mn82').html(`<div loadmorehome no="${loadno}">More</div>`)
+                        e.child(shotxx.numChildren()).once('value', function(shot) {
+                            $('.mn81').html('')
+
+
+                            shot.forEach(function(shotx) {
+                                const o = shotx.val();
+                                const userid = o.userid;
+
+                                $('.mn81').prepend(`<div fww userid="${userid}" sid="${o.sid}" bid="${o.bid}" class="mnmxc11 post-load"></div>`)
+                            })
+                        })
+                    })
+
+                })
                 $(document).on('click', '[view-page][page="home"]', function() {
                     const e = firebase.database().ref('/everyone/');
                     const u = firebase.database().ref('/users/');
@@ -1943,7 +1989,7 @@ Your browser does not support the video tag.
 
                 $('[view-page][page="home"]').ready(function() {
                     $('[view-page][page="home"]').trigger("click");
-
+                    $('.ss0').show()
 
                 });
                 $(document).on('click', '[view-page]', function() {
@@ -1951,18 +1997,22 @@ Your browser does not support the video tag.
                     if (page == 'account') {
                         $('[pagex][page="home"] > .mn81').html('')
                         $('[pagex][page="home"] > .mn82').html('')
+                        $('.ss0').hide()
                     }
                     if (page == 'search') {
                         $('[pagex][page="home"] > .mn81').html('')
                         $('[pagex][page="home"] > .mn82').html('')
+                        $('.ss0').hide()
                     }
                     if (page == 'add') {
                         $('[pagex][page="home"] > .mn81').html('')
                         $('[pagex][page="home"] > .mn82').html('')
+                        $('.ss0').hide()
                     }
                     if (page == 'notifications') {
                         $('[pagex][page="home"] > .mn81').html('')
                         $('[pagex][page="home"] > .mn82').html('')
+                        $('.ss0').hide()
                     }
                     navigator.vibrate(70);
                     if (page) {
@@ -2067,6 +2117,58 @@ Your browser does not support the video tag.
         </div>
     </div>`,
                     a('div', 'fw fff aa pagex page="home"', 'n8').prepend(
+                        `<div fww class="ss0">
+        <div fww class="ss1">
+            <div fww fbg class="ss11">
+
+            </div>
+            <div fww fbg class="ss11">
+
+            </div>
+            <div fww fbg class="ss11">
+
+            </div>
+            <div fww fbg class="ss11">
+
+            </div>
+            <div fww fbg class="ss11">
+
+            </div>
+            <div fww fbg class="ss11">
+
+            </div>
+            <div fww fbg class="ss11">
+
+            </div>
+            <div fww fbg class="ss11">
+
+            </div>
+            <div fww fbg class="ss11">
+
+            </div>
+            <div fww fbg class="ss11">
+
+            </div>
+            <div fww fbg class="ss11">
+
+            </div>
+            <div fww fbg class="ss11">
+
+            </div>
+            <div fww fbg class="ss11">
+
+            </div>
+            <div fww fbg class="ss11">
+
+            </div>
+            <div fww fbg class="ss11">
+
+            </div>
+            <div fww fbg class="ss11">
+
+            </div>
+        </div>
+    </div>`,
                         a('div', ' fww', 'n81').prepend(
                             ''
                         ),
