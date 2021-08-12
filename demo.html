@@ -790,6 +790,32 @@
             justify-content: flex-end;
             gap: 1rem;
         }
+        
+        div[send-massage] svg {
+            width: -webkit-fill-available;
+            height: -webkit-fill-available;
+            margin: 0.5rem;
+            fill: white;
+        }
+        
+        .ss2112x {
+            display: flex;
+            width: -webkit-fill-available;
+            flex-direction: row;
+            justify-content: flex-start;
+        }
+        
+        div[send-massage] {
+            background: var(--r10);
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-content: center;
+            width: 45px;
+            align-items: center;
+            height: 45px;
+            border-radius: 1000rem;
+        }
     </style>
 </head>
 
@@ -808,7 +834,13 @@
             <div id="messages" fww class="ss211">
 
             </div>
-            <textarea placeholder="Massage" fww></textarea>
+            <div class="ss2112x">
+                <textarea placeholder="Massage" fww></textarea>
+                <div send-massage>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M3.4 20.4l17.45-7.48c.81-.35.81-1.49 0-1.84L3.4 3.6c-.66-.29-1.39.2-1.39.91L2 9.12c0 .5.37.93.87.99L17 12 2.87 13.88c-.5.07-.87.5-.87 1l.01 4.61c0 .71.73 1.2 1.39.91z"/></svg>
+                </div>
+            </div>
         </div>
     </div>
     <script>
@@ -949,78 +981,85 @@
                             })
 
                         })
+
+                        function sendmassage() {
+
+                            const valx = $('textarea').val();
+                            $('textbox').text(valx);
+                            $('textarea').val('')
+                            $('textarea').css('height', '16px');
+                            const val = $('textbox').text();
+
+                            if (val.length == 0) {
+
+                            } else if (!val.replace(/\s/g, '').length) {
+                                console.log('no space')
+                            } else {
+
+
+                                chat.once('value', function(shot) {
+
+                                    const count = shot.numChildren();
+                                    if (count == 0) {
+                                        const CreateLink = new Date().getTime();
+                                        const Link = CreateLink;
+                                        chat.child(1).child(Link).update({
+                                            time: CreateLink,
+                                            massage: val,
+                                            userid: currentUser,
+                                            link: Link,
+                                        }).then(function name(params) {
+                                            $('textbox').text('');
+                                        })
+
+                                    } else {
+                                        const CreateLink = new Date().getTime();
+
+                                        chat.child(count).once('value', function(shotv) {
+                                            const count2 = shotv.numChildren();
+                                            const Link = shotv.numChildren() + '' + CreateLink + '' + count2 + 1;
+
+
+                                            console.log(Link)
+                                            if (count2 == 50) {
+                                                chat.child(count + 1).child(Link).update({
+                                                    time: CreateLink,
+                                                    massage: val,
+                                                    userid: currentUser,
+                                                    link: Link,
+                                                }).then(function name(params) {
+                                                    $('textbox').text('');
+                                                })
+                                            } else {
+                                                chat.child(count).child(Link).update({
+                                                    time: CreateLink,
+                                                    massage: val,
+                                                    userid: currentUser,
+                                                    link: Link,
+                                                }).then(function name(params) {
+                                                    $('textbox').text('');
+                                                })
+                                            }
+                                        })
+                                    }
+
+                                })
+
+                            }
+                        }
                         $('textarea').on('keyup keypress', function(e) {
                             var keyCode = e.keyCode || e.which;
 
                             if (keyCode === 13) {
                                 e.preventDefault();
-                                const valx = $(this).val();
-                                $('textbox').text(valx);
-                                $('textarea').val('')
-                                $('textarea').css('height', '16px');
-                                const val = $('textbox').text();
-
-                                if (val.length == 0) {
-
-                                } else if (!val.replace(/\s/g, '').length) {
-                                    console.log('no space')
-                                } else {
-
-
-                                    chat.once('value', function(shot) {
-
-                                        const count = shot.numChildren();
-                                        if (count == 0) {
-                                            const CreateLink = new Date().getTime();
-                                            const Link = CreateLink;
-                                            chat.child(1).child(Link).update({
-                                                time: CreateLink,
-                                                massage: val,
-                                                userid: currentUser,
-                                                link: Link,
-                                            }).then(function name(params) {
-                                                $('textbox').text('');
-                                            })
-
-                                        } else {
-                                            const CreateLink = new Date().getTime();
-
-                                            chat.child(count).once('value', function(shotv) {
-                                                const count2 = shotv.numChildren();
-                                                const Link = shotv.numChildren() + '' + CreateLink + '' + count2 + 1;
-
-
-                                                console.log(Link)
-                                                if (count2 == 50) {
-                                                    chat.child(count + 1).child(Link).update({
-                                                        time: CreateLink,
-                                                        massage: val,
-                                                        userid: currentUser,
-                                                        link: Link,
-                                                    }).then(function name(params) {
-                                                        $('textbox').text('');
-                                                    })
-                                                } else {
-                                                    chat.child(count).child(Link).update({
-                                                        time: CreateLink,
-                                                        massage: val,
-                                                        userid: currentUser,
-                                                        link: Link,
-                                                    }).then(function name(params) {
-                                                        $('textbox').text('');
-                                                    })
-                                                }
-                                            })
-                                        }
-
-                                    })
-
-                                }
+                                sendmassage()
                             }
 
                         });
 
-
+                        $(document).on('click', '[send-massage]', function name(params) {
+                            sendmassage()
+                        })
 
                     } else(
                         window.location.href = '/demo?userid=' + currentUser
