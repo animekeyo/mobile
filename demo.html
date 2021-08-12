@@ -988,7 +988,7 @@
                                             chat.child(count).once('value', function(shotv) {
                                                 const count2 = shotv.numChildren()
                                                 if (count2 == 50) {
-                                                    chat.child(count2 + 1 + CreateLink).child(Link).update({
+                                                    chat.child(count + 1).child(count2 + Link + 1).update({
                                                         time: CreateLink,
                                                         massage: val,
                                                         userid: currentUser,
@@ -997,7 +997,7 @@
                                                         $('textbox').text('');
                                                     })
                                                 } else {
-                                                    chat.child(count2 + 1 + CreateLink).child(Link).update({
+                                                    chat.child(count).child(count2 + Link + 1).update({
                                                         time: CreateLink,
                                                         massage: val,
                                                         userid: currentUser,
