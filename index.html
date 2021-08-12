@@ -748,7 +748,7 @@
             gap: 0.5rem;
         }
         
-        .mn82 {
+        div[loadmorehome] {
             padding: 0.8rem;
             margin: 1rem;
             background: var(--r15);
@@ -1944,15 +1944,19 @@ Your browser does not support the video tag.
                     const page = $(this).attr('page');
                     if (page == 'account') {
                         $('[pagex][page="home"] > .mn81').html('')
+                        $('[pagex][page="home"] > .mn82').html('')
                     }
                     if (page == 'search') {
                         $('[pagex][page="home"] > .mn81').html('')
+                        $('[pagex][page="home"] > .mn82').html('')
                     }
                     if (page == 'add') {
                         $('[pagex][page="home"] > .mn81').html('')
+                        $('[pagex][page="home"] > .mn82').html('')
                     }
                     if (page == 'notifications') {
                         $('[pagex][page="home"] > .mn81').html('')
+                        $('[pagex][page="home"] > .mn82').html('')
                     }
                     navigator.vibrate(70);
                     if (page) {
@@ -2065,7 +2069,7 @@ Your browser does not support the video tag.
                         )
                     ).css('display', 'none')
                     .css('margin-bottom', '50px'),
-                    a('div', 'fw fff aa pagex page="add"', 'n7').css('display', 'none').prepend(
+                    a('div', 'fw fff aa pagex page="add"', 'n7').css('background', '#0e1216').css('display', 'none').prepend(
                         ` <div aa fff  fw>
         <div fff rr fw class="ar1">
 
