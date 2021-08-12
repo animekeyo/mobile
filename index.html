@@ -1063,8 +1063,9 @@ Your browser does not support the video tag.
                         $('.ss1').html('')
                         for (var userx in shot.val()) {
                             u.child(userx).once('value', function(shotx) {
-                                $('[get-server][userid="' + userx + '"]').remove()
-                                const data = `<div get-server userid="${userx}" fww fbg style="background-image:url(${shotx.val().avatar})" class="ss11"></div>`;
+
+                                $('[get-server][userid="' + shotx.val().userid + '"]').remove()
+                                const data = `<div get-server userid="${shotx.val().userid}" fww fbg style="background-image:url(${shotx.val().avatar})" class="ss11"></div>`;
                                 $('.ss1').prepend(data)
                             })
                         }
