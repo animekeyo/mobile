@@ -927,8 +927,8 @@
                             chat.child(count).on('value', function(shotv) {
                                 shotv.forEach(element => {
                                     console.log(element.val().massage)
-                                    $('[keyx="' + element.val().time + '"]').remove()
-                                    const data = `<div fff keyx="${element.val().time}" class="mn611">
+                                    $('[keyx="' + element.val().link + '"]').remove()
+                                    const data = `<div fff keyx="${element.val().link}" class="mn611">
     <div fw rr fff class="mn6111">
         <div Avatar userid="${element.val().userid}" userid aa fw fff fbg class="mn61111">
 
