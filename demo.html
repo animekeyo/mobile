@@ -791,10 +791,20 @@
     </div>
     <script>
         autosize($('textarea'));
+        const url_userid = $.url(window.location.href).param('userid')
+        console.log(url_userid)
 
+        function c(params) {
+            console.log(params)
+        }
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
-
+                var useridx;
+                if (typeof url_userid == 'undefined') {
+                    useridx = user.uid;
+                } else {
+                    useridx = url_userid;
+                }
                 var v = window.location.pathname;
                 console.log(v)
                 const currentUser = user.uid;
@@ -803,88 +813,96 @@
                 const data = firebase.database().ref('/users/' + user.uid);
                 const e = firebase.database().ref('/everyone/');
                 const u = firebase.database().ref('/users/');
-                const chat = u.child(currentUser).child('server').child('chat');
-                chat.once('value', function(shot) {
-                    const count = shot.numChildren();
-                    chat.child(count).on('value', function(shotv) {
-                        shotv.forEach(element => {
-                            console.log(element.val().massage)
-                            $('[keyx="' + element.val().time + '"]').remove()
-                            const data = `<p keyx="${element.val().time}" massage>${element.val().massage}</p>`;
-                            $('.ss211').append(data)
-                        });
-                    })
+                const chat = u.child(useridx).child('server').child('chat');
+                u.child(useridx).once('value', function(check) {
+                    if (check.exists() == true) {
 
-                })
-                $('textarea').on('keyup keypress', function(e) {
-                    var keyCode = e.keyCode || e.which;
-
-                    if (keyCode === 13) {
-                        e.preventDefault();
-                        const valx = $(this).val();
-                        $('textbox').text(valx);
-                        $('textarea').val('')
-                        $('textarea').css('height', '16px');
-                        const val = $('textbox').text();
-                        let firstChar = val.charAt(0)
-                        let firstCharb = currentUser.charAt(0) + currentUser.charAt(1) + currentUser.charAt(2)
-                        if (val.length == 0) {
-
-                        } else if (!val.replace(/\s/g, '').length) {
-                            console.log('no space')
-                        } else {
-
-
-                            chat.once('value', function(shot) {
-
-                                const count = shot.numChildren();
-                                if (count == 0) {
-                                    const CreateLink = new Date().getTime();
-                                    const Link = CreateLink + firstChar + firstCharb;
-                                    chat.child(1).child(Link).update({
-                                        time: CreateLink,
-                                        massage: val,
-                                        userid: currentUser,
-                                        link: Link,
-                                    }).then(function name(params) {
-                                        $('textbox').text('');
-                                    })
-
-                                } else {
-                                    const CreateLink = new Date().getTime();
-                                    const Link = CreateLink + firstChar + firstCharb;
-                                    chat.child(count).once('value', function(shotv) {
-                                        const count2 = shotv.numChildren()
-                                        if (count2 == 50) {
-                                            chat.child(count + 1).child(Link).update({
-                                                time: CreateLink,
-                                                massage: val,
-                                                userid: currentUser,
-                                                link: Link,
-                                            }).then(function name(params) {
-                                                $('textbox').text('');
-                                            })
-                                        } else {
-                                            chat.child(count).child(Link).update({
-                                                time: CreateLink,
-                                                massage: val,
-                                                userid: currentUser,
-                                                link: Link,
-                                            }).then(function name(params) {
-                                                $('textbox').text('');
-                                            })
-                                        }
-                                    })
-                                }
-
+                        chat.once('value', function(shot) {
+                            const count = shot.numChildren();
+                            chat.child(count).on('value', function(shotv) {
+                                shotv.forEach(element => {
+                                    console.log(element.val().massage)
+                                    $('[keyx="' + element.val().time + '"]').remove()
+                                    const data = `<p keyx="${element.val().time}" massage>${element.val().massage}</p>`;
+                                    $('.ss211').append(data)
+                                });
                             })
 
-                        }
-                    }
+                        })
+                        $('textarea').on('keyup keypress', function(e) {
+                            var keyCode = e.keyCode || e.which;
 
-                });
+                            if (keyCode === 13) {
+                                e.preventDefault();
+                                const valx = $(this).val();
+                                $('textbox').text(valx);
+                                $('textarea').val('')
+                                $('textarea').css('height', '16px');
+                                const val = $('textbox').text();
+                                let firstChar = val.charAt(0)
+                                let firstCharb = currentUser.charAt(0) + currentUser.charAt(1) + currentUser.charAt(2)
+                                if (val.length == 0) {
+
+                                } else if (!val.replace(/\s/g, '').length) {
+                                    console.log('no space')
+                                } else {
 
 
+                                    chat.once('value', function(shot) {
+
+                                        const count = shot.numChildren();
+                                        if (count == 0) {
+                                            const CreateLink = new Date().getTime();
+                                            const Link = CreateLink + firstChar + firstCharb;
+                                            chat.child(1).child(Link).update({
+                                                time: CreateLink,
+                                                massage: val,
+                                                userid: currentUser,
+                                                link: Link,
+                                            }).then(function name(params) {
+                                                $('textbox').text('');
+                                            })
+
+                                        } else {
+                                            const CreateLink = new Date().getTime();
+                                            const Link = CreateLink + firstChar + firstCharb;
+                                            chat.child(count).once('value', function(shotv) {
+                                                const count2 = shotv.numChildren()
+                                                if (count2 == 50) {
+                                                    chat.child(count + 1).child(Link).update({
+                                                        time: CreateLink,
+                                                        massage: val,
+                                                        userid: currentUser,
+                                                        link: Link,
+                                                    }).then(function name(params) {
+                                                        $('textbox').text('');
+                                                    })
+                                                } else {
+                                                    chat.child(count).child(Link).update({
+                                                        time: CreateLink,
+                                                        massage: val,
+                                                        userid: currentUser,
+                                                        link: Link,
+                                                    }).then(function name(params) {
+                                                        $('textbox').text('');
+                                                    })
+                                                }
+                                            })
+                                        }
+
+                                    })
+
+                                }
+                            }
+
+                        });
+
+
+
+                    } else(
+                        window.location.href = '/demo?userid=' + currentUser
+                    )
+                })
 
 
 
