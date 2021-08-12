@@ -768,6 +768,26 @@
             margin: unset;
             padding: unset;
         }
+        
+        .ss211 {
+            overflow-y: scroll;
+        }
+        
+        .mn611 {
+            display: flex;
+            justify-content: space-between;
+            width: -webkit-fill-available;
+            font-size: 1rem;
+            gap: 1rem;
+            min-height: 40px;
+            margin-bottom: 0.7rem;
+        }
+        
+        .ss212 {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
     </style>
 </head>
 
@@ -813,6 +833,67 @@
                 const data = firebase.database().ref('/users/' + user.uid);
                 const e = firebase.database().ref('/everyone/');
                 const u = firebase.database().ref('/users/');
+
+                function userdata(div, type, useridxz) {
+                    if (useridxz && type && div) {
+                        const data = firebase.database().ref('/users/' + useridxz);
+                        data.on("value", snapshot => {
+
+
+
+                            if (type == 'displayName') {
+                                div.text(snapshot.val().displayName)
+                            } else if (type == 'aboutme') {
+                                if (typeof snapshot.val().aboutme == 'undefined') {
+                                    div.text('Meow!! Meow!! No Data Found.')
+                                } else {
+                                    div.text(snapshot.val().aboutme)
+                                }
+                            } else if (type == 'avatar') {
+                                div.css('background-image', 'url(' + snapshot.val().avatar + ')')
+                            } else if (type == 'banner') {
+                                div.css('background-image', 'url(' + snapshot.val().banner + ')')
+                            } else if (type == 'userid') {
+                                div.text(snapshot.val().userid)
+                            } else if (type == 'attr-userid') {
+                                div.attr('userid', snapshot.val().userid)
+                            } else if (type == 'followers-count') {
+                                data.child('followers').on("value", snapshot => {
+                                    div.text(snapshot.numChildren())
+                                })
+
+                            } else if (type == 'State') {
+                                if (snapshot.val().State == true) {
+                                    div.css('box-shadow', '0px 0px 0px 3px var(--c7)')
+                                } else if (snapshot.val().State == false) {
+                                    div.css('box-shadow', '0px 0px 0px 3px var(--c19)')
+                                } else {
+                                    div.css('box-shadow', '0px 0px 0px 3px var(--c19)')
+                                }
+                            } else if (type == 'StateColor') {
+                                if (snapshot.val().State == true) {
+                                    div.css('background-color', 'var(--c7)')
+                                } else if (snapshot.val().State == false) {
+                                    div.css('background-color', 'var(--c19)')
+                                } else {
+                                    div.css('background-color', 'var(--c19)')
+                                }
+                            } else if (type == 'following-count') {
+                                data.child('following').on("value", snapshot => {
+                                    div.text(snapshot.numChildren())
+                                })
+                            } else {
+                                console.log('Error [userdata]2')
+                            }
+                        })
+
+                    } else {
+                        console.log('Error [userdata]1')
+                    }
+                }
+
+
+
                 const chat = u.child(useridx).child('server').child('chat');
                 u.child(useridx).once('value', function(check) {
                     if (check.exists() == true) {
@@ -823,8 +904,22 @@
                                 shotv.forEach(element => {
                                     console.log(element.val().massage)
                                     $('[keyx="' + element.val().time + '"]').remove()
-                                    const data = `<p keyx="${element.val().time}" massage>${element.val().massage}</p>`;
+                                    const data = `<div fff keyx="${element.val().time}" class="mn611">
+    <div fw rr fff class="mn6111">
+        <div Avatar userid="${element.val().userid}" userid aa fw fff fbg class="mn61111">
+
+</div>
+
+<div  c class="mn61112">
+    <c c DisplayName userid="${element.val().userid}" class="mn611121"></c>
+    <t userid class="mn611122">${element.val().massage}</t>
+</div>
+    </div>
+  
+</div>`;
                                     $('.ss211').append(data)
+                                    userdata($('[Avatar][userid="' + element.val().userid + '"]'), 'avatar', element.val().userid)
+                                    userdata($('[DisplayName][userid="' + element.val().userid + '"]'), 'displayName', element.val().userid)
                                 });
                             })
 
