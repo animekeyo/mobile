@@ -1003,11 +1003,11 @@
                                     if (count == 0) {
                                         const CreateLink = new Date().getTime();
                                         const Link = CreateLink;
-                                        chat.child(1).child(Link).update({
+                                        chat.child(1).child(1).update({
                                             time: CreateLink,
                                             massage: val,
                                             userid: currentUser,
-                                            link: Link,
+                                            link: 1,
                                         }).then(function name(params) {
                                             $('textbox').text('');
                                         })
@@ -1022,11 +1022,11 @@
 
                                             console.log(Link)
                                             if (count2 == 50) {
-                                                chat.child(count + 1).child(Link).update({
+                                                chat.child(count + 1).child(1).update({
                                                     time: CreateLink,
                                                     massage: val,
                                                     userid: currentUser,
-                                                    link: Link,
+                                                    link: 1,
                                                 }).then(function name(params) {
                                                     $('textbox').text('');
                                                 })
