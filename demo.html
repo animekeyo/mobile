@@ -5,17 +5,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="manifest" href="/mobile-manifest.json?clear-21553">
+    <link rel="icon" href="/icon-192x192.png">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('service worker registered'))
+                .catch(err => console.log('service worker not registered', err));
+        }
+    </script>
+    <title>Anime Keyo</title>
     <script src="https://canary.animekeyo.com/scripts/jquery.js"></script>
+    <!---//////////////////////////------jquery------///////////////////////////--->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-messaging.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-storage.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://canary.animekeyo.com/scripts/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/purl/2.3.1/purl.js"></script>
+
     <style ux>
         @import url("https://canary.animekeyo.com/styles/style.css?clear1-5");
     </style>
@@ -71,8 +88,14 @@
             border-bottom: 4rem solid var(--r7);
         }
         
+        .mn8 {
+            display: contents!important;
+        }
+        
         .mn81 {
             padding: 1rem;
+            padding-top: unset;
+            padding-bottom: unset;
         }
         
         .m21 svg {
@@ -199,7 +222,7 @@
         .mn3211 {
             height: 40px;
             width: 40px;
-            background-color: white;
+            background-color: black;
             border-radius: 100rem;
         }
         
@@ -394,7 +417,7 @@
         }
         
         .mnmxc111 {
-            font-size: 1.8rem;
+            font-size: 1.1rem;
             word-break: break-word;
         }
         
@@ -405,7 +428,7 @@
         }
         
         .mnmxc1122 {
-            font-size: 1.2rem;
+            font-size: 1rem;
             width: fit-content;
         }
         
@@ -418,6 +441,7 @@
             align-items: center;
             gap: 0.5rem;
             margin: 10px 0rem;
+            margin-top: unset;
         }
         
         .mnmxc113 {
@@ -437,9 +461,9 @@
         }
         
         .mnmxc1132:before {
-            content: "Likes";
+            /* content: "Likes";
             margin-right: 0.2rem;
-            font-size: 1rem;
+            font-size: 1rem; */
         }
         
         .mnmxc1131 svg {
@@ -670,10 +694,23 @@
             fill: white;
             z-index: 11;
         }
-    </style>
-    <style>
+        
         .m3x1 {
             gap: 0.5rem;
+        }
+        
+        div[loadmorehome] {
+            padding: 0.8rem;
+            margin: 1rem;
+            background: var(--r15);
+            text-align: center;
+            text-transform: uppercase;
+            border-radius: 10px;
+        }
+        
+        .mnmxc111[mainttx] {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
         }
         
         .ss1 {
@@ -695,8 +732,35 @@
         .ss11 {
             width: 50px;
             height: 50px;
-            background: var(--r15);
+            margin: 3px;
+            background-color: var(--r15);
             border-radius: 100rem;
+            box-shadow: 0px 0px 0px 3px var(--r15);
+        }
+    </style>
+    <style>
+        .ss212 {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .ss21 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 200;
+            padding: 1rem;
+        }
+        
+        textarea {
+            font-size: 1.2rem;
+            font-family: 'C1';
+            padding: 1rem;
+            height: 19.8px;
+            border: unset;
+            background: var(--r10);
+            color: white;
+            border-radius: 2rem;
         }
     </style>
 </head>
@@ -706,72 +770,33 @@
     <!---->
 
     <!---->
-    <div fww class="ss0">
-        <div fww class="ss1">
-            <div fww fbg class="ss11">
+    <div fw class="ss21">
+        <div fww class="ss211">
+
+        </div>
+        <div fw ff class="ss212">
+            <div fww class="ss211">
 
             </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
-            <div fww fbg class="ss11">
-
-            </div>
+            <textarea placeholder="Massage" fww></textarea>
         </div>
     </div>
-
     <script>
-        function sendnoti(userid, notuserid, type) {
-            const CreateLink = new Date().getTime();
-            const user = database.ref("/users/");
-            user.child(notuserid).child('notifications').once("value", function(snapshot) {
-                const Cou = snapshot.numChildren() + 1;
-                user.child(notuserid).child('notifications').child(Cou).update({
-                    type: type,
-                    userid: userid,
-                    time: CreateLink,
-                })
-            })
-        }
+        autosize($('textarea'));
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+
+                var v = window.location.pathname;
+                console.log(v)
+                const currentUser = user.uid;
+                const CreateLink = new Date().getTime();
+
+                const data = firebase.database().ref('/users/' + user.uid);
+                const e = firebase.database().ref('/everyone/');
+                const u = firebase.database().ref('/users/');
+            }
+        })
     </script>
 </body>
 
