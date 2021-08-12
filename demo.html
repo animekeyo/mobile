@@ -809,8 +809,8 @@
                     chat.child(count).on('value', function(shotv) {
                         shotv.forEach(element => {
                             console.log(element.val().massage)
-                            $('[keyx="' + element.val().massage + '"]').remove()
-                            const data = `<p keyx="${element.val().massage}" massage>${element.val().massage}</p>`;
+                            $('[keyx="' + element.val().time + '"]').remove()
+                            const data = `<p keyx="${element.val().time}" massage>${element.val().massage}</p>`;
                             $('.ss211').append(data)
                         });
                     })
