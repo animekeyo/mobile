@@ -986,8 +986,11 @@
                                             const CreateLink = new Date().getTime();
 
                                             chat.child(count).once('value', function(shotv) {
-                                                const count2 = shotv.numChildren()
-                                                const Link = count2 + CreateLink + 1 + count2;
+                                                const count2 = shotv.numChildren();
+                                                const Link = shotv.numChildren() + '' + CreateLink + '' + count2 + 1;
+
+
+                                                console.log(Link)
                                                 if (count2 == 50) {
                                                     chat.child(count + 1).child(Link).update({
                                                         time: CreateLink,
