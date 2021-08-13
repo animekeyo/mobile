@@ -729,6 +729,12 @@
         
         .ss0 {
             overflow-x: scroll;
+            overflow-y: unset;
+            z-index: 2;
+            position: absolute;
+            top: 0;
+            left: 0;
+            box-shadow: inset 0px 80px 80px 0px black;
         }
         
         .ss11 {
@@ -814,8 +820,9 @@
             top: 0;
             left: 0;
             margin: 1rem;
-            margin-top: 86px;
+            margin-top: 0px;
             margin-bottom: 7px;
+            z-index: 1;
         }
         
         .ss1zx1 svg {
@@ -918,7 +925,9 @@
         }
 
         scrollToBottom();
-
+        $("#messages .mn611:first-child").ready(function() {
+            $(this).css('color', 'red')
+        })
         $(document).on('click', '[get-server]', function(shotv) {
             const userid = $(this).attr('userid');
             window.location.href = '/chats.html?userid=' + userid;
@@ -961,6 +970,7 @@ ${icon_settings}
             </div>
          
     </div>`;
+
                             $('.ss1').prepend(data)
                         } else {
                             $('[get-server][userid="' + shotx.val().userid + '"]').remove()
