@@ -1078,6 +1078,12 @@
 
                             }
                         }
+                        $(document).on('keypress', 'textarea', function(e) {
+                            if (e.which == 13) {
+                                sendmassage()
+                            }
+                        });
+                        //////
                         $('textarea').on('keyup keypress', function(e) {
                             var keyCode = e.keyCode || e.which;
 
