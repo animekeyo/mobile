@@ -1080,19 +1080,11 @@
                         }
                         $(document).on('keypress', 'textarea', function(e) {
                             if (e.which == 13) {
+                                e.preventDefault();
                                 sendmassage()
                             }
                         });
                         ///////
-                        $('textarea').on('keyup keypress', function(e) {
-                            var keyCode = e.keyCode || e.which;
-
-                            if (keyCode === 13) {
-                                e.preventDefault();
-                                sendmassage()
-                            }
-
-                        });
 
                         $(document).on('click', '[send-massage]', function name(params) {
                             sendmassage()
