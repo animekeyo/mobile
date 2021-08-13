@@ -1039,21 +1039,22 @@ Your browser does not support the video tag.
                     const no = $(this).attr('no');
                     const e = firebase.database().ref('/everyone/');
                     const u = firebase.database().ref('/users/');
-                    e.once('value', function(shotxx) {
-                        const loadno = shotxx.numChildren() - 1;
-                        $('.mn82').html(`<div loadmorehome no="${loadno}">More</div>`)
-                        e.child(shotxx.numChildren()).once('value', function(shot) {
-                            $('.mn81').html('')
+
+                    const loadno = no - 1;
+
+                    e.child(no).once('value', function(shot) {
+                        $('.mn81x').append('<div llgkoihn neko="' + no + '" fww="" class="mn81"></div>')
 
 
-                            shot.forEach(function(shotx) {
-                                const o = shotx.val();
-                                const userid = o.userid;
+                        shot.forEach(function(shotx) {
+                            const o = shotx.val();
+                            const userid = o.userid;
 
-                                $('.mn81').prepend(`<div fww userid="${userid}" sid="${o.sid}" bid="${o.bid}" class="mnmxc11 post-load"></div>`)
-                            })
+                            $('.mn81[llgkoihn][neko="' + no + '"]').prepend(`<div fww userid="${userid}" sid="${o.sid}" bid="${o.bid}" class="mnmxc11 post-load"></div>`)
                         })
                     })
+                    $('.mn82').html(`<div loadmorehome no="${loadno}">More</div>`)
+
 
                 })
                 $(document).on('click', '[view-page][page="home"]', function() {
@@ -2139,8 +2140,8 @@ Your browser does not support the video tag.
          
         </div>
     </div>`,
-                        a('div', ' fww', 'n81').prepend(
-                            ''
+                        a('div', ' fww', 'n81x').prepend(
+                            a('div', 'fww', 'n81').prepend('')
                         ),
                         a('div', 'fww', 'n82').prepend(
                             ''
