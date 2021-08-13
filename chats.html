@@ -854,7 +854,7 @@
 
             </div>
             <div class="ss2112x">
-                <div contenteditable="true" class="textbox">
+                <div id="myDiv" contenteditable="true" class="textbox">
 
                 </div>
                 <div send-massage>
@@ -897,6 +897,25 @@
             const userid = $(this).attr('userid');
             window.location.href = '/chats.html?userid=' + userid;
         })
+        var container = document.getElementById('myDiv');
+
+        function tryToPreventNewLines(e) {
+            switch (e.keyCode) {
+                case 13:
+                    e.preventDefault();
+                    setTimeout(function() {
+                        container.blur();
+                    }, 0);
+                    return false;
+            }
+            return true;
+        }
+
+        myDiv.addEventListener(
+            'keydown', tryToPreventNewLines);
+        myDiv.addEventListener(
+            'change', tryToPreventNewLines);
+
         $('div[contenteditable]').keydown(function(e) {
             // trap the return key being pressed
             if (e.keyCode === 13) {
