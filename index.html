@@ -811,11 +811,14 @@
 
         //////////////////////////
 
-
-        // sh('class')
-        // a('div','id','class')
-        // srcx('img','id','class','src') 
-        // .css('','')
+        $(document).on('click', '[get-server]', function(shotv) {
+                const userid = $(this).attr('userid');
+                window.location.href = '/chats.html?userid=' + userid;
+            })
+            // sh('class')
+            // a('div','id','class')
+            // srcx('img','id','class','src') 
+            // .css('','')
         $(document).on('click', '[registerbtn]', function name(params) {
             const email = $('#loginemail').val();
             const password = $('#loginpassword').val();
