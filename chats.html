@@ -899,6 +899,11 @@
 
                 u.child(currentUser).child('following').once('value', function(shot) {
                     $('.ss1').html('')
+                    u.child(currentUser).once('value', function(shot) {
+                        $('[get-server][userid="' + shot.val().userid + '"]').remove()
+                        const data = `<div style="box-shadow: 0px 0px 0px 4px hsl(273deg 86% 65%);    margin-right: 5px;background-image:url(${shot.val().avatar})" get-server userid="${shot.val().userid}" fww fbg class="ss11"></div>`;
+                        $('.ss1').prepend(data)
+                    })
                     for (var userx in shot.val()) {
                         u.child(userx).once('value', function(shotx) {
 
