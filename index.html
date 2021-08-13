@@ -1075,7 +1075,7 @@ Your browser does not support the video tag.
                         const loadno = shotxx.numChildren() - 1;
                         $('.mn82').html(`<div loadmorehome no="${loadno}">More</div>`)
                         e.child(shotxx.numChildren()).once('value', function(shot) {
-                            $('.mn81').html('')
+                            $('.mn81x').html('<div fww="" class="mn81"><div>')
 
 
                             shot.forEach(function(shotx) {
@@ -1780,7 +1780,7 @@ Your browser does not support the video tag.
                     myFunction()
                 })
                 $(document).on('click', '[get-user]', function() {
-                        $('[pagex][page="home"] > .mn81').html('')
+                        $('[pagex][page="home"] > .mn81x').html('')
                         $('[flow-results]').html('')
                         const userid = $(this).attr('userid')
 
@@ -2010,22 +2010,22 @@ Your browser does not support the video tag.
                 $(document).on('click', '[view-page]', function() {
                     const page = $(this).attr('page');
                     if (page == 'account') {
-                        $('[pagex][page="home"] > .mn81').html('')
+                        $('[pagex][page="home"] > .mn81x').html('')
                         $('[pagex][page="home"] > .mn82').html('')
                         $('.ss0').hide()
                     }
                     if (page == 'search') {
-                        $('[pagex][page="home"] > .mn81').html('')
+                        $('[pagex][page="home"] > .mn81x').html('')
                         $('[pagex][page="home"] > .mn82').html('')
                         $('.ss0').hide()
                     }
                     if (page == 'add') {
-                        $('[pagex][page="home"] > .mn81').html('')
+                        $('[pagex][page="home"] > .mn81x').html('')
                         $('[pagex][page="home"] > .mn82').html('')
                         $('.ss0').hide()
                     }
                     if (page == 'notifications') {
-                        $('[pagex][page="home"] > .mn81').html('')
+                        $('[pagex][page="home"] > .mn81x').html('')
                         $('[pagex][page="home"] > .mn82').html('')
                         $('.ss0').hide()
                     }
