@@ -816,22 +816,6 @@
             margin: 1rem;
             margin-top: 86px;
         }
-        
-        .textbox {
-            font-size: 1rem;
-            font-family: 'C1';
-            padding: 0.8rem;
-            border: unset;
-            background: var(--r10);
-            color: white;
-            border-radius: 22px;
-            height: fit-content;
-            width: -webkit-fill-available;
-        }
-        
-         :focus-visible {
-            outline: unset;
-        }
     </style>
 </head>
 
@@ -854,9 +838,7 @@
 
             </div>
             <div class="ss2112x">
-                <div id="myDiv" contenteditable="true" class="textbox">
-
-                </div>
+                <textarea placeholder="Massage" fww></textarea>
                 <div send-massage>
 
                     <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M3.4 20.4l17.45-7.48c.81-.35.81-1.49 0-1.84L3.4 3.6c-.66-.29-1.39.2-1.39.91L2 9.12c0 .5.37.93.87.99L17 12 2.87 13.88c-.5.07-.87.5-.87 1l.01 4.61c0 .71.73 1.2 1.39.91z"/></svg>
@@ -865,7 +847,7 @@
         </div>
     </div>
     <script>
-        autosize($('.textbox'));
+        autosize($('textarea'));
         const url_userid = $.url(window.location.href).param('userid')
         console.log(url_userid)
 
@@ -897,32 +879,6 @@
             const userid = $(this).attr('userid');
             window.location.href = '/chats.html?userid=' + userid;
         })
-        var container = document.getElementById('myDiv');
-
-        function tryToPreventNewLines(e) {
-            switch (e.keyCode) {
-                case 13:
-                    e.preventDefault();
-                    setTimeout(function() {
-                        container.blur();
-                    }, 0);
-                    return false;
-            }
-            return true;
-        }
-
-        myDiv.addEventListener(
-            'keydown', tryToPreventNewLines);
-        myDiv.addEventListener(
-            'change', tryToPreventNewLines);
-
-        $('div[contenteditable]').keydown(function(e) {
-            // tralp the return key being pressed
-            if (e.keyCode === 13) {
-                alert('yeds')
-                e.preventDefault();
-            }
-        });
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 var useridx;
@@ -1129,10 +1085,11 @@
                             }
                         });
                         ///////
-
-                        $(document).on('click', '[send-massage]', function name(params) {
+                        $("[send-massage]").on('touchstart touchend', function(e) {
+                            e.preventDefault();
                             sendmassage()
-                        })
+                        });
+
 
                     } else(
                         window.location.href = '/demo?userid=' + currentUser
