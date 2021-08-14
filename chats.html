@@ -901,7 +901,7 @@
 
         autosize($('textarea'));
         const url_userid = $.url(window.location.href).param('userid')
-        console.log(url_userid)
+
 
         function c(params) {
             console.log(params)
@@ -942,15 +942,18 @@
                     useridx = url_userid;
                 }
                 var v = window.location.pathname;
-                console.log(v)
+
                 const currentUser = user.uid;
                 const CreateLink = new Date().getTime();
 
                 const data = firebase.database().ref('/users/' + user.uid);
                 const e = firebase.database().ref('/everyone/');
                 const u = firebase.database().ref('/users/');
-
-
+                const view = u.child(useridx).child('server').child('view');
+                view.child(currentUser).update({
+                    count: 0,
+                    userid: currentUser,
+                })
                 u.child(currentUser).child('following').once('value', function(shot) {
                     $('.ss1').html('')
 
@@ -1077,7 +1080,7 @@ ${icon_settings}
                             const count = shot.numChildren();
                             chat.child(count).on('value', function(shotv) {
                                 shotv.forEach(element => {
-                                    console.log(element.val().massage)
+
                                     $('[keyx="' + element.val().link + '"]').remove()
                                     const data = `<div fff keyx="${element.val().link}" class="mn611">
     <div fw rr fff class="mn6111">
@@ -1139,7 +1142,7 @@ ${icon_settings}
                                             const Link = count2 + 1;
 
 
-                                            console.log(Link)
+
                                             if (count2 == 200) {
                                                 chat.child(count + 1).child(1).update({
                                                     time: CreateLink,
