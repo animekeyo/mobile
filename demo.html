@@ -901,7 +901,7 @@
         .con-sstt2 {
             overflow-y: scroll;
             position: absolute;
-            margin-top: 40px;
+            margin-top: 50px;
             height: -webkit-fill-available;
         }
         
@@ -937,20 +937,43 @@
         
         .con-sstt0 {
             width: -webkit-fill-available;
-            position: sticky;
-            top: 0;
-            left: 0;
-            height: 40px;
-        }
-        
-        .con-sstt0 {
-            width: -webkit-fill-available;
             position: absolute;
             top: -0.6px;
             left: 0;
-            height: 40px;
+            height: 30px;
             z-index: 102;
             background: var(--r12);
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-content: center;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 10px 14px;
+            gap: 27px;
+        }
+        
+        .con-sstt01 {
+            height: inherit;
+            width: auto;
+        }
+        
+        .con-sstt01 svg {
+            fill: white;
+            width: -webkit-fill-available;
+            height: -webkit-fill-available;
+        }
+        
+        input.con-sstt02 {
+            padding: unset;
+            height: -webkit-fill-available;
+            background: var(--r8);
+            color: white;
+            font-size: 0.8rem;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'C1';
+            width: -webkit-fill-available;
         }
         
         .con-sstt11 {
@@ -964,7 +987,10 @@
 <body>
     <div class="con-sstt">
         <div class="con-sstt0">
-
+            <div class="con-sstt01">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-3 10H8c-.55 0-1-.45-1-1s.45-1 1-1h8c.55 0 1 .45 1 1s-.45 1-1 1z"/></svg>
+            </div>
+            <input placeholder="Find the perfect Sticker" type="text" class="con-sstt02">
         </div>
         <div class="con-sstt1">
             <div style="background-image: url(https://media.discordapp.net/stickers/859924696962039858.png);" fbg class="con-sstt11">
