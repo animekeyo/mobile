@@ -908,21 +908,11 @@
         }
         const messages = document.getElementById('messages');
 
-        function getMessages() {
-            // Prior to getting your messages.
-            shouldScroll = messages.scrollTop + messages.clientHeight === messages.scrollHeight;
-            /*
-             * Get your messages, we'll just simulate it by appending a new one syncronously.
-             */
 
-            // After getting your messages.
-            if (!shouldScroll) {
-                scrollToBottom();
-            }
-        }
 
         function scrollToBottom() {
             messages.scrollTop = messages.scrollHeight;
+
         }
 
         scrollToBottom();
@@ -950,10 +940,7 @@
                 const e = firebase.database().ref('/everyone/');
                 const u = firebase.database().ref('/users/');
                 const view = u.child(useridx).child('server').child('view');
-                view.child(currentUser).update({
-                    count: 0,
-                    userid: currentUser
-                })
+
                 u.child(currentUser).child('following').once('value', function(shot) {
                     $('.ss1').html('')
 
@@ -1096,6 +1083,22 @@ ${icon_settings}
   
 </div>`;
                                     $('.ss211').append(data)
+
+                                    function getMessages() {
+                                        // Prior to getting your messages.
+                                        shouldScroll = messages.scrollTop + messages.clientHeight === messages.scrollHeight;
+                                        /*
+                                         * Get your messages, we'll just simulate it by appending a new one syncronously.
+                                         */
+                                        view.child(currentUser).update({
+                                                count: 0,
+                                                userid: currentUser
+                                            })
+                                            // After getting your messages.
+                                        if (!shouldScroll) {
+                                            scrollToBottom();
+                                        }
+                                    }
                                     getMessages()
                                     userdata($('[Avatar][userid="' + element.val().userid + '"]'), 'avatar', element.val().userid)
                                     userdata($('[DisplayName][userid="' + element.val().userid + '"]'), 'displayName', element.val().userid)
