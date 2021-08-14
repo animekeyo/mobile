@@ -734,7 +734,10 @@
             position: absolute;
             top: 0;
             left: 0;
+            display: flex;
             box-shadow: inset 0px 80px 80px 0px black;
+            flex-direction: row;
+            justify-content: flex-start;
         }
         
         .ss11 {
@@ -864,6 +867,20 @@
             background: var(--r15);
             border-radius: 100rem 50rem 50rem 100rem;
         }
+        
+        .ss11xvc {
+            z-index: 3;
+            position: absolute;
+            bottom: 0;
+            width: fit-content;
+            right: 0;
+            background: var(--c19);
+            min-width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            border-radius: 100rem;
+            box-shadow: 0px 0px 0px 3px var(--r15);
+        }
     </style>
 </head>
 
@@ -877,7 +894,10 @@
 
     <div fw class="ss21">
         <div fww class="ss0">
-            <div fww class="ss1">
+            <div fww ss1 class="ss1">
+
+            </div>
+            <div fww ss12 class="ss1">
 
             </div>
         </div>
@@ -941,6 +961,31 @@
                 const u = firebase.database().ref('/users/');
                 const view = u.child(useridx).child('server').child('view');
 
+                function swc(suid, div) {
+                    const server = u.child(suid).child('server');
+                    server.child('view').child(currentUser).on('value', function(shot) {
+                        if (shot.exists()) {
+                            if (shot.val().count == 0) {
+                                div.hide()
+                            } else {
+                                div.show().text(shot.val().count)
+                            }
+
+                        } else {
+                            server.child('chat').once('value', function(shot) {
+
+                                server.child('chat').child(shot.numChildren()).on('value', function(shot) {
+                                    if (shot.numChildren() == 0) {
+                                        div.hide()
+                                    } else {
+                                        div.show().text(shot.numChildren())
+                                    }
+
+                                })
+                            })
+                        }
+                    })
+                }
                 u.child(currentUser).child('following').once('value', function(shot) {
                     $('.ss1').html('')
 
@@ -950,7 +995,7 @@
                             const data = `
                                 <div get-server userid="${shotx.val().userid}" fww class="ss1xz">
         <div style="box-shadow: 0px 0px 0px 6px var(--v1);    margin-right: 5px;background-image:url(${shotx.val().avatar})"
-            get-server userid="${shotx.val().userid}" fww fbg class="ss11"></div>
+            get-server userid="${shotx.val().userid}" fww fbg rr class="ss11"></div>
             <div class="ss1zx1x">
                 <div class="ss1zx1">
 ${icon_settings}
@@ -962,11 +1007,15 @@ ${icon_settings}
          
     </div>`;
 
-                            $('.ss1').prepend(data)
+                            $('[ss1]').prepend(data)
                         } else {
                             $('[get-server][userid="' + shotx.val().userid + '"]').remove()
-                            const data = `<div style="box-shadow: 0px 0px 0px 4px hsl(273deg 86% 65%);    margin-right: 5px;background-image:url(${shotx.val().avatar})" get-server userid="${shotx.val().userid}" fww fbg class="ss11"></div>`;
-                            $('.ss1').prepend(data)
+                            const data = `<div style="box-shadow: 0px 0px 0px 4px hsl(273deg 86% 65%);    margin-right: 5px;background-image:url(${shotx.val().avatar})" get-server userid="${shotx.val().userid}" fww fbg rr class="ss11">
+                                <div style="display:none;" server-view-count suid="${shotx.val().userid}" class="ss11xvc" ff="">0</div>
+                            </div>`;
+                            $('[ss1]').prepend(data)
+                            swc(shotx.val().userid, $('[server-view-count][suid="' + shotx.val().userid + '"]'))
+
                         }
                     })
                     for (var userx in shot.val()) {
@@ -977,7 +1026,7 @@ ${icon_settings}
                                 const data = `
                                 <div get-server userid="${shotx.val().userid}" fww class="ss1xz">
         <div style="box-shadow: 0px 0px 0px 6px var(--v1);    margin-right: 5px;background-image:url(${shotx.val().avatar})"
-            get-server userid="${shotx.val().userid}" fww fbg class="ss11"></div>
+            get-server userid="${shotx.val().userid}" fww fbg rr class="ss11"></div>
             <div class="ss1zx1x">
                 <div class="ss1zx1">
 ${icon_settings}
@@ -988,11 +1037,12 @@ ${icon_settings}
             </div>
          
     </div>`;
-                                $('.ss1').prepend(data)
+                                $('[ss1]').prepend(data)
                             } else {
                                 $('[get-server][userid="' + shotx.val().userid + '"]').remove()
-                                const data = `<div style="box-shadow: 0px 0px 0px 3px var(--r15);background-image:url(${shotx.val().avatar})" get-server userid="${shotx.val().userid}" fww fbg class="ss11"></div>`;
-                                $('.ss1').append(data)
+                                const data = `<div style="box-shadow: 0px 0px 0px 3px var(--r15);background-image:url(${shotx.val().avatar})" get-server userid="${shotx.val().userid}" fww fbg rr class="ss11"><div style="display:none;" server-view-count suid="${shotx.val().userid}" class="ss11xvc" ff="">0</div></div>`;
+                                $('[ss12]').prepend(data)
+                                swc(shotx.val().userid, $('[server-view-count][suid="' + shotx.val().userid + '"]'))
                             }
 
                         })
