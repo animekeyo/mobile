@@ -952,7 +952,7 @@
                 const view = u.child(useridx).child('server').child('view');
                 view.child(currentUser).update({
                     count: 0,
-                    userid: currentUser,
+                    userid: currentUser
                 })
                 u.child(currentUser).child('following').once('value', function(shot) {
                     $('.ss1').html('')
