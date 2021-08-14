@@ -777,6 +777,15 @@
         
         .ss0 {
             overflow-x: scroll;
+            overflow-y: unset;
+            z-index: 2;
+            /* position: absolute; */
+            top: 0;
+            left: 0;
+            display: flex;
+            box-shadow: inset 0px 80px 80px 0px black;
+            flex-direction: row;
+            justify-content: flex-start;
         }
         
         .ss11 {
@@ -785,7 +794,100 @@
             margin: 3px;
             background-color: var(--r15);
             border-radius: 100rem;
-            box-shadow: 0px 0px 0px 3px var(--r15);
+        }
+        
+        .ss21 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 200;
+        }
+        
+        .ss211 {
+            overflow-y: scroll;
+        }
+        
+        .ss2112x {
+            display: flex;
+            width: -webkit-fill-available;
+            flex-direction: row;
+            gap: 0.5rem;
+            justify-content: flex-start;
+        }
+        
+        .ss212 {
+            display: flex;
+            justify-content: flex-end;
+            /* gap: 1rem; */
+            height: -webkit-fill-available;
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 1rem;
+            margin-top: 0px;
+            margin-bottom: 7px;
+            z-index: 1;
+        }
+        
+        .ss1zx1 svg {
+            fill: white;
+            width: -webkit-fill-available;
+            height: -webkit-fill-available;
+            margin: 5px;
+        }
+        
+        .ss1zx1 {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .ss1zx1x {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+        }
+        
+        .ss1xz {
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            justify-content: flex-start;
+            align-items: center;
+            width: fit-content;
+            background: var(--r15);
+            border-radius: 100rem 50rem 50rem 100rem;
+        }
+        
+        .ss11xvc {
+            z-index: 3;
+            position: absolute;
+            bottom: -4px;
+            width: fit-content;
+            right: -4px;
+            background: var(--c19);
+            min-width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            border-radius: 100rem;
+            box-shadow: 0px 0px 0px 4px var(--r15);
+        }
+        
+        .ss1[ss12] {
+            margin-left: 10px;
+        }
+        
+        .ss1[ss1] {
+            margin-right: unset;
         }
     </style>
 </head>
@@ -1063,17 +1165,62 @@ Your browser does not support the video tag.
                 $(document).on('click', '[view-page][page="home"]', function() {
                     const e = firebase.database().ref('/everyone/');
                     const u = firebase.database().ref('/users/');
+
+                    function swc(suid, div) {
+                        const server = u.child(suid).child('server');
+                        server.child('view').child(currentUser).on('value', function(shot) {
+                            if (shot.exists()) {
+                                if (shot.val().count == 0) {
+                                    div.hide()
+                                } else {
+                                    div.show().text(shot.val().count)
+                                }
+
+                            } else {
+                                server.child('chat').once('value', function(shot) {
+
+                                    server.child('chat').child(shot.numChildren()).on('value', function(shot) {
+                                        if (shot.numChildren() == 0) {
+                                            div.hide()
+                                        } else {
+                                            div.show().text(shot.numChildren())
+                                        }
+
+                                    })
+                                })
+                            }
+                        })
+                    }
                     u.child(currentUser).child('following').once('value', function(shot) {
                         $('.ss1').html('')
+
+                        u.child(currentUser).once('value', function(shotx) {
+
+                            $('[get-server][userid="' + shotx.val().userid + '"]').remove()
+                            const data = `<div data-aos="zoom-in" style="box-shadow: 0px 0px 0px 4px var(--c7);    margin-right: 5px;background-image:url(${shotx.val().avatar})" get-server userid="${shotx.val().userid}" fww fbg rr class="ss11">
+                                <div data-aos="zoom-in" style="display:none;" server-view-count suid="${shotx.val().userid}" class="ss11xvc" ff="">0</div>
+                            </div>`;
+                            $('[ss1]').prepend(data)
+                            swc(shotx.val().userid, $('[server-view-count][suid="' + shotx.val().userid + '"]'))
+                            AOS.refresh();
+
+                        })
                         for (var userx in shot.val()) {
                             u.child(userx).once('value', function(shotx) {
 
+
                                 $('[get-server][userid="' + shotx.val().userid + '"]').remove()
-                                const data = `<div get-server userid="${shotx.val().userid}" fww fbg style="background-image:url(${shotx.val().avatar})" class="ss11"></div>`;
-                                $('.ss1').prepend(data)
+                                const data = `<div data-aos="zoom-in"  style="box-shadow: 0px 0px 0px 3px var(--r15);background-image:url(${shotx.val().avatar})" get-server userid="${shotx.val().userid}" fww fbg rr class="ss11"><div data-aos="zoom-in" style="display:none;" server-view-count suid="${shotx.val().userid}" class="ss11xvc" ff="">0</div></div>`;
+                                $('[ss12]').prepend(data)
+
+                                swc(shotx.val().userid, $('[server-view-count][suid="' + shotx.val().userid + '"]'))
+                                AOS.refresh();
+
+
                             })
                         }
                     })
+
                     e.once('value', function(shotxx) {
                         const loadno = shotxx.numChildren() - 1;
                         $('.mn82').html(`<div loadmorehome no="${loadno}">More</div>`)
@@ -2139,10 +2286,9 @@ Your browser does not support the video tag.
     </div>`,
                     a('div', 'fw fff aa pagex page="home"', 'n8').prepend(
                         `<div fww class="ss0">
-        <div fww class="ss1">
-         
-        </div>
-    </div>`,
+            <div fww ss1 class="ss1"></div>
+            <div fww ss12 class="ss1"></div>
+        </div>`,
                         a('div', ' fww', 'n81x').prepend(
                             a('div', 'fww', 'n81').prepend('')
                         ),
