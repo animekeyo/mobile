@@ -865,9 +865,9 @@
         }
         
         .anli69 {
-            height: 22rem;
+            height: -webkit-fill-available;
             width: calc(100% + 100px);
-            filter: blur(12px);
+            filter: blur(12px)brightness(0.5);
             left: -50px;
             top: -2rem;
             z-index: 1;
@@ -876,6 +876,13 @@
         
         .anli691 {
             z-index: 2;
+            margin: 10px;
+            gap: 10px;
+            display: flex;
+            flex-direction: column;
+            align-content: flex-start;
+            justify-content: flex-start;
+            align-items: flex-start;
         }
         
         .anli691x {
@@ -883,7 +890,6 @@
             height: fit-content;
             display: grid;
             grid-gap: 10px;
-            margin: 10px;
             grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
         }
         
@@ -941,6 +947,29 @@
             margin-bottom: 35px;
             border-radius: 5px;
         }
+        
+        .alititle {
+            font-size: large;
+        }
+        
+        .anli692 {
+            display: flex;
+            flex-direction: column;
+            align-content: flex-start;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 5px;
+        }
+        
+        .alidec {
+            font-size: small;
+            max-height: 8rem;
+            overflow: hidden;
+            line-height: 1em;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 10;
+        }
     </style>
 </head>
 
@@ -953,7 +982,13 @@
     </div>
     <div pagex page="anime" style="display: none;" fx fw ff class="ani1">
         <div fbg aa class="anli69"></div>
+
         <div aa fw class="anli691">
+            <div fww class="anli692">
+                <div class="alititle en"></div>
+                <div class="alititle ja_jp"></div>
+                <div class="alidec"></div>
+            </div>
             <div class="anli691x">
 
             </div>
@@ -1056,11 +1091,23 @@
             const id = $(this).attr('id');
             $.getJSON('https://kitsu.io/api/edge/anime/' + id, function(data) {
                 const v = data.data;
+                console.log(v)
                 const attr = v.attributes;
+                const description = attr.description;
                 const poster = attr.posterImage;
                 const cover = attr.coverImage;
                 const title = attr.titles;
                 const slug = attr.slug;
+                var titlex;
+                if (typeof title.en === 'undefined') {
+                    titlex = title.en_jp;
+                } else {
+                    titlex = title.en;
+                }
+                $('.alititle.en').text(titlex)
+                $('.alititle.ja_jp').text(title.ja_jp)
+
+                $('.alidec').text(description)
                 $('.anli69').css('background-image', 'url(' + cover.original + ')')
                 const theme = '';
                 $.getJSON('https://kitsu.io/api/edge/anime/' + id + '/episodes', function(data) {
