@@ -1031,6 +1031,7 @@
         $(document).on('click', '[view-page]', function() {
             const page = $(this).attr('page');
             navigator.vibrate(70);
+            sh('.ani12x1');
             if (page) {
                 $('body > div[pagex]').hide()
                 $('div[view-page] > svg').css('fill', 'var(--c6)')
