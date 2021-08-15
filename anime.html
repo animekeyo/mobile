@@ -837,13 +837,12 @@
         }
         
         .ani12 {
-            display: flex;
-            justify-content: flex-start;
-            align-items: flex-start;
+            height: fit-content;
+            display: grid;
+            grid-gap: 10px;
             margin: 10px;
             margin-top: unset;
-            gap: 10px;
-            height: fit-content;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
         }
         
         .ani121 {
@@ -905,6 +904,34 @@
             height: 56vw;
             width: 100vw;
         }
+        
+        tag {
+            padding: 2px 5px 3px;
+            height: fit-content;
+            width: fit-content;
+            background: var(--c19);
+            border-radius: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .ani12x12 {
+            height: fit-content;
+            width: fit-content;
+            margin: 7px;
+        }
+        
+        .ani12x1x1 {
+            top: unset;
+            bottom: 0;
+            height: 2.04rem;
+            width: -webkit-fill-available;
+            overflow: hidden;
+        }
+        
+        .ani12x11 {
+            margin-bottom: 35px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 
@@ -912,7 +939,6 @@
     <div pagex page="search" style="display: none;" fx fw ff class="ani1">
         <input fww class="ani11" type="search" placeholder="Search Anime">
         <div fw ff class="ani12">
-
 
         </div>
     </div>
@@ -939,6 +965,25 @@
 
     </div>
     <script>
+        function sh(dsfvf) {
+            setTimeout(function name(params) {
+                $(dsfvf).css({
+                    'height': $(dsfvf).width() + $(dsfvf).width() - 45 + 'px'
+                })
+            }, 2000)
+            $(dsfvf).css({
+                'height': $(dsfvf).width() + $(dsfvf).width() - 45 + 'px'
+            })
+            $(window).on('resize', function() {
+                $(dsfvf).css({
+                    'height': $(dsfvf).width() + $(dsfvf).width() - 45 + 'px'
+                })
+            })
+        }
+
+
+        sh('.ani12x1');
+
         $(document).on('click', '[view-page]', function() {
             const page = $(this).attr('page');
             navigator.vibrate(70);
@@ -973,7 +1018,18 @@
                 </div>
                 <div fww class="ani1212">${titlex}</div>
             </div>`;
-                    $('.ani12').prepend(theme);
+                    const theme2 = `
+            <div rr get-anime id="${id}" class="ani12x1">
+                <div fw fbg aa style="background-image: url(${poster.small});" ff class="ani12x11">
+
+                </div>
+                <div aa class="ani12x1x1">
+                    ${titlex}
+                </div>
+
+            </div>`;
+                    $('.ani12').prepend(theme2);
+                    sh('.ani12x1')
 
                 })
             })
@@ -1002,7 +1058,7 @@
                     $('.anli691x').html('')
                     $.each(data.data, function(o, v) {
                         const attr = v.attributes;
-                        const thumbnail = attr.thumbnail.original;
+                        //  const thumbnail = attr.thumbnail.original;
                         const title = attr.titles;
                         const number = attr.number;
                         console.log(number)
@@ -1017,4 +1073,4 @@
     </script>
 </body>
 
-</html>
+</html
