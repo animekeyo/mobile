@@ -917,7 +917,7 @@
         </div>
     </div>
     <div pagex page="anime" style="display: none;" fx fw ff class="ani1">
-        <div fbg aa class="anli69" style="background-image: url(https://media.kitsu.io/anime/cover_images/11902/original.jpg?1597701521);"></div>
+        <div fbg aa class="anli69"></div>
         <div aa fw class="anli691">
             <div class="anli691x">
 
@@ -951,7 +951,7 @@
                 $('[page="' + page + '"]').css('border-color', 'var(--v1)')
             }
         })
-
+        $('[view-page][page="search"]').trigger("click");
         $('input').on('keyup keypress', function() {
             const val = $(this).val();
             $.getJSON('https://kitsu.io/api/edge/anime?filter[text]=' + val, function(data) {
@@ -996,7 +996,7 @@
                 const cover = attr.coverImage;
                 const title = attr.titles;
                 const slug = attr.slug;
-
+                $('.anli69').css('background-image', 'url(' + cover.original + ')')
                 const theme = '';
                 $.getJSON('https://kitsu.io/api/edge/anime/' + id + '/episodes', function(data) {
                     $('.anli691x').html('')
