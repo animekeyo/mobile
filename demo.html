@@ -1056,7 +1056,31 @@
     </div>
     <script>
         sh('.con-sstt21')
+
+        setInterval(function() {
+            const bottom = $('.con-sstt').css('bottom');
+            const hh = bottom.replace("px", "");
+            const min = hh - 15;
+            if (hh == -255) {
+
+            } else {
+                $('.con-sstt').css('bottom', min);
+            }
+
+        }, 0000)
+        $.ajax({
+            type: "POST",
+            url: 'https://genoanime.com/player/genovids.php',
+            data: {
+                id: 'MTY2ODAy'
+            },
+            success: function(data) {
+                filedata = (JSON.parse(data).url);
+                console.log(filedata)
+            }
+        })
     </script>
+
 </body>
 
 </html>
