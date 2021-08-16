@@ -985,9 +985,26 @@
             z-index: 10;
         }
         
+        iframe.chat {
+            height: calc(100% - 56vw);
+            width: -webkit-fill-available;
+        }
+        
+        .ani1 {
+            background: var(--r6);
+        }
+        
         @media (max-width:600px) {}
         
         @media (min-width:600px) {
+            iframe.chat {
+                height: -webkit-fill-available;
+                width: calc(100% - 55vw);
+            }
+            .ani1 {
+                display: flex;
+                flex-direction: row;
+            }
             .m21 {
                 height: auto;
             }
@@ -1133,7 +1150,8 @@
             $('[view-page][page="watch"]').trigger("click");
             const number = $(this).attr('no');
             const slug = $(this).attr('slug');
-            const theme = `<iframe allow="fullscreen" src="https://streamfreak.cc/genoani.php?ani_me=${slug}/${number}"  frameborder="0"></iframe>`;
+            const theme = `<iframe allow="fullscreen" src="https://streamfreak.cc/genoani.php?ani_me=${slug}/${number}"  frameborder="0"></iframe>
+            <iframe allow="fullscreen" src="/chats.html" class="chat"  frameborder="0"></iframe>`;
             $('[pagex][page="watch"]').html(theme)
         })
         $(document).on('click', '[get-anime]', function() {
