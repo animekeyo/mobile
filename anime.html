@@ -997,34 +997,52 @@
         @media (max-width:600px) {}
         
         @media (min-width:600px) {
+            .ani12x11 {
+                margin-bottom: unset;
+                border-radius: unset;
+            }
             iframe.chat {
                 height: -webkit-fill-available;
                 width: calc(100% - 55vw);
             }
             .ani12x1 {
                 background: var(--r15);
-                padding: 5px;
-                border-radius: 8px 8px 5px 5px;
+                border-radius: 4px;
+                overflow: hidden;
+            }
+            .ani12x11::after {
+                content: "";
+                position: absolute;
+                top: 0%;
+                left: 0;
+                right: 0;
+                bottom: 36px;
+                z-index: 2;
+                background: -moz-linear-gradient( 0deg, var(--r15) 0, rgba(42, 44, 49, 0) 100%);
+                background: -webkit-linear-gradient( 0deg, var(--r15) 0, rgba(42, 44, 49, 0) 100%);
+                background: linear-gradient( 0deg, var(--r15) 0, rgba(42, 44, 49, 0) 100%);
+            }
+            .ani12 {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                --r15: var(--r7);
             }
             .ani12x1x1x {
-                height: 41px;
+                /* height: 41px; */
                 width: auto;
                 overflow: hidden;
-                position: absolute;
+                /* position: absolute; */
                 bottom: 0;
                 display: flex;
+                padding: 5px;
                 align-items: center;
-                padding-right: 6px;
-                padding-left: 1px;
+                /* padding-right: 6px; */
+                /* padding-left: 1px; */
             }
             .ani12x1x1 {
                 font-size: calc(100% - 3px);
             }
             .ani1 {
                 background: var(--r10);
-            }
-            .ani12 {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
             }
             .ani1[page="watch"] {
                 display: flex;
@@ -1107,15 +1125,15 @@
         function sh(dsfvf) {
             setTimeout(function name(params) {
                 $(dsfvf).css({
-                    'height': $(dsfvf).width() + $(dsfvf).width() - 25 + 'px'
+                    'height': $(dsfvf).width() + $(dsfvf).width() - 15 + 'px'
                 })
             }, 2000)
             $(dsfvf).css({
-                'height': $(dsfvf).width() + $(dsfvf).width() - 25 + 'px'
+                'height': $(dsfvf).width() + $(dsfvf).width() - 15 + 'px'
             })
             $(window).on('resize', function() {
                 $(dsfvf).css({
-                    'height': $(dsfvf).width() + $(dsfvf).width() - 25 + 'px'
+                    'height': $(dsfvf).width() + $(dsfvf).width() - 15 + 'px'
                 })
             })
         }
