@@ -1246,7 +1246,7 @@
             $.getJSON('https://api.jikan.moe/v3/top/anime/0/airing', function(data) {
 
 
-
+                $('[trending_r]').html('');
                 $.each(data.top, function name(o, v) {
                     const id = v.mal_id;
 
