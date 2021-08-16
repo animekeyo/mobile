@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anime</title>
     <script src="https://canary.animekeyo.com/scripts/jquery.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <style ux>
         @import url("https://canary.animekeyo.com/styles/style.css?clear1-5");
     </style>
@@ -1087,9 +1090,18 @@
 </head>
 
 <body>
+
+    <div pagex page="home" style="display: none;" fx fw ff class="ani1">
+        <div class="header-title">
+            Treading
+        </div>
+        <div trending_r fw ff class="ani12">
+
+        </div>
+    </div>
     <div pagex page="search" style="display: none;" fx fw ff class="ani1">
         <input fww class="ani11" type="search" placeholder="Search Anime">
-        <div fw ff class="ani12">
+        <div search_r fw ff class="ani12">
 
         </div>
     </div>
@@ -1122,6 +1134,8 @@
 
     </div>
     <script>
+        AOS.init();
+
         function sh(dsfvf) {
             setTimeout(function name(params) {
                 $(dsfvf).css({
@@ -1139,16 +1153,19 @@
         }
 
 
-        sh('.ani12x1');
-
+        sh('.ani12[search_r] > div.ani121')
+        sh('.ani12[trending_r] > div.ani121')
         $(document).on('click', '[view-page]', function() {
             const page = $(this).attr('page');
+            $('[pagex][page="watch"]').attr('data', false)
             navigator.vibrate(70);
             setInterval(function(params) {
-                sh('.ani12x1');
+                sh('.ani12[search_r] > div')
+                sh('.ani12[trending_r] > div')
             }, 500)
             if (page) {
                 $('body > div[pagex]').hide()
+
                 $('div[view-page] > svg').css('fill', 'var(--c6)')
                 $('div[view-page]').css('border-color', 'var(--c6)')
                 $('[page="' + page + '"]').show()
@@ -1156,11 +1173,11 @@
                 $('[page="' + page + '"]').css('border-color', 'var(--v1)')
             }
         })
-        $('[view-page][page="search"]').trigger("click");
+
         $('input').on('keyup keypress', function() {
             const val = $(this).val();
             $.getJSON('https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=0&filter[text]=' + val, function(data) {
-                $('.ani12').html('')
+                $('[search_r]').html('')
                 $.each(data.data, function(o, v) {
                     const attr = v.attributes;
                     const id = v.id;
@@ -1172,7 +1189,7 @@
                     } else {
                         titlex = title.en;
                     }
-                    const theme = ` <div get-anime id="${id}" fww rr class="ani121">
+                    const theme = ` <div get-anime id="${id}" fww rr class="ani121 cc">
                 <div aa class="ani1211" fbg style="background-image: url(${poster.small});">
 
                 </div>
@@ -1191,19 +1208,82 @@
                
 
             </div>`;
-                    $('.ani12').prepend(theme2);
-                    sh('.ani12x1')
+                    $('[search_r]').prepend(theme2);
+                    sh('.ani12[trending_r] > div')
+
+                })
+            })
+        })
+        setTimeout(function name(params) {
+            $('[view-page][page="home"]').trigger("click");
+        }, 1000)
+        $(document).on('click', '[view-page][page="home"]', function() {
+            $.getJSON('https://api.jikan.moe/v3/top/anime/0/airing', function(data) {
+
+
+
+                $.each(data.top, function name(o, v) {
+                    const id = v.mal_id;
+
+                    setTimeout(function name(params) {
+                        $.getJSON('https://kitsu.io/api/edge/mappings?filter[externalSite]=myanimelist%2Fanime&filter[externalId]=' + id + '&include=item', function(data) {
+                            if (data.included[0]) {
+                                const v = data.included[0];
+
+                                const attr = v.attributes;
+                                const id = v.id;
+                                const poster = attr.posterImage;
+                                const title = attr.titles;
+                                console.log(title)
+                                var titlex;
+                                if (typeof title.en === 'undefined') {
+                                    titlex = title.en_jp;
+                                } else {
+                                    titlex = title.en;
+                                }
+                                if (typeof title.en_jp === 'undefined') {
+                                    titlex = title.en_cn;
+                                }
+                                const theme = ` <div  get-anime id="${id}" fww rr class="ani121 gg">
+                <div aa class="ani1211" fbg style="background-image: url(${poster.small});">
+
+                </div>
+                <div fww class="ani1212">${titlex}</div>
+            </div>`;
+                                const theme2 = `
+            <div rr get-anime id="${id}" class="ani12x1">
+                <div fw fbg  style="background-image: url(${poster.small});" ff class="ani12x11">
+
+                </div>
+                <div  class="ani12x1x1x">
+                    <div  class="ani12x1x1">
+                    ${titlex}
+                </div>
+                </div>
+               
+
+            </div>`;
+                                $('[trending_r]').append(theme2);
+                                sh('.ani12[search_r] > div')
+                            }
+                        })
+                    }, 50)
 
                 })
             })
         })
         $(document).on('click', '[get-watch]', function() {
             $('[view-page][page="watch"]').trigger("click");
+            $('[iframe][id="prev"]').attr('data', 'xxx')
             const number = $(this).attr('no');
             const slug = $(this).attr('slug');
-            const theme = `<iframe allow="fullscreen" src="https://streamfreak.cc/genoani.php?ani_me=${slug}/${number}"  frameborder="0"></iframe>
+            const theme = `<iframe id="prev" allow="fullscreen" src="https://streamfreak.ani12[trending_r] > div/genoani.php?ani_me=${slug}/${number}"  frameborder="0"></iframe>
             <iframe allow="fullscreen" src="/chats.html" class="chat"  frameborder="0"></iframe>`;
             $('[pagex][page="watch"]').html(theme)
+            $('iframe[id="prev"] > body').ready(function name(params) {
+                $('iframe[id="prev"] > body').css('display', 'nonex')
+            })
+
         })
         $(document).on('click', '[get-anime]', function() {
             $('[view-page][page="anime"]').trigger("click");
