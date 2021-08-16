@@ -997,6 +997,11 @@
             background: var(--r6);
         }
         
+        .header-title {
+            padding: 10px;
+            font-size: xx-large;
+        }
+        
         @media (max-width:600px) {}
         
         @media (min-width:600px) {
@@ -1093,7 +1098,7 @@
 
     <div pagex page="home" style="display: none;" fx fw ff class="ani1">
         <div class="header-title">
-            Treading
+            Top Airing Anime
         </div>
         <div trending_r fw ff class="ani12">
 
@@ -1152,16 +1157,36 @@
             })
         }
 
+        function shx(dsfvf) {
+            setTimeout(function name(params) {
+                dsfvf.css({
+                    'height': dsfvf.width() + dsfvf.width() - 15 + 'px'
+                })
+            }, 2000)
+            dsfvf.css({
+                'height': dsfvf.width() + dsfvf.width() - 15 + 'px'
+            })
+            $(window).on('resize', function() {
+                dsfvf.css({
+                    'height': dsfvf.width() + dsfvf.width() - 15 + 'px'
+                })
+            })
+        }
+        $(document).on('DOMNodeInserted', function(e) {
+            if ($(e.target).hasClass('ani12x1')) {
+                shx($(e.target))
+            }
+        })
 
-        sh('.ani12[search_r] > div.ani121')
-        sh('.ani12[trending_r] > div.ani121')
+        //  sh('.ani12[search_r] > div.ani121')
+        // sh('.ani12[trending_r] > div.ani121')
         $(document).on('click', '[view-page]', function() {
             const page = $(this).attr('page');
             $('[pagex][page="watch"]').attr('data', false)
             navigator.vibrate(70);
             setInterval(function(params) {
-                sh('.ani12[search_r] > div')
-                sh('.ani12[trending_r] > div')
+                //sh('.ani12[search_r] > div')
+                //sh('.ani12[trending_r] > div')
             }, 500)
             if (page) {
                 $('body > div[pagex]').hide()
@@ -1209,7 +1234,7 @@
 
             </div>`;
                     $('[search_r]').prepend(theme2);
-                    sh('.ani12[trending_r] > div')
+                    //  sh('.ani12[trending_r] > div')
 
                 })
             })
@@ -1234,7 +1259,7 @@
                                 const id = v.id;
                                 const poster = attr.posterImage;
                                 const title = attr.titles;
-                                console.log(title)
+
                                 var titlex;
                                 if (typeof title.en === 'undefined') {
                                     titlex = title.en_jp;
@@ -1244,7 +1269,7 @@
                                 if (typeof title.en_jp === 'undefined') {
                                     titlex = title.en_cn;
                                 }
-                                const theme = ` <div  get-anime id="${id}" fww rr class="ani121 gg">
+                                const theme = ` <div data-aos="zoom-in" get-anime id="${id}" fww rr class="ani121 gg">
                 <div aa class="ani1211" fbg style="background-image: url(${poster.small});">
 
                 </div>
@@ -1264,7 +1289,7 @@
 
             </div>`;
                                 $('[trending_r]').append(theme2);
-                                sh('.ani12[search_r] > div')
+                                //   sh('.ani12[search_r] > div')
                             }
                         })
                     }, 50)
