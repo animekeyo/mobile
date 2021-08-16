@@ -1004,6 +1004,9 @@
             .ani1 {
                 background: var(--r10);
             }
+            .ani12 {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
             .ani1[page="watch"] {
                 display: flex;
                 flex-direction: row;
@@ -1119,7 +1122,7 @@
         $('[view-page][page="search"]').trigger("click");
         $('input').on('keyup keypress', function() {
             const val = $(this).val();
-            $.getJSON('https://kitsu.io/api/edge/anime?filter[text]=' + val, function(data) {
+            $.getJSON('https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=0&filter[text]=' + val, function(data) {
                 $('.ani12').html('')
                 $.each(data.data, function(o, v) {
                     const attr = v.attributes;
