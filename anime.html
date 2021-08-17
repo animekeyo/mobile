@@ -1056,9 +1056,58 @@
             border-radius: 3px;
         }
         
+        .ani12v {
+            width: -webkit-fill-available;
+            height: fit-content;
+            overflow-x: scroll;
+        }
+        
+        .ani12v .ani12 .ani12x1 {
+            width: 150px;
+        }
+        
+        .ani12v .ani12 {
+            display: flex;
+            width: fit-content;
+            flex-direction: row;
+            grid-template-columns: unset;
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            align-items: center;
+            align-content: center;
+            margin-bottom: 4px;
+        }
+        
         @media (max-width:600px) {}
         
         @media (min-width:600px) {
+            .ani12v::-webkit-scrollbar {
+                display: block!important;
+            }
+            .ani12v::-webkit-scrollbar {
+                display: block!important;
+            }
+            .ani12v::-webkit-scrollbar {
+                width: 7px!important;
+            }
+            .ani12v::-webkit-scrollbar-thumb {
+                background-color: var(--v1)!important;
+                border-radius: 10rem!important;
+            }
+            .ani12v::-webkit-scrollbar-track {
+                background-color: var(--r8)!important;
+                border-radius: 100rem!important;
+            }
+            .ani12v::-webkit-scrollbar {
+                display: unset!important;
+            }
+            /* Hide scrollbar for IE, Edge and Firefox */
+            .ani12v {
+                -ms-overflow-style: unset!important;
+                /* IE and Edge */
+                scrollbar-width: unset!important;
+                /* Firefox */
+            }
             .ani12x11 {
                 margin-bottom: unset;
                 border-radius: unset;
@@ -1153,9 +1202,12 @@
         <div class="header-title">
             Top Airing Anime
         </div>
-        <div trending_r fw ff class="ani12">
+        <div fw class="ani12v">
+            <div trending_r fw class="ani12">
 
+            </div>
         </div>
+
     </div>
     <div pagex page="search" style="display: none;" fx fw ff class="ani1">
         <input fww class="ani11" type="search" placeholder="Search Anime">
