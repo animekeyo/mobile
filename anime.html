@@ -845,7 +845,7 @@
             grid-gap: 10px;
             margin: 10px;
             margin-top: unset;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         }
         
         .ani121 {
@@ -999,7 +999,48 @@
         
         .header-title {
             padding: 10px;
+            text-transform: uppercase;
             font-size: xx-large;
+            color: var(--v1);
+        }
+        
+        genres {
+            padding: 4px 7px;
+            border-radius: 3px;
+            background: var(--r10);
+            /* text-transform: uppercase; */
+            font-size: small;
+        }
+        
+        .aligenres {
+            gap: 5px;
+            display: flex;
+            flex-direction: row;
+        }
+        
+        .aliratingo {
+            color: var(--v1);
+        }
+        
+        .alirating.epv {
+            display: flex;
+            flex-direction: row;
+            gap: 5px;
+            /* padding: 6px 7px; */
+            padding-top: 4px;
+        }
+        
+        .alirating {
+            padding: 5px 7px;
+            border-radius: 3px;
+            background: var(--r10);
+            /* text-transform: uppercase; */
+            font-size: small;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            align-items: flex-start;
+            align-content: flex-start;
         }
         
         @media (max-width:600px) {}
@@ -1031,8 +1072,9 @@
                 background: linear-gradient( 0deg, var(--r15) 0, rgba(42, 44, 49, 0) 100%);
             }
             .ani12 {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
                 --r15: var(--r7);
+                margin-left: unset;
             }
             .ani12x1x1x {
                 /* height: 41px; */
@@ -1041,16 +1083,13 @@
                 /* position: absolute; */
                 bottom: 0;
                 display: flex;
-                padding: 5px;
+                padding: 6px;
                 align-items: center;
                 /* padding-right: 6px; */
                 /* padding-left: 1px; */
             }
             .ani12x1x1 {
                 font-size: calc(100% - 3px);
-            }
-            .ani1 {
-                background: var(--r10);
             }
             .ani1[page="watch"] {
                 display: flex;
@@ -1060,6 +1099,7 @@
                 width: 24.5rem;
                 margin-bottom: 13px;
                 background: var(--r15);
+                margin-left: unset;
             }
             .m21 {
                 height: auto;
@@ -1117,7 +1157,35 @@
             <div fww class="anli692">
                 <div class="alititle en"></div>
                 <div class="alititle ja_jp"></div>
+                <div class="alirating epv">
+                    <O class="aliratingo">
+                        Episodes
+                    </O>
+                    <V class="Episodesv">
+
+                    </V>
+                </div>
+                <div class="alirating epv">
+                    <O class="aliratingo">
+                        Status
+                    </O>
+                    <V class="Statusv">
+
+                    </V>
+                </div>
+                <div class="alirating epv">
+                    <O class="aliratingo">
+                        Rating
+                    </O>
+                    <V class="aliratingv">
+
+                    </V>
+                </div>
+                <div class="aligenres">
+
+                </div>
                 <div class="alidec"></div>
+
             </div>
             <div class="anli691x">
 
@@ -1144,15 +1212,15 @@
         function sh(dsfvf) {
             setTimeout(function name(params) {
                 $(dsfvf).css({
-                    'height': $(dsfvf).width() + $(dsfvf).width() - 15 + 'px'
+                    'height': $(dsfvf).width() + $(dsfvf).width() - 30 + 'px'
                 })
             }, 2000)
             $(dsfvf).css({
-                'height': $(dsfvf).width() + $(dsfvf).width() - 15 + 'px'
+                'height': $(dsfvf).width() + $(dsfvf).width() - 30 + 'px'
             })
             $(window).on('resize', function() {
                 $(dsfvf).css({
-                    'height': $(dsfvf).width() + $(dsfvf).width() - 15 + 'px'
+                    'height': $(dsfvf).width() + $(dsfvf).width() - 30 + 'px'
                 })
             })
         }
@@ -1160,15 +1228,15 @@
         function shx(dsfvf) {
             setTimeout(function name(params) {
                 dsfvf.css({
-                    'height': dsfvf.width() + dsfvf.width() - 15 + 'px'
+                    'height': dsfvf.width() + dsfvf.width() - 30 + 'px'
                 })
             }, 2000)
             dsfvf.css({
-                'height': dsfvf.width() + dsfvf.width() - 15 + 'px'
+                'height': dsfvf.width() + dsfvf.width() - 30 + 'px'
             })
             $(window).on('resize', function() {
                 dsfvf.css({
-                    'height': dsfvf.width() + dsfvf.width() - 15 + 'px'
+                    'height': dsfvf.width() + dsfvf.width() - 30 + 'px'
                 })
             })
         }
@@ -1199,46 +1267,67 @@
             }
         })
 
-        $('input').on('keyup keypress', function() {
-            const val = $(this).val();
-            $.getJSON('https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=0&filter[text]=' + val, function(data) {
-                $('[search_r]').html('')
-                $.each(data.data, function(o, v) {
-                    const attr = v.attributes;
-                    const id = v.id;
-                    const poster = attr.posterImage;
-                    const title = attr.titles;
-                    var titlex;
-                    if (typeof title.en === 'undefined') {
-                        titlex = title.en_jp;
-                    } else {
-                        titlex = title.en;
-                    }
-                    const theme = ` <div get-anime id="${id}" fww rr style="display:none" class="ani121 cc">
-                <div aa class="ani1211" fbg style="background-image: url(${poster.small});">
 
-                </div>
-                <div fww class="ani1212">${titlex}</div>
-            </div>`;
-                    const theme2 = `
+
+        function getinfo(malid, type, apply) {
+            $.getJSON('https://kitsu.io/api/edge/mappings?filter[externalSite]=myanimelist%2Fanime&filter[externalId]=' + malid + '&include=item', function(data) {
+                if (data.included[0]) {
+                    const v = data.included[0];
+                    const slug = attr.slug;
+                    const attr = v.attributes;
+                    const poster = attr.posterImage.small;
+                    const cover = attr.coverImage;
+                    const title = attr.titles.ja_jp;
+                    console.log(data.included[0])
+
+                    if (type == 'slug') {
+                        apply.attr('slug', attr.slug)
+                    }
+                }
+
+            })
+        }
+        $(document).on('keypress', 'input', function(e) {
+            if (e.which == 13) {
+                const val = $(this).val();
+                if ($(this).val().length > 4) {
+                    $.getJSON('https://api.jikan.moe/v3/search/anime?q=' + val, function(data) {
+                        console.log(data.results)
+                        $('[search_r]').html('');
+                        $.each(data.results, function name(o, v) {
+                            const id = v.mal_id;
+                            const title = v.title;
+                            const poster = v.image_url;
+                            const eps = v.episodes;
+                            const rank = v.rank;
+                            const score = v.score;
+                            const start_date = v.start_date;
+                            const type = v.type;
+                            const theme2 = `
             <div rr get-anime id="${id}" class="ani12x1">
-                <div fw fbg  style="background-image: url(${poster.small});" ff class="ani12x11">
+                <div fw fbg  style="background-image: url(${poster});" ff class="ani12x11">
 
                 </div>
                 <div  class="ani12x1x1x">
                     <div  class="ani12x1x1">
-                    ${titlex}
+                    ${title}
                 </div>
                 </div>
                
 
             </div>`;
-                    $('[search_r]').prepend(theme2);
-                    //  sh('.ani12[trending_r] > div')
+                            $('[search_r]').append(theme2);
+                            console.log(v)
+                        })
 
-                })
-            })
-        })
+                    })
+                } else {
+
+                }
+
+            }
+        });
+
         setTimeout(function name(params) {
             $('[view-page][page="home"]').trigger("click");
         }, 1000)
@@ -1249,51 +1338,28 @@
                 $('[trending_r]').html('');
                 $.each(data.top, function name(o, v) {
                     const id = v.mal_id;
-
-                    setTimeout(function name(params) {
-                        $.getJSON('https://kitsu.io/api/edge/mappings?filter[externalSite]=myanimelist%2Fanime&filter[externalId]=' + id + '&include=item', function(data) {
-                            if (data.included[0]) {
-                                const v = data.included[0];
-
-                                const attr = v.attributes;
-                                const id = v.id;
-                                const poster = attr.posterImage;
-                                const title = attr.titles;
-
-                                var titlex;
-                                if (typeof title.en === 'undefined') {
-                                    titlex = title.en_jp;
-                                } else {
-                                    titlex = title.en;
-                                }
-                                if (typeof title.en_jp === 'undefined') {
-                                    titlex = title.en_cn;
-                                }
-                                const theme = ` <div  get-anime id="${id}" fww rr class="ani121 gg">
-                <div aa class="ani1211" fbg style="background-image: url(${poster.small});">
-
-                </div>
-                <div fww class="ani1212">${titlex}</div>
-            </div>`;
-                                const theme2 = `
+                    const title = v.title;
+                    const poster = v.image_url;
+                    const eps = v.episodes;
+                    const rank = v.rank;
+                    const score = v.score;
+                    const start_date = v.start_date;
+                    const type = v.type;
+                    const theme2 = `
             <div rr get-anime id="${id}" class="ani12x1">
-                <div fw fbg  style="background-image: url(${poster.small});" ff class="ani12x11">
+                <div fw fbg  style="background-image: url(${poster});" ff class="ani12x11">
 
                 </div>
                 <div  class="ani12x1x1x">
                     <div  class="ani12x1x1">
-                    ${titlex}
+                    ${title}
                 </div>
                 </div>
                
 
             </div>`;
-                                $('[trending_r]').append(theme2);
-                                //   sh('.ani12[search_r] > div')
-                            }
-                        })
-                    }, 50)
-
+                    $('[trending_r]').append(theme2);
+                    console.log(v)
                 })
             })
         })
@@ -1302,7 +1368,7 @@
             $('[iframe][id="prev"]').attr('data', 'xxx')
             const number = $(this).attr('no');
             const slug = $(this).attr('slug');
-            const theme = `<iframe id="prev" allow="fullscreen" src="https://streamfreak.ani12[trending_r] > div/genoani.php?ani_me=${slug}/${number}"  frameborder="0"></iframe>
+            const theme = `<iframe id="prev" allow="fullscreen" src="https://streamfreak.cc/genoani.php?ani_me=${slug}/${number}"  frameborder="0"></iframe>
             <iframe allow="fullscreen" src="/chats.html" class="chat"  frameborder="0"></iframe>`;
             $('[pagex][page="watch"]').html(theme)
             $('iframe[id="prev"] > body').ready(function name(params) {
@@ -1314,42 +1380,60 @@
             $('[view-page][page="anime"]').trigger("click");
             //  $('[pagex][page="anime"]').html('')
             const id = $(this).attr('id');
-            $.getJSON('https://kitsu.io/api/edge/anime/' + id, function(data) {
-                const v = data.data;
+            $.getJSON('https://api.jikan.moe/v3/anime/' + id, function(data) {
+
+                const v = data;
                 console.log(v)
-                const attr = v.attributes;
-                const description = attr.description;
-                const poster = attr.posterImage;
-                const cover = attr.coverImage;
-                const title = attr.titles;
-                const slug = attr.slug;
-                var titlex;
-                if (typeof title.en === 'undefined') {
-                    titlex = title.en_jp;
-                } else {
-                    titlex = title.en;
-                }
-                $('.alititle.en').text(titlex)
-                $('.alititle.ja_jp').text(title.ja_jp)
-
-                $('.alidec').text(description)
-                $('.anli69').css('background-image', 'url(' + cover.original + ')')
-                const theme = '';
-                $.getJSON('https://kitsu.io/api/edge/anime/' + id + '/episodes', function(data) {
-                    $('.anli691x').html('')
-                    $.each(data.data, function(o, v) {
+                $('.alititle.en').text(v.title)
+                $('.Episodesv').text(v.episodes)
+                $('.Statusv').text(v.status)
+                $('.aliratingv').text(v.rating)
+                $('.aligenres').html('')
+                $.each(v.genres, function(o, v) {
+                    const name = v.name;
+                    const theme = `<genres>${name}</genres>`;
+                    $('.aligenres').append(theme)
+                })
+                $('.alititle.ja_jp').text(v.title_japanese)
+                $('.alidec').text(v.synopsis)
+                $('.anli691x').html('')
+                $.getJSON('https://kitsu.io/api/edge/mappings?filter[externalSite]=myanimelist%2Fanime&filter[externalId]=' + id + '&include=item', function(data) {
+                    if (data.included[0]) {
+                        const v = data.included[0];
                         const attr = v.attributes;
-                        //  const thumbnail = attr.thumbnail.original;
-                        const title = attr.titles;
-                        const number = attr.number;
-                        console.log(number)
-                        $('.anli691x').append(`<div get-watch slug="${slug}" no="${number}" class="anli691xx">${number}</div>`)
-                    })
+                        const slug = attr.slug;
+                        $.getJSON('https://api.jikan.moe/v3/anime/' + id + '/episodes', function(data) {
 
+                            $.each(new Array(data.episodes_last_page),
+                                function(n) {
+                                    const count = n + 1;
+                                    setTimeout(function name(params) {
+                                        $.getJSON('https://api.jikan.moe/v3/anime/' + id + '/episodes/' + count, function(data) {
+                                            console.log(data)
+                                            $.each(data.episodes, function(o, v) {
+                                                const number = v.episode_id;
+                                                $('.anli691x').append(`<div get-watch slug="${slug}" no="${number}" class="anli691xx">${number}</div>`)
+
+                                            })
+                                        })
+                                    }, 1500)
+                                }
+                            );
+
+
+                        })
+
+                    }
+                })
+                $.getJSON('https://api.jikan.moe/v3/anime/' + id + '/pictures', function(data) {
+
+                    $('.anli69').css('background-image', 'url(' + data.pictures[1].large + ')')
                 })
 
-                //$('[pagex][page="anime"]').html(theme)
+                /// getinfo(id, 'bg', $('.anli69'))
             })
+
+            //   $.getJSON('https://kitsu.io/api/edge/anime/' + id, function(data) { const v = data.data; console.log(v) const attr = v.attributes; const description = attr.description; const poster = attr.posterImage; const cover = attr.coverImage; const title = attr.titles; const slug = attr.slug; var titlex; if (typeof title.en === 'undefined') { titlex = title.en_jp; } else { titlex = title.en; } $('.alititle.en').text(titlex) $('.alititle.ja_jp').text(title.ja_jp) $('.alidec').text(description) $('.anli69').css('background-image', 'url(' + cover.original + ')') const theme = ''; $.getJSON('https://kitsu.io/api/edge/anime/' + id + '/episodes', function(data) { $('.anli691x').html('') $.each(data.data, function(o, v) { const attr = v.attributes; //  const thumbnail = attr.thumbnail.original; const title = attr.titles; const number = attr.number; console.log(number) $('.anli691x').append(`<div get-watch slug="${slug}" no="${number}" class="anli691xx">${number}</div>`) }) }) //$('[pagex][page="anime"]').html(theme) })
         })
     </script>
 </body>
