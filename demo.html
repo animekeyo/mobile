@@ -134,6 +134,44 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="https://ricklancee.github.io/currently-airing-anime/currentlyAiringAnime.js"></script>
     <script>
+        $.getJSON('https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=0&filter[text]=' + val, function(data) {
+            $('[search_r]').html('')
+            $.each(data.data, function(o, v) {
+                const attr = v.attributes;
+                const id = v.id;
+                const poster = attr.posterImage;
+                const title = attr.titles;
+                var titlex;
+                if (typeof title.en === 'undefined') {
+                    titlex = title.en_jp;
+                } else {
+                    titlex = title.en;
+                }
+                const theme = ` <div get-anime id="${id}" fww rr style="display:none" class="ani121 cc">
+                <div aa class="ani1211" fbg style="background-image: url(${poster.small});">
+
+                </div>
+                <div fww class="ani1212">${titlex}</div>
+            </div>`;
+                const theme2 = `
+            <div rr get-anime id="${id}" class="ani12x1">
+                <div fw fbg  style="background-image: url(${poster.small});" ff class="ani12x11">
+
+                </div>
+                <div  class="ani12x1x1x">
+                    <div  class="ani12x1x1">
+                    ${titlex}
+                </div>
+                </div>
+               
+
+            </div>`;
+                $('[search_r]').prepend(theme2);
+                //  sh('.ani12[trending_r] > div')
+
+            })
+        })
+
         Vue.filter('untilDate', function(value) {
             if (value) {
                 return 'Airs ' + moment.unix(value).fromNow()
