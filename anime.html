@@ -1083,6 +1083,12 @@
             display: block;
         }
         
+        tagx[rank] {
+            right: 0;
+            left: unset;
+            background: hsl(213deg 22% 8% / 80%);
+        }
+        
         @media (max-width:600px) {}
         
         @media (min-width:600px) {
@@ -1397,6 +1403,7 @@
                 <div fw fbg  style="background-image: url(${poster});" ff class="ani12x11">
 
                 </div>
+                <tagx rank> #${rank}</tagx>
                 <div  class="ani12x1x1x">
                     <div  class="ani12x1x1">
                     ${title}
@@ -1472,7 +1479,7 @@
 <div fw fbg  style="background-image: url(${poster});" ff class="ani12x11">
 
 </div>
-
+<tagx rank> #${rank}</tagx>
 <div  class="ani12x1x1x">
     <div  class="ani12x1x1">
     ${title}
