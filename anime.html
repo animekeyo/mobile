@@ -1043,6 +1043,19 @@
             align-content: flex-start;
         }
         
+        tagx {
+            position: absolute;
+            top: 0;
+            left: 0;
+            left: 0;
+            font-size: small;
+            text-transform: uppercase;
+            padding: 3px 5px;
+            margin: 6px 5px;
+            background: var(--c19);
+            border-radius: 3px;
+        }
+        
         @media (max-width:600px) {}
         
         @media (min-width:600px) {
@@ -1273,8 +1286,9 @@
             $.getJSON('https://kitsu.io/api/edge/mappings?filter[externalSite]=myanimelist%2Fanime&filter[externalId]=' + malid + '&include=item', function(data) {
                 if (data.included[0]) {
                     const v = data.included[0];
-                    const slug = attr.slug;
+
                     const attr = v.attributes;
+                    const slug = attr.slug;
                     const poster = attr.posterImage.small;
                     const cover = attr.coverImage;
                     const title = attr.titles.ja_jp;
@@ -1282,6 +1296,14 @@
 
                     if (type == 'slug') {
                         apply.attr('slug', attr.slug)
+                    }
+                    if (type == 'nsfw') {
+                        if (attr.nsfw = true) {
+                            apply.append('<tagx>18+</tagx>')
+                        } else {
+
+                        }
+
                     }
                 }
 
@@ -1318,6 +1340,7 @@
             </div>`;
                             $('[search_r]').append(theme2);
                             console.log(v)
+                            getinfo(id, 'nsfw', $('[get-anime][id="' + id + '"]'))
                         })
 
                     })
@@ -1346,10 +1369,11 @@
                     const start_date = v.start_date;
                     const type = v.type;
                     const theme2 = `
-            <div rr get-anime id="${id}" class="ani12x1">
+            <div  rr get-anime id="${id}" class="ani12x1">
                 <div fw fbg  style="background-image: url(${poster});" ff class="ani12x11">
 
                 </div>
+               
                 <div  class="ani12x1x1x">
                     <div  class="ani12x1x1">
                     ${title}
@@ -1359,6 +1383,7 @@
 
             </div>`;
                     $('[trending_r]').append(theme2);
+                    getinfo(id, 'nsfw', $('[get-anime][id="' + id + '"]'))
                     console.log(v)
                 })
             })
