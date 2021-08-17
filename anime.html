@@ -1078,6 +1078,11 @@
             margin-bottom: 4px;
         }
         
+        .ani1 {
+            height: -webkit-fill-available;
+            display: block;
+        }
+        
         @media (max-width:600px) {}
         
         @media (min-width:600px) {
@@ -1206,6 +1211,14 @@
         </div>
         <div fw class="ani12v">
             <div trending_r fw class="ani12">
+
+            </div>
+        </div>
+        <div class="header-title">
+            Special
+        </div>
+        <div fw class="ani12v">
+            <div special_r fw class="ani12">
 
             </div>
         </div>
@@ -1441,6 +1454,39 @@
                     console.log(v)
                 })
             })
+            $.getJSON('https://api.jikan.moe/v3/top/anime/0/special', function(data) {
+
+
+                $('[special_r]').html('');
+                $.each(data.top, function name(o, v) {
+                    const id = v.mal_id;
+                    const title = v.title;
+                    const poster = v.image_url;
+                    const eps = v.episodes;
+                    const rank = v.rank;
+                    const score = v.score;
+                    const start_date = v.start_date;
+                    const type = v.type;
+                    const theme2 = `
+<div  rr get-anime id="${id}" class="ani12x1">
+<div fw fbg  style="background-image: url(${poster});" ff class="ani12x11">
+
+</div>
+
+<div  class="ani12x1x1x">
+    <div  class="ani12x1x1">
+    ${title}
+</div>
+</div>
+
+
+</div>`;
+                    $('[special_r]').append(theme2);
+                    getinfo(id, 'nsfw', $('[get-anime][id="' + id + '"]'))
+                    console.log(v)
+                })
+            })
+
         })
         $(document).on('click', '[get-watch]', function() {
             $('[view-page][page="watch"]').trigger("click");
